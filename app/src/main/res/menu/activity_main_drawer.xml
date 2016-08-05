@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group
+        android:id="@+id/group_main"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_tasks"
+            android:icon="@drawable/ic_menu_file_document_box"
+            android:title="Tasks" />
+        <item
+            android:id="@+id/nav_archive"
+            android:icon="@drawable/ic_menu_archive"
+            android:title="Archive" />
+        <item
+            android:id="@+id/nav_trash"
+            android:icon="@drawable/ic_menu_delete"
+            android:title="Trash" />
+    </group>
+
+    <group
+        android:id="@+id/group_settings"
+        android:checkableBehavior="single">>
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Settings" />
+        <item
+            android:id="@+id/nav_help"
+            android:icon="@drawable/ic_menu_help_circle"
+            android:title="Help" />
+    </group>
+    <group
+        android:id="@+id/group_other"
+        android:checkableBehavior="single">>
+        <item
+            android:id="@+id/nav_share"
+            android:icon="@drawable/ic_menu_share"
+            android:title="Share" />
+        <item
+            android:id="@+id/nav_upgrade"
+            android:icon="@drawable/ic_menu_cart"
+            android:title="Upgrade" />
+    </group>
+
+</menu>
