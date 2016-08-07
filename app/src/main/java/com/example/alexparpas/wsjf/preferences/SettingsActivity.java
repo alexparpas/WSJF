@@ -1,10 +1,12 @@
-package com.example.alexparpas.wsjf;
+package com.example.alexparpas.wsjf.preferences;
 
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.os.Bundle;
+
+import com.example.alexparpas.wsjf.R;
 
 public class SettingsActivity extends PreferenceActivity
         implements Preference.OnPreferenceChangeListener {

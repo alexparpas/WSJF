@@ -1,23 +1,19 @@
-package com.example.alexparpas.wsjf;
+package com.example.alexparpas.wsjf.model;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import java.util.Date;
 
-public class DetailsActivity extends AppCompatActivity {
+/**
+ * Created by Alex on 06/08/2016.
+ */
+public class Job {
 
     private int userValue, timeValue, rroeValue, jobsize;
     private String jobName, jobDescription;
+    private Date startDate, endDate;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_details);
-    }
-
-    public int calculateWSJF(int userValue, int timeValue, int rroeValue, int jobsize) {
-        int score;
-        score = (userValue + timeValue + rroeValue) / jobsize;
-        return score;
+    public Job() {
+        startDate = new Date();
+        endDate = new Date();
     }
 
     public void setUserValue(int userValue) {
@@ -44,6 +40,10 @@ public class DetailsActivity extends AppCompatActivity {
         this.jobDescription = jobDescription;
     }
 
+    public void setStartDate(Date startDate) { this.startDate = startDate; }
+
+    public void setEndDate(Date endDate) { this.endDate = endDate; }
+
     public int getUserValue() {
         return userValue;
     }
@@ -68,4 +68,13 @@ public class DetailsActivity extends AppCompatActivity {
         return jobDescription;
     }
 
+    public Date getEndDate() { return endDate; }
+
+    public Date getStartDate() { return startDate; }
+
+    public int calculateWSJF(int userValue, int timeValue, int rroeValue, int jobsize) {
+        int score;
+        score = (userValue + timeValue + rroeValue) / jobsize;
+        return score;
+    }
 }
