@@ -15,7 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.alexparpas.wsjf.R;
-import com.example.alexparpas.wsjf.SettingsActivity;
+import com.example.alexparpas.wsjf.preferences.SettingsActivity;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {

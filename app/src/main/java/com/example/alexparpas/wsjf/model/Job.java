@@ -10,6 +10,7 @@ public class Job {
     private int userValue, timeValue, rroeValue, jobsize;
     private String jobName, jobDescription;
     private Date startDate, endDate;
+    private boolean completed;
 
     public Job() {
         startDate = new Date();
@@ -40,9 +41,18 @@ public class Job {
         this.jobDescription = jobDescription;
     }
 
-    public void setStartDate(Date startDate) { this.startDate = startDate; }
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
 
-    public void setEndDate(Date endDate) { this.endDate = endDate; }
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
+
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
+    }
+
 
     public int getUserValue() {
         return userValue;
@@ -68,9 +78,17 @@ public class Job {
         return jobDescription;
     }
 
-    public Date getEndDate() { return endDate; }
+    public Date getEndDate() {
+        return endDate;
+    }
 
-    public Date getStartDate() { return startDate; }
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public boolean isCompleted() {
+        return completed;
+    }
 
     public int calculateWSJF(int userValue, int timeValue, int rroeValue, int jobsize) {
         int score;
