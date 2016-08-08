@@ -25,6 +25,7 @@ public class DetailsFragment extends Fragment {
     private CheckBox mCompletedCheckBox;
 
     public DetailsFragment() {
+        mJob = new Job();
     }
 
     @Override
@@ -36,14 +37,14 @@ public class DetailsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_details, container, false);
         mStartDateButton = (Button) v.findViewById(R.id.job_start_date);
-        mStartDateButton .setText(mJob.getStartDate().toString());
-        mStartDateButton .setEnabled(false);
+        mStartDateButton.setText(mJob.getStartDate().toString());
+        mStartDateButton.setEnabled(false);
 
         mEndDateButton = (Button) v.findViewById(R.id.job_end_date);
         mEndDateButton.setText(mJob.getEndDate().toString());
         mEndDateButton.setEnabled(false);
 
-        mCompletedCheckBox = (CheckBox)v.findViewById(R.id.job_completed);
+        mCompletedCheckBox = (CheckBox) v.findViewById(R.id.job_completed);
         mCompletedCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

@@ -7,7 +7,7 @@ import java.util.Date;
  */
 public class Job {
 
-    private int userValue, timeValue, rroeValue, jobsize;
+    private int userValue, timeValue, rroeValue, jobSize;
     private String jobName, jobDescription;
     private Date startDate, endDate;
     private boolean completed;
@@ -29,8 +29,8 @@ public class Job {
         this.rroeValue = rroeValue;
     }
 
-    public void setJobsize(int jobsize) {
-        this.jobsize = jobsize;
+    public void setJobSize(int jobsize) {
+        this.jobSize = jobsize;
     }
 
     public void setJobName(String jobName) {
@@ -66,8 +66,8 @@ public class Job {
         return rroeValue;
     }
 
-    public int getJobsize() {
-        return jobsize;
+    public int getJobSize() {
+        return jobSize;
     }
 
     public String getJobName() {

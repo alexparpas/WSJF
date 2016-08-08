@@ -1,9 +1,11 @@
 package com.example.alexparpas.wsjf.activities;
 
+import android.support.v4.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,8 +15,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.alexparpas.wsjf.R;
+import com.example.alexparpas.wsjf.fragments.ArchiveFragment;
+import com.example.alexparpas.wsjf.fragments.TasksFragment;
+import com.example.alexparpas.wsjf.fragments.TrashFragment;
 import com.example.alexparpas.wsjf.preferences.SettingsActivity;
 
 public class MainActivity extends AppCompatActivity
@@ -27,14 +33,14 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -82,23 +88,38 @@ public class MainActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
         if (id == R.id.nav_tasks) {
-
+            Fragment fragment = new TasksFragment();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.content_frame, fragment)
+                    .commit();
+            Toast.makeText(getApplicationContext(), "Tasks Selected", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_archive) {
-
+            Fragment fragment = new ArchiveFragment();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.content_frame, fragment)
+                    .commit();
+            Toast.makeText(getApplicationContext(), "Archive Selected", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_trash) {
-
+            Fragment fragment = new TrashFragment();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.content_frame, fragment)
+                    .commit();
+            Toast.makeText(getApplicationContext(), "Trash Selected", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_settings) {
-
+            startActivity(new Intent(this, SettingsActivity.class));
+            Toast.makeText(getApplicationContext(), "Settings Selected", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_help) {
-
-        } else if (id == R.id.nav_share) {
-
+            startActivity(new Intent(this, HelpActivity.class));
+            Toast.makeText(getApplicationContext(), "Help Selected", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_upgrade) {
-
+            startActivity(new Intent(this, UpgradeActivity.class));
+            Toast.makeText(getApplicationContext(), "Upgrade Selected", Toast.LENGTH_SHORT).show();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

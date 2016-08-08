@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import com.example.alexparpas.wsjf.fragments.DetailsFragment;
 import com.example.alexparpas.wsjf.R;
+import com.example.alexparpas.wsjf.model.Job;
 
 public class DetailsActivity extends FragmentActivity {
 
