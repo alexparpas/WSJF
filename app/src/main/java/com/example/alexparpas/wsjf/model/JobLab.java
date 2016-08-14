@@ -40,16 +40,17 @@ public class JobLab {
     }
 
     private void mockData(){
-        //Populate the list with 100 mock jobs
-        Random rn = new Random();
-        int min = 1;
-        int max = 13;
 
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 4; i++) {
             Job job = new Job();
             job.setJobName("Job #" + i);
             job.setCompleted(i % 2 == 0); //Every other one
             job.setJobDescription(mockDescription);
+
+            //Populate the list with 100 mock jobs
+            Random rn = new Random();
+            int min = 1;
+            int max = 13;
 
             for (int j = 0; i < 4; i++) {
                 int randomValue = rn.nextInt(max - min + 1) + min;

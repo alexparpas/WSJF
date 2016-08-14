@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.example.alexparpas.wsjf.R;
 import com.example.alexparpas.wsjf.fragments.ArchiveFragment;
+import com.example.alexparpas.wsjf.fragments.HelpFragment;
 import com.example.alexparpas.wsjf.fragments.TasksFragment;
 import com.example.alexparpas.wsjf.fragments.TrashFragment;
 import com.example.alexparpas.wsjf.preferences.SettingsActivity;
@@ -37,6 +38,8 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent(getBaseContext(), DetailsActivity.class);
+                startActivity(intent);
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
@@ -50,6 +53,8 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        populateFragment(new TasksFragment());
     }
 
     @Override
@@ -88,42 +93,55 @@ public class MainActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
+
 
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
         if (id == R.id.nav_tasks) {
-            Fragment fragment = new TasksFragment();
-            fragmentManager.beginTransaction()
-                    .replace(R.id.content_frame, fragment)
-                    .commit();
-            Toast.makeText(getApplicationContext(), "Tasks Selected", Toast.LENGTH_SHORT).show();
+            if (!item.isChecked())
+                populateFragment(new TasksFragment());
         } else if (id == R.id.nav_archive) {
-            Fragment fragment = new ArchiveFragment();
-            fragmentManager.beginTransaction()
-                    .replace(R.id.content_frame, fragment)
-                    .commit();
-            Toast.makeText(getApplicationContext(), "Archive Selected", Toast.LENGTH_SHORT).show();
+            if (!item.isChecked())
+                populateFragment(new ArchiveFragment());
         } else if (id == R.id.nav_trash) {
-            Fragment fragment = new TrashFragment();
-            fragmentManager.beginTransaction()
-                    .replace(R.id.content_frame, fragment)
-                    .commit();
-            Toast.makeText(getApplicationContext(), "Trash Selected", Toast.LENGTH_SHORT).show();
+            if (!item.isChecked())
+                populateFragment(new TrashFragment());
         } else if (id == R.id.nav_settings) {
-            startActivity(new Intent(this, SettingsActivity.class));
-            Toast.makeText(getApplicationContext(), "Settings Selected", Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.nav_help) {
-            startActivity(new Intent(this, HelpActivity.class));
-            Toast.makeText(getApplicationContext(), "Help Selected", Toast.LENGTH_SHORT).show();
+            if (!item.isChecked()) {
+                startActivity(new Intent(this, SettingsActivity.class));
+                Toast.makeText(getApplicationContext(), "Settings Selected", Toast.LENGTH_SHORT).show();
+            }
+        } else if (id == R.id.nav_about) {
+            if (!item.isChecked())
+                populateFragment(new HelpFragment());
         } else if (id == R.id.nav_upgrade) {
-            startActivity(new Intent(this, UpgradeActivity.class));
-            Toast.makeText(getApplicationContext(), "Upgrade Selected", Toast.LENGTH_SHORT).show();
+            if (!item.isChecked()) {
+                startActivity(new Intent(this, UpgradeActivity.class));
+                Toast.makeText(getApplicationContext(), "Upgrade Selected", Toast.LENGTH_SHORT).show();
+            }
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void populateFragment(Fragment f) {
+        Fragment fragment = null;
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        if (f instanceof TasksFragment) {
+            fragment = new TasksFragment();
+        } else if (f instanceof ArchiveFragment) {
+            fragment = new ArchiveFragment();
+        } else if (f instanceof TrashFragment) {
+            fragment = new TrashFragment();
+        } else if (f instanceof HelpFragment) {
+            fragment = new HelpFragment();
+        }
+        fragmentManager.beginTransaction()
+                .replace(R.id.content_frame, fragment)
+                .commit();
+
     }
 }

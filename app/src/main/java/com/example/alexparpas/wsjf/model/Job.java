@@ -14,7 +14,7 @@ public class Job {
 
     public Job() {
         startDate = new Date();
-        endDate = new Date();
+        endDate = new Date() ;
     }
 
     public void setUserValue(int userValue) {
