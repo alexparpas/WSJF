@@ -1,15 +1,19 @@
 package com.example.alexparpas.wsjf.activities;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 
-import com.example.alexparpas.wsjf.fragments.DetailsFragment;
 import com.example.alexparpas.wsjf.R;
-import com.example.alexparpas.wsjf.model.Job;
+import com.example.alexparpas.wsjf.fragments.DetailsFragment;
 
-public class DetailsActivity extends FragmentActivity {
+/**
+ * Created by Alex on 14/08/2016.
+ */
+public abstract class SingleFragmentActivity extends FragmentActivity {
+    protected abstract Fragment createFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,12 +23,11 @@ public class DetailsActivity extends FragmentActivity {
         FragmentManager fm = getSupportFragmentManager();
         Fragment fragment = fm.findFragmentById(R.id.fragment_container);
 
-        if(fragment == null){
-            fragment = new DetailsFragment();
+        if (fragment == null) {
+            fragment = createFragment();
             fm.beginTransaction()
                     .add(R.id.fragment_container, fragment)
                     .commit();
         }
     }
-
 }

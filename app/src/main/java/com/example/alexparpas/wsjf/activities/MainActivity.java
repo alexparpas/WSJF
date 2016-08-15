@@ -22,6 +22,8 @@ import com.example.alexparpas.wsjf.fragments.ArchiveFragment;
 import com.example.alexparpas.wsjf.fragments.HelpFragment;
 import com.example.alexparpas.wsjf.fragments.TasksFragment;
 import com.example.alexparpas.wsjf.fragments.TrashFragment;
+import com.example.alexparpas.wsjf.model.Job;
+import com.example.alexparpas.wsjf.model.JobLab;
 import com.example.alexparpas.wsjf.preferences.SettingsActivity;
 
 public class MainActivity extends AppCompatActivity
@@ -38,8 +40,8 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getBaseContext(), DetailsActivity.class);
-                startActivity(intent);
+                Job job = new Job();
+                JobLab.get(getApplicationContext()).addJob(job);
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }

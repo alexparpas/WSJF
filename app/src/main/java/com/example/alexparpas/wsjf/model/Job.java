@@ -1,20 +1,23 @@
 package com.example.alexparpas.wsjf.model;
 
 import java.util.Date;
+import java.util.UUID;
 
 /**
  * Created by Alex on 06/08/2016.
  */
 public class Job {
 
+    private UUID id;
     private int userValue, timeValue, rroeValue, jobSize;
     private String jobName, jobDescription;
     private Date startDate, endDate;
     private boolean completed;
 
     public Job() {
+        id = UUID.randomUUID();
         startDate = new Date();
-        endDate = new Date() ;
+        endDate = new Date();
     }
 
     public void setUserValue(int userValue) {
@@ -53,7 +56,6 @@ public class Job {
         this.completed = completed;
     }
 
-
     public int getUserValue() {
         return userValue;
     }
@@ -85,6 +87,8 @@ public class Job {
     public Date getStartDate() {
         return startDate;
     }
+
+    public UUID getId() { return id; }
 
     public boolean isCompleted() {
         return completed;

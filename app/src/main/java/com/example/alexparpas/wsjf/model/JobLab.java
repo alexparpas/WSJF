@@ -9,6 +9,7 @@ import com.example.alexparpas.wsjf.R;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 
 /**
  * Created by Alex on 07/08/2016.
@@ -41,7 +42,7 @@ public class JobLab {
 
     private void mockData(){
 
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 20; i++) {
             Job job = new Job();
             job.setJobName("Job #" + i);
             job.setCompleted(i % 2 == 0); //Every other one
@@ -72,7 +73,20 @@ public class JobLab {
         }
     }
 
+    public void addJob(Job j){
+        mJobs.add(j);
+    }
+
     public List<Job> getJobs() {
         return mJobs;
+    }
+
+    public Job getJob(UUID id){
+        for(Job job: mJobs){
+            if(job.getId().equals(id)){
+                return job;
+            }
+        }
+        return null;
     }
 }

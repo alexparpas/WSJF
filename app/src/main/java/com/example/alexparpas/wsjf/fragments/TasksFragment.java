@@ -10,10 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.example.alexparpas.wsjf.R;
-import com.example.alexparpas.wsjf.activities.DetailsActivity;
+import com.example.alexparpas.wsjf.activities.JobPagerActivity;
 import com.example.alexparpas.wsjf.model.Job;
 import com.example.alexparpas.wsjf.model.JobLab;
 
@@ -34,6 +32,12 @@ public class TasksFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateUI();
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -45,13 +49,18 @@ public class TasksFragment extends Fragment {
         return v;
     }
 
-    private void updateUI(){
-        JobLab jobLab= JobLab.get(getActivity());
+    private void updateUI() {
+        JobLab jobLab = JobLab.get(getActivity());
         List<Job> jobs = jobLab.getJobs();
 
-        mAdapter = new JobAdapter(jobs);
-        mJobsRecyclerView.setAdapter(mAdapter);
+        if (mAdapter == null) {
+            mAdapter = new JobAdapter(jobs);
+            mJobsRecyclerView.setAdapter(mAdapter);
+        } else {
+            mAdapter.notifyDataSetChanged();
+        }
     }
+
     private class JobsHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private Job mJob;
         public TextView mTitleTextView;
@@ -60,13 +69,13 @@ public class TasksFragment extends Fragment {
 
         public JobsHolder(View itemView) {
             super(itemView);
-            mTitleTextView = (TextView)itemView.findViewById(R.id.list_item_job_title_text_view);
-            mJobDescription = (TextView)itemView.findViewById(R.id.list_item_description_text_view);
-            mDateTextView = (TextView)itemView.findViewById(R.id.list_item_view_dates_text_view);
+            mTitleTextView = (TextView) itemView.findViewById(R.id.list_item_job_title_text_view);
+            mJobDescription = (TextView) itemView.findViewById(R.id.list_item_description_text_view);
+            mDateTextView = (TextView) itemView.findViewById(R.id.list_item_view_dates_text_view);
             itemView.setOnClickListener(this);
         }
 
-        public void bindJob(Job job){
+        public void bindJob(Job job) {
             mJob = job;
             mTitleTextView.setText(mJob.getJobName());
             mJobDescription.setText(mJob.getJobDescription());
@@ -76,7 +85,7 @@ public class TasksFragment extends Fragment {
 
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(getActivity(), DetailsActivity.class);
+            Intent intent = JobPagerActivity.newIntent(getActivity(), mJob.getId());
             startActivity(intent);
         }
     }
@@ -99,7 +108,7 @@ public class TasksFragment extends Fragment {
         @Override
         public void onBindViewHolder(JobsHolder holder, int position) {
             Job job = mJobs.get(position);
-            holder.bindJob(job);
+            holder.bindJob(job); //Connecting the adapter with the ViewHolder
         }
 
         @Override
