@@ -2,6 +2,7 @@ package com.example.alexparpas.wsjf.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,13 +10,11 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.example.alexparpas.wsjf.model.Job;
 import com.example.alexparpas.wsjf.R;
 import com.example.alexparpas.wsjf.model.JobLab;
 
-import java.util.ArrayList;
 import java.util.UUID;
 
 /**
@@ -23,12 +22,14 @@ import java.util.UUID;
  */
 public class DetailsFragment extends Fragment {
     private static final String ARG_JOB_ID = "job_id";
+    private static final String DIALOG_START_DATE = "DialogStartDate";
+    private static final String DIALOG_END_DATE = "DialogEndDate";
 
     private Job mJob;
     private Button mStartDateButton, mEndDateButton;
     private CheckBox mCompletedCheckBox;
 
-    public static DetailsFragment newInstance(UUID jobId){
+    public static DetailsFragment newInstance(UUID jobId) {
         Bundle args = new Bundle();
         args.putSerializable(ARG_JOB_ID, jobId);
 
@@ -47,25 +48,44 @@ public class DetailsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_details, container, false);
-        EditText mTitleField = (EditText)v.findViewById(R.id.job_title);
+        EditText mTitleField = (EditText) v.findViewById(R.id.job_title);
         mTitleField.setText(mJob.getJobName());
 
         mStartDateButton = (Button) v.findViewById(R.id.job_start_date);
         mStartDateButton.setText(mJob.getStartDate().toString());
-        mStartDateButton.setEnabled(false);
+        mStartDateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createDateDialog(DIALOG_START_DATE );
+            }
+        });
 
         mEndDateButton = (Button) v.findViewById(R.id.job_end_date);
         mEndDateButton.setText(mJob.getEndDate().toString());
-        mEndDateButton.setEnabled(false);
+        mEndDateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createDateDialog(DIALOG_END_DATE );
+            }
+        });
 
         mCompletedCheckBox = (CheckBox) v.findViewById(R.id.job_completed);
         mCompletedCheckBox.setChecked(mJob.isCompleted());
-        mCompletedCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                mJob.setCompleted(isChecked);
-            }
-        });
+        mCompletedCheckBox.setOnCheckedChangeListener(
+                new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        mJob.setCompleted(isChecked);
+                    }
+                }
+
+        );
         return v;
+    }
+
+    public void createDateDialog(String dateType){
+        FragmentManager manager = getFragmentManager();
+        DatePickerFragment dialog = new DatePickerFragment();
+        dialog.show(manager, dateType);
     }
 }
