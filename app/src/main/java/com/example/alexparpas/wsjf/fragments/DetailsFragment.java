@@ -25,6 +25,8 @@ public class DetailsFragment extends Fragment {
     private static final String DIALOG_START_DATE = "DialogStartDate";
     private static final String DIALOG_END_DATE = "DialogEndDate";
 
+    private static final int REQUEST_DATE = 0;
+
     private Job mJob;
     private Button mStartDateButton, mEndDateButton;
     private CheckBox mCompletedCheckBox;
@@ -56,7 +58,7 @@ public class DetailsFragment extends Fragment {
         mStartDateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                createDateDialog(DIALOG_START_DATE );
+                createDateDialog(DIALOG_START_DATE, mJob.getStartDate());
             }
         });
 
@@ -65,7 +67,7 @@ public class DetailsFragment extends Fragment {
         mEndDateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                createDateDialog(DIALOG_END_DATE );
+                createDateDialog(DIALOG_END_DATE, mJob.getEndDate());
             }
         });
 
@@ -83,9 +85,10 @@ public class DetailsFragment extends Fragment {
         return v;
     }
 
-    public void createDateDialog(String dateType){
+    public void createDateDialog(String dateType, java.util.Date date) {
         FragmentManager manager = getFragmentManager();
-        DatePickerFragment dialog = new DatePickerFragment();
+        DatePickerFragment dialog = DatePickerFragment.newInstance(date);
+        dialog.setTargetFragment(DetailsFragment.this, REQUEST_DATE);
         dialog.show(manager, dateType);
     }
 }

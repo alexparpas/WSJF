@@ -26,17 +26,13 @@
             android:icon="@drawable/ic_menu_manage"
             android:title="Settings" />
         <item
-            android:id="@+id/nav_help"
+            android:id="@+id/nav_about"
             android:icon="@drawable/ic_menu_help_circle"
-            android:title="Help" />
+            android:title="About" />
     </group>
     <group
         android:id="@+id/group_other"
         android:checkableBehavior="single">>
-        <item
-            android:id="@+id/nav_share"
-            android:icon="@drawable/ic_menu_share"
-            android:title="Share" />
         <item
             android:id="@+id/nav_upgrade"
             android:icon="@drawable/ic_menu_cart"

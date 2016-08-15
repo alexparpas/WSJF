@@ -18,8 +18,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".DetailsActivity" />
-        <activity android:name=".preferences.SettingsActivity"></activity>
+        <activity android:name=".preferences.SettingsActivity" />
+        <activity android:name=".activities.UpgradeActivity" />
+        <activity android:name=".activities.JobPagerActivity"></activity>
     </application>
 
 </manifest>

@@ -1,6 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/toolbar">
 
-</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingTop="10dp">
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="6dp"
+            android:src="@drawable/ic_menu_briefcase_download" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Version 1.0" />
+
+        <TextView
+            style="?android:listSeparatorTextViewStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="About" />
+
+        <TextView
+            style="@style/about_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Has eu quem deterruisset. Mazim civibus partiendo id vis. Cu debitis veritus accommodare pri. Ut nam autem melius omnium. Elitr quaeque no nam, ne meis honestatis est, sed ut legimus conclusionemque. Porro posidonium no cum, eum id paulo corpora conceptam. In omnes dissentias theophrastus est, te sed labitur placerat singulis. Oportere principes at mei, partem voluptaria eam ut. Sea erant veniam ad, ut deserunt eleifend pri. No nisl tota inimicus nec, cu adolescens temporibus pro, duo cu affert discere gloriatur. Has eu quem deterruisset. Mazim civibus partiendo id vis. Cu debitis veritus accommodare pri. Ut nam autem melius omnium. Elitr quaeque no nam, ne meis honestatis est, sed ut legimus conclusionemque. Porro posidonium no cum, eum id paulo corpora conceptam. In omnes dissentias theophrastus est, te sed labitur placerat singulis. Oportere principes at mei, partem voluptaria eam ut. Sea erant veniam ad, ut deserunt eleifend pri. No nisl tota inimicus nec, cu adolescens temporibus pro, duo cu affert discere gloriatur." />
+
+        <TextView
+            style="?android:listSeparatorTextViewStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Developer" />
+
+        <TextView
+            style="@style/about_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autoLink="web"
+            android:text="Alexandros Parpas\nhttp://alexandrosparpas.com" />
+
+        <TextView
+            style="?android:listSeparatorTextViewStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Links" />
+
+
+        <TextView
+            style="@style/about_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Rate on Google Play" />
+
+        <TextView
+            style="@style/about_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Send Feedback" />
+
+        <TextView
+            style="@style/about_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="View Source Code on GitHub" />
+
+        <TextView
+            style="?android:listSeparatorTextViewStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Legal" />
+
+        <TextView
+            style="@style/about_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Has eu quem deterruisset. Mazim civibus partiendo id vis. Cu debitis veritus accommodare pri. Ut nam autem melius omnium." />
+
+    </LinearLayout>
+</ScrollView>
