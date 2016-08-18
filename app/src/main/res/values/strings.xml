@@ -25,5 +25,6 @@
     <string name="job_completed">Completed</string>
 
     <string name="date_picker_title">Start Date</string>
+    <string name="no_data_available">There are no jobs. You can add a job by clicking on the + button below. </string>
 
 </resources>

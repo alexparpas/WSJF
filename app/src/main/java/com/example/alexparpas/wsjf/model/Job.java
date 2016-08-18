@@ -11,13 +11,12 @@ public class Job {
     private UUID id;
     private int userValue, timeValue, rroeValue, jobSize;
     private String jobName, jobDescription;
-    private Date startDate, endDate;
+    private Date date;
     private boolean completed;
 
     public Job() {
         id = UUID.randomUUID();
-        startDate = new Date();
-        endDate = new Date();
+        date = new Date();
     }
 
     public void setUserValue(int userValue) {
@@ -44,12 +43,8 @@ public class Job {
         this.jobDescription = jobDescription;
     }
 
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-    }
-
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public void setCompleted(boolean completed) {
@@ -80,15 +75,13 @@ public class Job {
         return jobDescription;
     }
 
-    public Date getEndDate() {
-        return endDate;
+    public Date getDate() {
+        return date;
     }
 
-    public Date getStartDate() {
-        return startDate;
+    public UUID getId() {
+        return id;
     }
-
-    public UUID getId() { return id; }
 
     public boolean isCompleted() {
         return completed;

@@ -20,7 +20,9 @@
         </activity>
         <activity android:name=".preferences.SettingsActivity" />
         <activity android:name=".activities.UpgradeActivity" />
-        <activity android:name=".activities.JobPagerActivity"></activity>
+        <activity android:name=".activities.JobPagerActivity"
+            android:parentActivityName=".activities.MainActivity">
+        </activity>
     </application>
 
 </manifest>

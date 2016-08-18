@@ -7,11 +7,15 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import com.example.alexparpas.wsjf.R;
 import com.example.alexparpas.wsjf.activities.JobPagerActivity;
+import com.example.alexparpas.wsjf.model.EmptyRecyclerView;
 import com.example.alexparpas.wsjf.model.Job;
 import com.example.alexparpas.wsjf.model.JobLab;
 
@@ -24,7 +28,7 @@ import java.util.List;
  */
 public class TasksFragment extends Fragment {
 
-    private RecyclerView mJobsRecyclerView;
+    private EmptyRecyclerView mJobsRecyclerView;
     private JobAdapter mAdapter;
 
     @Override
@@ -38,12 +42,20 @@ public class TasksFragment extends Fragment {
         updateUI();
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_tasks, container, false);
-        mJobsRecyclerView = (RecyclerView) v.findViewById(R.id.job_recycler_view);
+        mJobsRecyclerView = (EmptyRecyclerView) v.findViewById(R.id.job_recycler_view);
         mJobsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        View emptyView = v.findViewById(R.id.todo_list_empty_view);
+        mJobsRecyclerView.setEmptyView(emptyView);
 
         updateUI();
         return v;
@@ -79,7 +91,7 @@ public class TasksFragment extends Fragment {
             mJob = job;
             mTitleTextView.setText(mJob.getJobName());
             mJobDescription.setText(mJob.getJobDescription());
-            String formattedDate = mJob.getStartDate().toString() + " - " + mJob.getEndDate().toString();
+            String formattedDate = mJob.getDate().toString();
             mDateTextView.setText(formattedDate);
         }
 

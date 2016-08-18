@@ -1,5 +1,7 @@
 package com.example.alexparpas.wsjf.fragments;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -15,6 +17,7 @@ import com.example.alexparpas.wsjf.model.Job;
 import com.example.alexparpas.wsjf.R;
 import com.example.alexparpas.wsjf.model.JobLab;
 
+import java.util.Date;
 import java.util.UUID;
 
 /**
@@ -22,13 +25,12 @@ import java.util.UUID;
  */
 public class DetailsFragment extends Fragment {
     private static final String ARG_JOB_ID = "job_id";
-    private static final String DIALOG_START_DATE = "DialogStartDate";
-    private static final String DIALOG_END_DATE = "DialogEndDate";
+    private static final String DIALOG_DATE = "DialogDate";
 
     private static final int REQUEST_DATE = 0;
 
     private Job mJob;
-    private Button mStartDateButton, mEndDateButton;
+    private Button mDateButton;
     private CheckBox mCompletedCheckBox;
 
     public static DetailsFragment newInstance(UUID jobId) {
@@ -53,21 +55,16 @@ public class DetailsFragment extends Fragment {
         EditText mTitleField = (EditText) v.findViewById(R.id.job_title);
         mTitleField.setText(mJob.getJobName());
 
-        mStartDateButton = (Button) v.findViewById(R.id.job_start_date);
-        mStartDateButton.setText(mJob.getStartDate().toString());
-        mStartDateButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                createDateDialog(DIALOG_START_DATE, mJob.getStartDate());
-            }
-        });
+        mDateButton = (Button) v.findViewById(R.id.job_date);
+        updateDate();
 
-        mEndDateButton = (Button) v.findViewById(R.id.job_end_date);
-        mEndDateButton.setText(mJob.getEndDate().toString());
-        mEndDateButton.setOnClickListener(new View.OnClickListener() {
+        mDateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                createDateDialog(DIALOG_END_DATE, mJob.getEndDate());
+                FragmentManager manager = getFragmentManager();
+                DatePickerFragment dialog = DatePickerFragment.newInstance(mJob.getDate());
+                dialog.setTargetFragment(DetailsFragment.this, REQUEST_DATE);
+                dialog.show(manager, DIALOG_DATE);
             }
         });
 
@@ -85,10 +82,20 @@ public class DetailsFragment extends Fragment {
         return v;
     }
 
-    public void createDateDialog(String dateType, java.util.Date date) {
-        FragmentManager manager = getFragmentManager();
-        DatePickerFragment dialog = DatePickerFragment.newInstance(date);
-        dialog.setTargetFragment(DetailsFragment.this, REQUEST_DATE);
-        dialog.show(manager, dateType);
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode!= Activity.RESULT_OK) {
+            return;
+        }
+
+        if(requestCode == REQUEST_DATE){
+            Date date = (Date) data.getSerializableExtra(DatePickerFragment.EXTRA_DATE);
+            mJob.setDate(date);
+            updateDate();
+        }
+    }
+
+    private void updateDate(){
+        mDateButton.setText(mJob.getDate().toString());
     }
 }
