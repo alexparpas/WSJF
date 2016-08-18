@@ -13,6 +13,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 
+import com.example.alexparpas.wsjf.activities.MainActivity;
 import com.example.alexparpas.wsjf.model.Job;
 import com.example.alexparpas.wsjf.R;
 import com.example.alexparpas.wsjf.model.JobLab;
@@ -30,8 +31,9 @@ public class DetailsFragment extends Fragment {
     private static final int REQUEST_DATE = 0;
 
     private Job mJob;
-    private Button mDateButton;
+    private Button mDateButton, mSaveButton;
     private CheckBox mCompletedCheckBox;
+    private EditText mTitleField, mDescriptionField;
 
     public static DetailsFragment newInstance(UUID jobId) {
         Bundle args = new Bundle();
@@ -52,8 +54,19 @@ public class DetailsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_details, container, false);
-        EditText mTitleField = (EditText) v.findViewById(R.id.job_title);
-        mTitleField.setText(mJob.getJobName());
+        mTitleField = (EditText) v.findViewById(R.id.job_title);
+        mDescriptionField = (EditText) v.findViewById(R.id.job_description);
+
+        mSaveButton = (Button) v.findViewById(R.id.btn_save);
+        mSaveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mJob.setJobName(mTitleField.getText().toString().trim());
+                mJob.setJobDescription(mDescriptionField.getText().toString().trim());
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                startActivity(intent);
+            }
+        });
 
         mDateButton = (Button) v.findViewById(R.id.job_date);
         updateDate();
@@ -84,18 +97,29 @@ public class DetailsFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode!= Activity.RESULT_OK) {
+        if (resultCode != Activity.RESULT_OK) {
             return;
         }
 
-        if(requestCode == REQUEST_DATE){
+        if (requestCode == REQUEST_DATE) {
             Date date = (Date) data.getSerializableExtra(DatePickerFragment.EXTRA_DATE);
             mJob.setDate(date);
             updateDate();
         }
     }
 
-    private void updateDate(){
+    @Override
+    public void onResume() {
+        updateValues();
+        super.onResume();
+    }
+
+    private void updateDate() {
         mDateButton.setText(mJob.getDate().toString());
+    }
+
+    private void updateValues(){
+        mTitleField.setText(mJob.getJobName());
+        mDescriptionField.setText(mJob.getJobDescription());
     }
 }

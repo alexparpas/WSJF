@@ -89,8 +89,8 @@ public class TasksFragment extends Fragment {
 
         public void bindJob(Job job) {
             mJob = job;
-            mTitleTextView.setText(mJob.getJobName());
-            mJobDescription.setText(mJob.getJobDescription());
+            mTitleTextView.setText(mJob.getJobName().toString());
+            mJobDescription.setText(mJob.getJobDescription().toString());
             String formattedDate = mJob.getDate().toString();
             mDateTextView.setText(formattedDate);
         }
