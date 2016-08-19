@@ -21,7 +21,9 @@
 
     <string name="job_title">Job Title</string>
     <string name="job_title_hint">Enter a Job Title</string>
+    <string name="job_description_hint">Job Description</string>
     <string name="job_details">Details</string>
+    <string name="job_description">Description</string>
     <string name="job_completed">Completed</string>
 
     <string name="date_picker_title">Start Date</string>

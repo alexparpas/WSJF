@@ -10,6 +10,7 @@ public class Job {
 
     private UUID id;
     private int userValue, timeValue, rroeValue, jobSize;
+    private double wsjfScore;
     private String jobName, jobDescription;
     private Date date;
     private boolean completed;
@@ -51,6 +52,10 @@ public class Job {
         this.completed = completed;
     }
 
+    public void setWsjfScore(int wsjfScore) {
+        this.wsjfScore = wsjfScore;
+    }
+
     public int getUserValue() {
         return userValue;
     }
@@ -87,9 +92,11 @@ public class Job {
         return completed;
     }
 
-    public int calculateWSJF(int userValue, int timeValue, int rroeValue, int jobsize) {
-        int score;
-        score = (userValue + timeValue + rroeValue) / jobsize;
-        return score;
+    public double getWsjfScore() {
+        return wsjfScore;
+    }
+
+    public void calculateWSJF() {
+        wsjfScore = (userValue + timeValue + rroeValue) / jobSize;
     }
 }

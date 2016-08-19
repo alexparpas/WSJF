@@ -75,15 +75,14 @@ public class TasksFragment extends Fragment {
 
     private class JobsHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private Job mJob;
-        public TextView mTitleTextView;
-        private TextView mJobDescription;
-        private TextView mDateTextView;
+        public TextView mTitleTextView, mJobDescription, mDateTextView, mScore;
 
         public JobsHolder(View itemView) {
             super(itemView);
             mTitleTextView = (TextView) itemView.findViewById(R.id.list_item_job_title_text_view);
             mJobDescription = (TextView) itemView.findViewById(R.id.list_item_description_text_view);
             mDateTextView = (TextView) itemView.findViewById(R.id.list_item_view_dates_text_view);
+            mScore = (TextView) itemView.findViewById(R.id.list_item_description_wsjf_view);
             itemView.setOnClickListener(this);
         }
 
@@ -91,8 +90,8 @@ public class TasksFragment extends Fragment {
             mJob = job;
             mTitleTextView.setText(mJob.getJobName().toString());
             mJobDescription.setText(mJob.getJobDescription().toString());
-            String formattedDate = mJob.getDate().toString();
-            mDateTextView.setText(formattedDate);
+            mScore.setText(String.valueOf(mJob.getWsjfScore()));
+            mDateTextView.setText(mJob.getDate().toString());
         }
 
         @Override
