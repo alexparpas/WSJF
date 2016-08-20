@@ -3,8 +3,6 @@ package com.example.alexparpas.wsjf.database;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.os.Build;
-
 import static com.example.alexparpas.wsjf.database.JobDbSchema.JobTable;
 
 /**
@@ -28,6 +26,7 @@ public class JobBaseHelper extends SQLiteOpenHelper {
                 JobTable.Cols.TIME_VALUE + ", " +
                 JobTable.Cols.RROE_VALUE + ", " +
                 JobTable.Cols.JOB_SIZE + ", " +
+                JobTable.Cols.WSJF_VALUE + ", " +
                 JobTable.Cols.DATE + ", " +
                 JobTable.Cols.COMPLETED + ")"
         );

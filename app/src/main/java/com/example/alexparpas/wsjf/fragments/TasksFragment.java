@@ -69,6 +69,7 @@ public class TasksFragment extends Fragment {
             mAdapter = new JobAdapter(jobs);
             mJobsRecyclerView.setAdapter(mAdapter);
         } else {
+            mAdapter.setJobs(jobs);
             mAdapter.notifyDataSetChanged();
         }
     }
@@ -119,12 +120,17 @@ public class TasksFragment extends Fragment {
         @Override
         public void onBindViewHolder(JobsHolder holder, int position) {
             Job job = mJobs.get(position);
+            System.out.println("WSJF value on the RecyclerView is: " + job.getWsjfScore());
             holder.bindJob(job); //Connecting the adapter with the ViewHolder
         }
 
         @Override
         public int getItemCount() {
             return mJobs.size();
+        }
+
+        public void setJobs(List<Job> jobs){
+            mJobs = jobs;
         }
     }
 

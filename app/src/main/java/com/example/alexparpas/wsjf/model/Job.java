@@ -16,7 +16,11 @@ public class Job {
     private boolean completed;
 
     public Job() {
-        id = UUID.randomUUID();
+        this(UUID.randomUUID());
+    }
+
+    public Job(UUID id){
+        this.id = id;
         date = new Date();
         jobName = "";
         jobDescription = "";
@@ -54,7 +58,7 @@ public class Job {
         this.completed = completed;
     }
 
-    public void setWsjfScore(int wsjfScore) {
+    public void setWsjfScore(double wsjfScore) {
         this.wsjfScore = wsjfScore;
     }
 

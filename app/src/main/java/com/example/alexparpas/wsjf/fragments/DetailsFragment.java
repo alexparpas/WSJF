@@ -92,7 +92,6 @@ public class DetailsFragment extends Fragment implements NumberPicker.OnValueCha
             }
         });
 
-
         mTimeValueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -147,6 +146,8 @@ public class DetailsFragment extends Fragment implements NumberPicker.OnValueCha
                 mJob.setJobName(mTitleField.getText().toString().trim());
                 mJob.setJobDescription(mDescriptionField.getText().toString().trim());
                 mJob.calculateWSJF();
+
+                System.out.println("WSJF value on DetailsFragment is: " + mJob.getWsjfScore());
                 Intent intent = new Intent(getActivity(), MainActivity.class);
                 startActivity(intent);
             }
@@ -170,6 +171,13 @@ public class DetailsFragment extends Fragment implements NumberPicker.OnValueCha
     public void onResume() {
         updateValues();
         super.onResume();
+    }
+
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        JobLab.get(getActivity()).updateJob(mJob);
     }
 
     @Override
