@@ -2,7 +2,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <EditTextPreference
-        android:defaultValue="100"
+        android:defaultValue="10"
         android:dialogTitle="@string/pref_values_scale"
         android:inputType="number"
         android:key="@string/pref_scale_key"

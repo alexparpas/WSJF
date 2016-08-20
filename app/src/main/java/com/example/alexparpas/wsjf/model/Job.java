@@ -18,6 +18,8 @@ public class Job {
     public Job() {
         id = UUID.randomUUID();
         date = new Date();
+        jobName = "";
+        jobDescription = "";
     }
 
     public void setUserValue(int userValue) {
