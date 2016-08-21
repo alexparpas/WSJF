@@ -50,25 +50,6 @@ public class TasksFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-
-        inflater.inflate(R.menu.fragment_tasks, menu);
-        MenuItem item = menu.findItem(R.id.action_search);
-        SearchView sv = new SearchView(((MainActivity) getActivity()).getSupportActionBar().getThemedContext());
-        MenuItemCompat.setShowAsAction(item, MenuItemCompat.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW | MenuItemCompat.SHOW_AS_ACTION_IF_ROOM);
-        MenuItemCompat.setActionView(item, sv);
-        sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                System.out.println("Query is" + query);
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                System.out.println("tap");
-                return false;
-            }
-        });
     }
 
     @Nullable
@@ -153,7 +134,7 @@ public class TasksFragment extends Fragment {
             return mJobs.size();
         }
 
-        public void setJobs(List<Job> jobs){
+        public void setJobs(List<Job> jobs) {
             mJobs = jobs;
         }
     }

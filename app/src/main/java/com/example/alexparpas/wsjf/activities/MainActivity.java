@@ -4,7 +4,6 @@ import android.support.v4.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -21,7 +20,6 @@ import com.example.alexparpas.wsjf.R;
 import com.example.alexparpas.wsjf.fragments.ArchiveFragment;
 import com.example.alexparpas.wsjf.fragments.HelpFragment;
 import com.example.alexparpas.wsjf.fragments.TasksFragment;
-import com.example.alexparpas.wsjf.fragments.TrashFragment;
 import com.example.alexparpas.wsjf.model.Job;
 import com.example.alexparpas.wsjf.model.JobLab;
 import com.example.alexparpas.wsjf.preferences.SettingsActivity;
@@ -95,8 +93,6 @@ public class MainActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-
-
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
@@ -106,9 +102,6 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_archive) {
             if (!item.isChecked())
                 populateFragment(new ArchiveFragment());
-        } else if (id == R.id.nav_trash) {
-            if (!item.isChecked())
-                populateFragment(new TrashFragment());
         } else if (id == R.id.nav_settings) {
             if (!item.isChecked()) {
                 startActivity(new Intent(this, SettingsActivity.class));
@@ -136,8 +129,6 @@ public class MainActivity extends AppCompatActivity
             fragment = new TasksFragment();
         } else if (f instanceof ArchiveFragment) {
             fragment = new ArchiveFragment();
-        } else if (f instanceof TrashFragment) {
-            fragment = new TrashFragment();
         } else if (f instanceof HelpFragment) {
             fragment = new HelpFragment();
         }
