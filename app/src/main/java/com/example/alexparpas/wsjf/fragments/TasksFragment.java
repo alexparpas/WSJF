@@ -19,12 +19,14 @@ import android.widget.TextView;
 import com.example.alexparpas.wsjf.R;
 import com.example.alexparpas.wsjf.activities.JobPagerActivity;
 import com.example.alexparpas.wsjf.activities.MainActivity;
+import com.example.alexparpas.wsjf.model.DividerItemDecoration;
 import com.example.alexparpas.wsjf.model.EmptyRecyclerView;
 import com.example.alexparpas.wsjf.model.Job;
 import com.example.alexparpas.wsjf.model.JobLab;
 
 import org.w3c.dom.Text;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
@@ -58,6 +60,8 @@ public class TasksFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_tasks, container, false);
         mJobsRecyclerView = (EmptyRecyclerView) v.findViewById(R.id.job_recycler_view);
         mJobsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mJobsRecyclerView.addItemDecoration(
+                new DividerItemDecoration(getActivity()));
 
         View emptyView = v.findViewById(R.id.todo_list_empty_view);
         mJobsRecyclerView.setEmptyView(emptyView);
@@ -97,7 +101,7 @@ public class TasksFragment extends Fragment {
             mTitleTextView.setText(mJob.getJobName().toString());
             mJobDescription.setText(mJob.getJobDescription().toString());
             mScore.setText(String.valueOf(mJob.getWsjfScore()));
-            mDateTextView.setText(mJob.getDate().toString());
+            mDateTextView.setText(new SimpleDateFormat("dd/MM").format(mJob.getDate()));
         }
 
         @Override

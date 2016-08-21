@@ -2,48 +2,89 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:layout_height="72dp"
+    android:layout_marginBottom="0.5dp"
+    android:orientation="horizontal"
+    android:paddingBottom="8dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="8dp">
 
-    <TextView
-        android:id="@+id/list_item_job_title_text_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="4dp"
-        android:text="Job Title"
-        android:textStyle="bold" />
+    <ImageView
+        android:id="@+id/item_image"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_gravity="center"
+        android:src="@drawable/ic_menu_file_document_box" />
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_gravity="center"
+        android:layout_marginLeft="16dp"
+        android:layout_weight="5"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingRight="16dp">
+
+        <TextView
+            android:id="@+id/list_item_job_title_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:padding="4dp"
+            android:singleLine="true"
+
+            android:text="Job Title"
+            android:textSize="16dp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/list_item_description_text_view"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:maxLines="3"
+            android:layout_gravity="left"
+            android:layout_weight="3"
+            android:ellipsize="end"
             android:padding="4dp"
-            android:text="Job Description" />
+            android:singleLine="true"
+            android:text="Job Description"
+            android:textColor="#727272"
+            android:textSize="12sp" />
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="right"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/list_item_view_dates_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_gravity="right"
+            android:layout_marginBottom="4dp"
+            android:layout_weight="1"
+            android:padding="4dp"
+            android:text="Dates"
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/list_item_description_wsjf_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="WSJF" />
-
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_gravity="right"
+            android:layout_weight="2"
+            android:text="SJF"
+            android:textColor="#439F47"
+            android:textSize="20sp" />
 
     </LinearLayout>
 
 
-    <TextView
-        android:id="@+id/list_item_view_dates_text_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:padding="4dp"
-        android:text="Dates" />
 </LinearLayout>

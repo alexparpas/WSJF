@@ -23,6 +23,7 @@ import com.example.alexparpas.wsjf.model.Job;
 import com.example.alexparpas.wsjf.R;
 import com.example.alexparpas.wsjf.model.JobLab;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 
@@ -186,7 +187,7 @@ public class DetailsFragment extends Fragment implements NumberPicker.OnValueCha
     }
 
     private void updateDate() {
-        mDateButton.setText(mJob.getDate().toString());
+        mDateButton.setText(new SimpleDateFormat("dd-MM-yyyy").format(mJob.getDate()));
     }
 
     private void updateValues() {
