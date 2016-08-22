@@ -2,10 +2,13 @@ package com.example.alexparpas.wsjf.fragments;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +18,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.NumberPicker;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.alexparpas.wsjf.activities.JobPagerActivity;
@@ -43,11 +47,9 @@ public class DetailsFragment extends Fragment implements NumberPicker.OnValueCha
     private static final int REQUEST_DATE = 0;
 
     private Job mJob;
-    private Button mDateButton, mSaveButton,
-            mUserValueButton, mTimeValueButton, mRroeValueButton, mJobSizeButton;
-    private CheckBox mCompletedCheckBox;
-    private EditText mTitleField, mDescriptionField;
-    private TextView mUserValueField, mTimeValueField, mRroeValueField, mJobSizeField;
+    private EditText mTitleField;
+    private TextView mJobDescriptionField, mDateValueField, mUserValueField, mTimeValueField, mRroeValueField, mJobSizeField;
+    private RelativeLayout setJobDescription, setDateValue, setUserValue, setTimeValue, setRrroeValue, setJobSizeValue;
 
     public static DetailsFragment newInstance(UUID jobId) {
         Bundle args = new Bundle();
@@ -73,52 +75,52 @@ public class DetailsFragment extends Fragment implements NumberPicker.OnValueCha
         mTitleField = (EditText) v.findViewById(R.id.job_title);
 
         //Description section
-        mDescriptionField = (EditText) v.findViewById(R.id.job_description);
+        mJobDescriptionField = (TextView) v.findViewById(R.id.job_description);
 
         //Values section
-        mUserValueButton = (Button) v.findViewById(R.id.btn_user_value);
-        mTimeValueButton = (Button) v.findViewById(R.id.btn_time_value);
-        mRroeValueButton = (Button) v.findViewById(R.id.btn_rroe_value);
-        mJobSizeButton = (Button) v.findViewById(R.id.btn_job_size);
+        setUserValue = (RelativeLayout) v.findViewById(R.id.set_user_value);
+        setTimeValue = (RelativeLayout) v.findViewById(R.id.set_time_value);
+        setRrroeValue = (RelativeLayout) v.findViewById(R.id.set_rroe_value);
+        setJobSizeValue = (RelativeLayout) v.findViewById(R.id.set_job_size_value);
 
-        mUserValueField = (TextView) v.findViewById(R.id.tf_user_value);
-        mTimeValueField = (TextView) v.findViewById(R.id.tf_time_value);
-        mRroeValueField = (TextView) v.findViewById(R.id.tf_rroe_value);
-        mJobSizeField = (TextView) v.findViewById(R.id.tf_job_size);
+        mUserValueField = (TextView) v.findViewById(R.id.user_value);
+        mTimeValueField = (TextView) v.findViewById(R.id.time_value);
+        mRroeValueField = (TextView) v.findViewById(R.id.rroe_value);
+        mJobSizeField = (TextView) v.findViewById(R.id.job_size_value);
 
-        mUserValueButton.setOnClickListener(new View.OnClickListener() {
+        setUserValue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showDialog(NP_USER_VALUE);
             }
         });
 
-        mTimeValueButton.setOnClickListener(new View.OnClickListener() {
+        setTimeValue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showDialog(NP_TIME_VALUE);
             }
         });
 
-        mRroeValueButton.setOnClickListener(new View.OnClickListener() {
+        setRrroeValue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showDialog(NP_RROE_VALUE);
             }
         });
 
-        mJobSizeButton.setOnClickListener(new View.OnClickListener() {
+        setJobSizeValue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showDialog(NP_JOBSIZE_VALUE);
             }
         });
 
-        //Details section
-        mDateButton = (Button) v.findViewById(R.id.job_date);
+        setDateValue = (RelativeLayout) v.findViewById(R.id.set_date_value);
+        mDateValueField = (TextView) v.findViewById(R.id.date_value);
         updateDate();
 
-        mDateButton.setOnClickListener(new View.OnClickListener() {
+        setDateValue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FragmentManager manager = getFragmentManager();
@@ -128,24 +130,12 @@ public class DetailsFragment extends Fragment implements NumberPicker.OnValueCha
             }
         });
 
-        mCompletedCheckBox = (CheckBox) v.findViewById(R.id.job_completed);
-        mCompletedCheckBox.setChecked(mJob.isCompleted());
-        mCompletedCheckBox.setOnCheckedChangeListener(
-                new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        mJob.setCompleted(isChecked);
-                    }
-                }
-        );
-
-        //Save button
-        mSaveButton = (Button) v.findViewById(R.id.btn_save);
-        mSaveButton.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton detailsFAB = (FloatingActionButton) v.findViewById(R.id.add_job_fab);
+        detailsFAB.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 mJob.setJobName(mTitleField.getText().toString().trim());
-                mJob.setJobDescription(mDescriptionField.getText().toString().trim());
+                mJob.setJobDescription(mJobDescriptionField.getText().toString().trim());
                 mJob.calculateWSJF();
 
                 System.out.println("WSJF value on DetailsFragment is: " + mJob.getWsjfScore());
@@ -153,6 +143,17 @@ public class DetailsFragment extends Fragment implements NumberPicker.OnValueCha
                 startActivity(intent);
             }
         });
+
+//        mCompletedCheckBox = (CheckBox) v.findViewById(R.id.job_completed);
+//        mCompletedCheckBox.setChecked(mJob.isCompleted());
+//        mCompletedCheckBox.setOnCheckedChangeListener(
+//                new CompoundButton.OnCheckedChangeListener() {
+//                    @Override
+//                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                        mJob.setCompleted(isChecked);
+//                    }
+//                }
+//        );
         return v;
     }
 
@@ -187,12 +188,12 @@ public class DetailsFragment extends Fragment implements NumberPicker.OnValueCha
     }
 
     private void updateDate() {
-        mDateButton.setText(new SimpleDateFormat("dd-MM-yyyy").format(mJob.getDate()));
+        mDateValueField.setText(new SimpleDateFormat("dd-MM-yyyy").format(mJob.getDate()));
     }
 
     private void updateValues() {
         mTitleField.setText(mJob.getJobName());
-        mDescriptionField.setText(mJob.getJobDescription());
+        mJobDescriptionField.setText(mJob.getJobDescription());
         mUserValueField.setText(String.valueOf(mJob.getUserValue()));
         mTimeValueField.setText(String.valueOf(mJob.getTimeValue()));
         mRroeValueField.setText(String.valueOf(mJob.getRroeValue()));
@@ -200,46 +201,72 @@ public class DetailsFragment extends Fragment implements NumberPicker.OnValueCha
     }
 
     public void showDialog(final String value) {
-        final Dialog d = new Dialog(getActivity());
-        d.setTitle("NumberPicker");
-        d.setContentView(R.layout.dialog_number_picker);
-        Button mButtonSet = (Button) d.findViewById(R.id.btn_set);
-        Button mButtonCancel = (Button) d.findViewById(R.id.btn_cancel);
-        final NumberPicker np = (NumberPicker) d.findViewById(R.id.numberPicker);
-        np.setMaxValue(13);
-        np.setMinValue(0);
-        np.setWrapSelectorWheel(false);
-        np.setOnValueChangedListener(this);
-        mButtonSet.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                switch (value) {
-                    case NP_USER_VALUE:
-                        mUserValueField.setText(String.valueOf(np.getValue()));
-                        mJob.setUserValue(np.getValue());
-                        break;
-                    case NP_RROE_VALUE:
-                        mRroeValueField.setText(String.valueOf(np.getValue()));
-                        mJob.setRroeValue(np.getValue());
-                        break;
-                    case NP_TIME_VALUE:
-                        mTimeValueField.setText(String.valueOf(np.getValue()));
-                        mJob.setTimeValue(np.getValue());
-                        break;
-                    case NP_JOBSIZE_VALUE:
-                        mJobSizeField.setText(String.valueOf(np.getValue()));
-                        mJob.setJobSize(np.getValue());
-                        break;
-                }
-                d.dismiss();
-            }
-        });
-        mButtonCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                d.dismiss();
-            }
-        });
-        d.show();
+        RelativeLayout linearLayout = new RelativeLayout(getActivity());
+        final NumberPicker numberPicker = new NumberPicker(getActivity());
+        numberPicker.setMaxValue(13);
+        numberPicker.setMinValue(0);
+
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(50, 50);
+        RelativeLayout.LayoutParams numPickerParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        numPickerParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
+
+        linearLayout.setLayoutParams(params);
+        linearLayout.addView(numberPicker, numPickerParams);
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+        switch (value){
+            case NP_USER_VALUE:
+                numberPicker.setValue(Integer.valueOf(mUserValueField.getText().toString()));
+                alertDialogBuilder.setTitle("Select User Value");
+                break;
+            case NP_TIME_VALUE:
+                numberPicker.setValue(Integer.valueOf(mTimeValueField.getText().toString()));
+                alertDialogBuilder.setTitle("Select Time Value");
+                break;
+            case NP_RROE_VALUE:
+                numberPicker.setValue(Integer.valueOf(mRroeValueField.getText().toString()));
+                alertDialogBuilder.setTitle("Select RROE Value");
+                break;
+            case NP_JOBSIZE_VALUE:
+                numberPicker.setValue(Integer.valueOf(mJobSizeField.getText().toString()));
+                alertDialogBuilder.setTitle("Select Job Size Value");
+                break;
+        }
+        alertDialogBuilder.setView(linearLayout);
+        alertDialogBuilder
+                .setCancelable(false)
+                .setPositiveButton("Ok",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,
+                                                int id) {
+                                switch (value) {
+                                    case NP_USER_VALUE:
+                                        mUserValueField.setText(String.valueOf(numberPicker.getValue()));
+                                        mJob.setUserValue(numberPicker.getValue());
+                                        break;
+                                    case NP_TIME_VALUE:
+                                        mTimeValueField.setText(String.valueOf(numberPicker.getValue()));
+                                        mJob.setTimeValue(numberPicker.getValue());
+                                        break;
+                                    case NP_RROE_VALUE:
+                                        mRroeValueField.setText(String.valueOf(numberPicker.getValue()));
+                                        mJob.setRroeValue(numberPicker.getValue());
+                                        break;
+                                    case NP_JOBSIZE_VALUE:
+                                        mJobSizeField.setText(String.valueOf(numberPicker.getValue()));
+                                        mJob.setJobSize(numberPicker.getValue());
+                                        break;
+                                }
+                            }
+                        })
+                .setNegativeButton("Cancel",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,
+                                                int id) {
+                                dialog.cancel();
+                            }
+                        });
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 }

@@ -1,6 +1,5 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -18,7 +17,7 @@
     <LinearLayout
         android:id="@+id/add_job_layout_top"
         android:layout_width="match_parent"
-        android:layout_height="96dp"
+        android:layout_height="112dp"
         android:layout_below="@+id/toolbar"
         android:background="#439F47"
         android:orientation="vertical"
@@ -28,14 +27,14 @@
             android:id="@+id/job_title"
             android:layout_width="match_parent"
             android:layout_height="70dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="72dp"
-            android:gravity="top|left"
+            android:layout_marginLeft="32dp"
+            android:layout_marginRight="32dp"
+            android:gravity="start|center"
             android:hint="@string/job_title_hint"
-            android:inputType="textCapWords|textMultiLine"
+            android:inputType="textAutoCorrect|textCapSentences"
             android:lines="2"
-            android:minLines="2"
-            android:textSize="25dp" />
+            android:maxLines="3"
+            android:textSize="20dp" />
 
     </LinearLayout>
 
@@ -50,34 +49,22 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/details"
-                style="?android:listSeparatorTextViewStyle"
-                android:layout_width="match_parent"
-                android:layout_height="72dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="8dp"
-                android:gravity="center_vertical"
-                android:text="Details"
-                android:textSize="15dp" />
-
             <RelativeLayout
                 android:id="@+id/set_description"
                 android:layout_width="match_parent"
                 android:layout_height="72dp"
                 android:background="?android:attr/selectableItemBackground"
-                android:clickable="true"
-                android:onClick="setDescription">
+                android:clickable="true">
 
                 <ImageView
                     android:id="@+id/description_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="32dp"
-                    android:src="@drawable/ic_menu_file_document_box" />
+                    android:src="@drawable/ic_description_black_24dp" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -100,30 +87,36 @@
                 </LinearLayout>
             </RelativeLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#DEDEDE"
+                android:layout_alignBottom="@id/set_description" />
+
             <RelativeLayout
                 android:id="@+id/set_date_value"
                 android:layout_width="match_parent"
                 android:layout_height="72dp"
                 android:background="?android:attr/selectableItemBackground"
-                android:clickable="true"
-                android:onClick="setDateValue">
+                android:clickable="true">
 
                 <ImageView
                     android:id="@+id/date_value_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="32dp"
-                    android:src="@drawable/ic_menu_file_document_box" />
+                    android:src="@drawable/ic_date_range_black_24dp" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@id/date_value_icon"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:id="@+id/linearLayout">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -139,23 +132,28 @@
                 </LinearLayout>
             </RelativeLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#DEDEDE"
+                android:layout_alignBottom="@id/set_description" />
+
             <RelativeLayout
                 android:id="@+id/set_user_value"
                 android:layout_width="match_parent"
                 android:layout_height="72dp"
                 android:background="?android:attr/selectableItemBackground"
-                android:clickable="true"
-                android:onClick="setUserValue">
+                android:clickable="true">
 
                 <ImageView
                     android:id="@+id/user_value_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="32dp"
-                    android:src="@drawable/ic_menu_file_document_box" />
+                    android:src="@drawable/ic_mode_edit_black_24dp" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -177,25 +175,40 @@
                         android:text="0"
                         android:textSize="15dp" />
                 </LinearLayout>
+
+                <ImageButton
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:id="@+id/user_value_info"
+                    android:background="@drawable/ic_info_outline_black_36dp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginRight="16dp" />
+
             </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#DEDEDE"
+                android:layout_alignBottom="@id/set_description" />
 
             <RelativeLayout
                 android:id="@+id/set_time_value"
                 android:layout_width="match_parent"
                 android:layout_height="72dp"
                 android:background="?android:attr/selectableItemBackground"
-                android:clickable="true"
-                android:onClick="setTimeValue">
+                android:clickable="true">
 
                 <ImageView
                     android:id="@+id/time_value_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="32dp"
-                    android:src="@drawable/ic_menu_file_document_box" />
+                    android:src="@drawable/ic_mode_edit_black_24dp" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -217,25 +230,40 @@
                         android:text="0"
                         android:textSize="15dp" />
                 </LinearLayout>
+
+                <ImageButton
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:id="@+id/time_value_info"
+                    android:background="@drawable/ic_info_outline_black_36dp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginRight="16dp" />
+
             </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#DEDEDE"
+                android:layout_alignBottom="@id/set_description" />
 
             <RelativeLayout
                 android:id="@+id/set_rroe_value"
                 android:layout_width="match_parent"
                 android:layout_height="72dp"
                 android:background="?android:attr/selectableItemBackground"
-                android:clickable="true"
-                android:onClick="setRroeValue">
+                android:clickable="true">
 
                 <ImageView
                     android:id="@+id/rroe_value_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="32dp"
-                    android:src="@drawable/ic_menu_file_document_box" />
+                    android:src="@drawable/ic_mode_edit_black_24dp" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -247,7 +275,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Risk Reduction/Opportunity Enablement Value"
+                        android:text="Risk Reduction Value"
                         android:textSize="15dp" />
 
                     <TextView
@@ -257,10 +285,25 @@
                         android:text="0"
                         android:textSize="15dp" />
                 </LinearLayout>
+
+                <ImageButton
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:id="@+id/rroe_info"
+                    android:background="@drawable/ic_info_outline_black_36dp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginRight="16dp" />
             </RelativeLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#DEDEDE"
+                android:layout_alignBottom="@id/set_description" />
+
             <RelativeLayout
-                android:id="@+id/set_jobsize_value"
+                android:id="@+id/set_job_size_value"
                 android:layout_width="match_parent"
                 android:layout_height="72dp"
                 android:background="?android:attr/selectableItemBackground"
@@ -269,13 +312,13 @@
 
                 <ImageView
                     android:id="@+id/job_size_value_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="32dp"
-                    android:src="@drawable/ic_menu_file_document_box" />
+                    android:src="@drawable/ic_mode_edit_black_24dp" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -297,21 +340,46 @@
                         android:text="0"
                         android:textSize="15dp" />
                 </LinearLayout>
+
+                <ImageButton
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:id="@+id/job_size_info"
+                    android:background="@drawable/ic_info_outline_black_36dp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginRight="16dp" />
+
             </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#DEDEDE"
+                android:layout_alignBottom="@id/set_description" />
+
+            <TextView
+                style="?android:listSeparatorTextViewStyle"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="24dp"
+                android:gravity="center_vertical"
+                android:text="Actions"
+                android:textSize="15dp" />
 
         </LinearLayout>
 
     </ScrollView>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/makeToDoFloatingActionButton"
+        android:id="@+id/add_job_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:src="@drawable/ic_menu_check"
-        android:layout_marginTop="128dp"
-        app:fabSize="normal"
-        android:layout_alignRight="@+id/add_job_layout_top" />
+        android:layout_alignRight="@+id/add_job_layout_top"
+        android:layout_marginEnd="32dp"
+        android:layout_marginTop="144dp"
+        android:padding="16dp"
+        android:src="@drawable/ic_play_arrow_black_24dp"
+        app:fabSize="normal" />
 
 </RelativeLayout>
