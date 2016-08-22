@@ -2,6 +2,7 @@ package com.example.alexparpas.wsjf.fragments;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -74,9 +76,6 @@ public class DetailsFragment extends Fragment implements NumberPicker.OnValueCha
         //Title section
         mTitleField = (EditText) v.findViewById(R.id.job_title);
 
-        //Description section
-        mJobDescriptionField = (TextView) v.findViewById(R.id.job_description);
-
         //Values section
         setUserValue = (RelativeLayout) v.findViewById(R.id.set_user_value);
         setTimeValue = (RelativeLayout) v.findViewById(R.id.set_time_value);
@@ -127,6 +126,17 @@ public class DetailsFragment extends Fragment implements NumberPicker.OnValueCha
                 DatePickerFragment dialog = DatePickerFragment.newInstance(mJob.getDate());
                 dialog.setTargetFragment(DetailsFragment.this, REQUEST_DATE);
                 dialog.show(manager, DIALOG_DATE);
+            }
+        });
+
+        setJobDescription = (RelativeLayout) v.findViewById(R.id.set_description);
+        mJobDescriptionField = (EditText) v.findViewById(R.id.job_description);
+        setJobDescription.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mJobDescriptionField.requestFocus();
+                InputMethodManager imgr = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imgr.showSoftInput(mJobDescriptionField, InputMethodManager.SHOW_IMPLICIT);
             }
         });
 
