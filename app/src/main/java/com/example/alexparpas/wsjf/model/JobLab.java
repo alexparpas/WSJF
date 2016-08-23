@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.example.alexparpas.wsjf.database.JobBaseHelper;
 import com.example.alexparpas.wsjf.database.JobCursorWrapper;
-import com.example.alexparpas.wsjf.database.JobDbSchema;
 import com.example.alexparpas.wsjf.database.JobDbSchema.JobTable;
 
 import java.util.ArrayList;
@@ -41,7 +40,7 @@ public class JobLab {
 
     public List<Job> getJobs() {
         List<Job> jobs = new ArrayList<>();
-        JobCursorWrapper cursor = queryCrimes(null, null);
+        JobCursorWrapper cursor = queryJobs(null, null);
 
         try {
             cursor.moveToFirst();
@@ -56,7 +55,7 @@ public class JobLab {
     }
 
     public Job getJob(UUID id) {
-        JobCursorWrapper cursor = queryCrimes(JobTable.Cols.UUID + " = ?", new String[]{id.toString()});
+        JobCursorWrapper cursor = queryJobs(JobTable.Cols.UUID + " = ?", new String[]{id.toString()});
 
         try {
             if (cursor.getCount() == 0) {
@@ -76,7 +75,7 @@ public class JobLab {
         mDatabase.update(JobTable.NAME, values, JobTable.Cols.UUID + " = ?", new String[]{uuidString});
     }
 
-    private JobCursorWrapper queryCrimes(String whereClause, String[] whereArgs) {
+    private JobCursorWrapper queryJobs(String whereClause, String[] whereArgs) {
         Cursor cursor = mDatabase.query(
                 JobTable.NAME,
                 null,
@@ -100,6 +99,7 @@ public class JobLab {
         values.put(JobTable.Cols.JOB_SIZE, job.getJobSize());
         values.put(JobTable.Cols.WSJF_VALUE, job.getWsjfScore());
         values.put(JobTable.Cols.DATE, job.getDate().getTime());
+        values.put(JobTable.Cols.TIME, job.getDateTime().getTime());
         values.put(JobTable.Cols.COMPLETED, job.isCompleted() ? 1 : 0);
 
         return values;

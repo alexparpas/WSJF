@@ -18,6 +18,7 @@ public class JobDbSchema {
             public static final String JOB_SIZE = "jobsize";
             public static final String WSJF_VALUE = "wsjfvalue";
             public static final String DATE = "date";
+            public static final String TIME = "time";
             public static final String COMPLETED = "completed";
 
         }

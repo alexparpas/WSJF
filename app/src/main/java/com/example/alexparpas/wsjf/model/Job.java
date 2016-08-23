@@ -12,7 +12,7 @@ public class Job {
     private int userValue, timeValue, rroeValue, jobSize;
     private double wsjfScore;
     private String jobName, jobDescription;
-    private Date date;
+    private Date date, dateTime;
     private boolean completed;
 
     public Job() {
@@ -22,6 +22,7 @@ public class Job {
     public Job(UUID id){
         this.id = id;
         date = new Date();
+        dateTime = new Date(); //Todo investigate how to get default time
         jobName = "";
         jobDescription = "";
     }
@@ -62,6 +63,10 @@ public class Job {
         this.wsjfScore = wsjfScore;
     }
 
+    public void setDateTime(Date dateTime) {
+        this.dateTime = dateTime;
+    }
+
     public int getUserValue() {
         return userValue;
     }
@@ -100,6 +105,10 @@ public class Job {
 
     public double getWsjfScore() {
         return wsjfScore;
+    }
+
+    public Date getDateTime() {
+        return dateTime;
     }
 
     public void calculateWSJF() {

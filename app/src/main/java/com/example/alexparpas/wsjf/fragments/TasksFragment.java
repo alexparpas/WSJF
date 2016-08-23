@@ -130,6 +130,7 @@ public class TasksFragment extends Fragment {
         public void onBindViewHolder(JobsHolder holder, int position) {
             Job job = mJobs.get(position);
             System.out.println("WSJF value on the RecyclerView is: " + job.getWsjfScore());
+            System.out.println(("The time in the RecyclerView is:  " + new SimpleDateFormat("HH:mm").format(job.getDateTime())));
             holder.bindJob(job); //Connecting the adapter with the ViewHolder
         }
 

@@ -24,7 +24,6 @@ import java.util.GregorianCalendar;
 public class DatePickerFragment extends DialogFragment {
 
     public static final String EXTRA_DATE = "com.example.alexparpas.wsjf.fragments.date";
-
     private static final String ARG_DATE = "date";
     private DatePicker mDatePicker;
 
@@ -72,10 +71,8 @@ public class DatePickerFragment extends DialogFragment {
         if(getTargetFragment() == null){
             return;
         }
-
         Intent intent = new Intent();
         intent.putExtra(EXTRA_DATE, date);
-
         getTargetFragment().onActivityResult(getTargetRequestCode(), resultCode, intent);
 
     }

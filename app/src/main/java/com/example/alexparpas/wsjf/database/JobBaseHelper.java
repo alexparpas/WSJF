@@ -28,6 +28,7 @@ public class JobBaseHelper extends SQLiteOpenHelper {
                 JobTable.Cols.JOB_SIZE + ", " +
                 JobTable.Cols.WSJF_VALUE + ", " +
                 JobTable.Cols.DATE + ", " +
+                JobTable.Cols.TIME + ", " +
                 JobTable.Cols.COMPLETED + ")"
         );
     }

@@ -25,6 +25,7 @@ public class JobCursorWrapper extends CursorWrapper{
         int jobSize = getInt(getColumnIndex(JobTable.Cols.JOB_SIZE));
         double wsjf = getDouble(getColumnIndex(JobTable.Cols.WSJF_VALUE));
         long date = getLong(getColumnIndex(JobTable.Cols.DATE));
+        long time = getLong(getColumnIndex(JobTable.Cols.TIME));
         int isCompleted = getInt(getColumnIndex(JobTable.Cols.COMPLETED));
 
         Job job = new Job(UUID.fromString(uuidString));
@@ -36,6 +37,7 @@ public class JobCursorWrapper extends CursorWrapper{
         job.setJobSize(jobSize);
         job.setWsjfScore(wsjf);
         job.setDate(new Date(date));
+        job.setDateTime(new Date(time));
         job.setCompleted(isCompleted != 0);
 
         return job;

@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
@@ -19,7 +20,6 @@ import android.widget.ImageButton;
 import android.widget.NumberPicker;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.alexparpas.wsjf.activities.MainActivity;
 import com.example.alexparpas.wsjf.model.Job;
@@ -35,7 +35,8 @@ import java.util.UUID;
  */
 public class DetailsFragment extends Fragment implements NumberPicker.OnValueChangeListener {
     private static final String ARG_JOB_ID = "job_id";
-    private static final String DIALOG_DATE = "DialogDate";
+    private static final String DIALOG_DATE = "dialogDate";
+    private static final String DIALOG_TIME = "dialogTime";
 
     private static final String NP_USER_VALUE = "UserValue";
     private static final String NP_TIME_VALUE = "TimeValue";
@@ -43,11 +44,12 @@ public class DetailsFragment extends Fragment implements NumberPicker.OnValueCha
     private static final String NP_JOBSIZE_VALUE = "JobSizeValue";
 
     private static final int REQUEST_DATE = 0;
+    private static final int REQUEST_TIME = 1;
 
     private Job mJob;
     private EditText mTitleField;
-    private TextView mJobDescriptionField, mDateValueField, mUserValueField, mTimeValueField, mRroeValueField, mJobSizeField;
-    private RelativeLayout setJobDescription, setDateValue, setUserValue, setTimeValue, setRrroeValue, setJobSizeValue;
+    private TextView mJobDescriptionField, mDateField, mDateTimeField, mUserValueField, mTimeValueField, mRroeValueField, mJobSizeField;
+    private RelativeLayout setJobDescription, setDate, setDateTime, setUserValue, setTimeValue, setRrroeValue, setJobSizeValue;
     ImageButton userValueInfo, timeValueInfo, rroeValueInfo, jobSizeInfo;
 
     public static DetailsFragment newInstance(UUID jobId) {
@@ -69,7 +71,45 @@ public class DetailsFragment extends Fragment implements NumberPicker.OnValueCha
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_details, container, false);
+        setup(v);
+        return v;
+    }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode != Activity.RESULT_OK) {
+            return;
+        }
+        if (requestCode == REQUEST_DATE) {
+            Date date = (Date) data.getSerializableExtra(DatePickerFragment.EXTRA_DATE);
+            mJob.setDate(date);
+            updateDate();
+        }
+        if (requestCode == REQUEST_TIME) {
+            Date time = (Date) data.getSerializableExtra(TimePickerFragment.EXTRA_TIME);
+            mJob.setDateTime(time);
+            updateTime();
+        }
+    }
+
+    @Override
+    public void onResume() {
+        updateValues();
+        super.onResume();
+    }
+
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        JobLab.get(getActivity()).updateJob(mJob);
+    }
+    @Override
+    public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+        Log.i("value is", "" + newVal);
+    }
+
+    private void setup(View v){
         //Title section
         mTitleField = (EditText) v.findViewById(R.id.job_title);
 
@@ -112,20 +152,39 @@ public class DetailsFragment extends Fragment implements NumberPicker.OnValueCha
             }
         });
 
-        setDateValue = (RelativeLayout) v.findViewById(R.id.set_date_value);
-        mDateValueField = (TextView) v.findViewById(R.id.date_value);
+        //Date
+        setDate = (RelativeLayout) v.findViewById(R.id.set_date_value);
+        mDateField = (TextView) v.findViewById(R.id.date_value);
         updateDate();
 
-        setDateValue.setOnClickListener(new View.OnClickListener() {
+        setDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FragmentManager manager = getFragmentManager();
-                DatePickerFragment dialog = DatePickerFragment.newInstance(mJob.getDate());
-                dialog.setTargetFragment(DetailsFragment.this, REQUEST_DATE);
-                dialog.show(manager, DIALOG_DATE);
+                DatePickerFragment datePickerDialog = DatePickerFragment.newInstance(mJob.getDate());
+                datePickerDialog.setTargetFragment(DetailsFragment.this, REQUEST_DATE);
+                datePickerDialog.show(manager, DIALOG_DATE);
             }
         });
 
+        //Time
+        // TODO sort out functionality
+        setDateTime = (RelativeLayout) v.findViewById(R.id.set_date_time);
+        mDateTimeField = (TextView) v.findViewById(R.id.date_time_value);
+        updateTime();
+
+        setDateTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println(("The time before calling TimePickerFragment.newInstance is:  " + new SimpleDateFormat("HH:mm").format(mJob.getDateTime())));
+                FragmentManager manager = getFragmentManager();
+                TimePickerFragment timePickerFragment  = TimePickerFragment.newInstance(mJob.getDateTime());
+                timePickerFragment.setTargetFragment(DetailsFragment.this, REQUEST_TIME);
+                timePickerFragment.show(manager, DIALOG_TIME);
+            }
+        });
+
+        //Job Description
         setJobDescription = (RelativeLayout) v.findViewById(R.id.set_description);
         mJobDescriptionField = (EditText) v.findViewById(R.id.job_description);
         setJobDescription.setOnClickListener(new View.OnClickListener() {
@@ -171,6 +230,7 @@ public class DetailsFragment extends Fragment implements NumberPicker.OnValueCha
             }
         });
 
+        //FAB
         FloatingActionButton detailsFAB = (FloatingActionButton) v.findViewById(R.id.add_job_fab);
         detailsFAB.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -178,12 +238,13 @@ public class DetailsFragment extends Fragment implements NumberPicker.OnValueCha
                 mJob.setJobName(mTitleField.getText().toString().trim());
                 mJob.setJobDescription(mJobDescriptionField.getText().toString().trim());
                 mJob.calculateWSJF();
-
+                System.out.println("The time on DetailsFragment is:  " + new SimpleDateFormat("HH:mm").format(mJob.getDateTime()));
                 System.out.println("WSJF value on DetailsFragment is: " + mJob.getWsjfScore());
                 Intent intent = new Intent(getActivity(), MainActivity.class);
                 startActivity(intent);
             }
         });
+
 
 //        mCompletedCheckBox = (CheckBox) v.findViewById(R.id.job_completed);
 //        mCompletedCheckBox.setChecked(mJob.isCompleted());
@@ -195,40 +256,15 @@ public class DetailsFragment extends Fragment implements NumberPicker.OnValueCha
 //                    }
 //                }
 //        );
-        return v;
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode != Activity.RESULT_OK) {
-            return;
-        }
-        if (requestCode == REQUEST_DATE) {
-            Date date = (Date) data.getSerializableExtra(DatePickerFragment.EXTRA_DATE);
-            mJob.setDate(date);
-            updateDate();
-        }
-    }
-
-    @Override
-    public void onResume() {
-        updateValues();
-        super.onResume();
-    }
-
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        JobLab.get(getActivity()).updateJob(mJob);
-    }
-    @Override
-    public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-        Log.i("value is", "" + newVal);
     }
 
     private void updateDate() {
-        mDateValueField.setText(new SimpleDateFormat("dd-MM-yyyy").format(mJob.getDate()));
+        mDateField.setText(new SimpleDateFormat("dd-MM-yyyy").format(mJob.getDate()));
+    }
+
+    private void updateTime() {
+        //TODO format time appropriately
+        mDateTimeField.setText(new SimpleDateFormat("HH:mm").format(mJob.getDateTime()));
     }
 
     private void updateValues() {
