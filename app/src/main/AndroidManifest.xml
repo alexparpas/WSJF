@@ -10,7 +10,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".activities.MainActivity"
-            android:label="@string/app_name"
+            android:label="WSJF Tasks"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,9 +20,10 @@
         </activity>
         <activity android:name=".preferences.SettingsActivity" />
         <activity android:name=".activities.UpgradeActivity" />
-        <activity android:name=".activities.JobPagerActivity"
-            android:parentActivityName=".activities.MainActivity">
-        </activity>
+        <activity
+            android:name=".activities.JobPagerActivity"
+            android:label="Task"
+            android:parentActivityName=".activities.MainActivity"></activity>
     </application>
 
 </manifest>

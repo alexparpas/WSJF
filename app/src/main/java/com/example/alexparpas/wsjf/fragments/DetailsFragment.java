@@ -1,7 +1,6 @@
 package com.example.alexparpas.wsjf.fragments;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -15,15 +14,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.NumberPicker;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.example.alexparpas.wsjf.activities.JobPagerActivity;
 import com.example.alexparpas.wsjf.activities.MainActivity;
 import com.example.alexparpas.wsjf.model.Job;
 import com.example.alexparpas.wsjf.R;
@@ -45,13 +42,13 @@ public class DetailsFragment extends Fragment implements NumberPicker.OnValueCha
     private static final String NP_RROE_VALUE = "RroeValue";
     private static final String NP_JOBSIZE_VALUE = "JobSizeValue";
 
-
     private static final int REQUEST_DATE = 0;
 
     private Job mJob;
     private EditText mTitleField;
     private TextView mJobDescriptionField, mDateValueField, mUserValueField, mTimeValueField, mRroeValueField, mJobSizeField;
     private RelativeLayout setJobDescription, setDateValue, setUserValue, setTimeValue, setRrroeValue, setJobSizeValue;
+    ImageButton userValueInfo, timeValueInfo, rroeValueInfo, jobSizeInfo;
 
     public static DetailsFragment newInstance(UUID jobId) {
         Bundle args = new Bundle();
@@ -90,28 +87,28 @@ public class DetailsFragment extends Fragment implements NumberPicker.OnValueCha
         setUserValue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showDialog(NP_USER_VALUE);
+                showNumberPickerDialog(NP_USER_VALUE);
             }
         });
 
         setTimeValue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showDialog(NP_TIME_VALUE);
+                showNumberPickerDialog(NP_TIME_VALUE);
             }
         });
 
         setRrroeValue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showDialog(NP_RROE_VALUE);
+                showNumberPickerDialog(NP_RROE_VALUE);
             }
         });
 
         setJobSizeValue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showDialog(NP_JOBSIZE_VALUE);
+                showNumberPickerDialog(NP_JOBSIZE_VALUE);
             }
         });
 
@@ -137,6 +134,40 @@ public class DetailsFragment extends Fragment implements NumberPicker.OnValueCha
                 mJobDescriptionField.requestFocus();
                 InputMethodManager imgr = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imgr.showSoftInput(mJobDescriptionField, InputMethodManager.SHOW_IMPLICIT);
+            }
+        });
+
+        //Info
+        userValueInfo = (ImageButton) v.findViewById(R.id.user_value_info);
+        timeValueInfo = (ImageButton) v.findViewById(R.id.time_value_info);
+        rroeValueInfo = (ImageButton) v.findViewById(R.id.rroe_value_info);
+        jobSizeInfo = (ImageButton) v.findViewById(R.id.job_size_value_info);
+
+        userValueInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showInfoDialog(NP_USER_VALUE);
+            }
+        });
+
+        timeValueInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showInfoDialog(NP_TIME_VALUE);
+            }
+        });
+
+        rroeValueInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showInfoDialog(NP_RROE_VALUE);
+            }
+        });
+
+        jobSizeInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showInfoDialog(NP_JOBSIZE_VALUE);
             }
         });
 
@@ -191,7 +222,6 @@ public class DetailsFragment extends Fragment implements NumberPicker.OnValueCha
         super.onPause();
         JobLab.get(getActivity()).updateJob(mJob);
     }
-
     @Override
     public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
         Log.i("value is", "" + newVal);
@@ -210,7 +240,7 @@ public class DetailsFragment extends Fragment implements NumberPicker.OnValueCha
         mJobSizeField.setText(String.valueOf(mJob.getJobSize()));
     }
 
-    public void showDialog(final String value) {
+    public void showNumberPickerDialog(final String value) {
         RelativeLayout linearLayout = new RelativeLayout(getActivity());
         final NumberPicker numberPicker = new NumberPicker(getActivity());
         numberPicker.setMaxValue(13);
@@ -224,7 +254,7 @@ public class DetailsFragment extends Fragment implements NumberPicker.OnValueCha
         linearLayout.addView(numberPicker, numPickerParams);
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
-        switch (value){
+        switch (value) {
             case NP_USER_VALUE:
                 numberPicker.setValue(Integer.valueOf(mUserValueField.getText().toString()));
                 alertDialogBuilder.setTitle("Select User Value");
@@ -277,6 +307,37 @@ public class DetailsFragment extends Fragment implements NumberPicker.OnValueCha
                             }
                         });
         AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
+    public void showInfoDialog(final String value) {
+        AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
+
+        switch (value) {
+            case NP_USER_VALUE:
+                alertDialog.setTitle("User Value");
+                alertDialog.setMessage("Alert message to be shown");
+                break;
+            case NP_TIME_VALUE:
+                alertDialog.setTitle("Time Value");
+                alertDialog.setMessage("Alert message to be shown");
+                break;
+            case NP_RROE_VALUE:
+                alertDialog.setTitle("Risk Reduction Value");
+                alertDialog.setMessage("Alert message to be shown");
+                break;
+            case NP_JOBSIZE_VALUE:
+                alertDialog.setTitle("Job Size Value");
+                alertDialog.setMessage("Alert message to be shown");
+                break;
+        }
+
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
         alertDialog.show();
     }
 }
