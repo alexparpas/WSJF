@@ -72,7 +72,12 @@ public class JobLab {
         String uuidString = job.getId().toString();
         ContentValues values = getContentValues(job);
 
-        mDatabase.update(JobTable.NAME, values, JobTable.Cols.UUID + " = ?", new String[]{uuidString});
+        mDatabase.update(JobTable.NAME, values, JobTable.Cols.UUID + " =?", new String[]{uuidString});
+    }
+
+    public void deleteJob(Job job){
+        String uuidString = job.getId().toString();
+        mDatabase.delete(JobTable.NAME, JobTable.Cols.UUID + " =?", new String[]{uuidString});
     }
 
     private JobCursorWrapper queryJobs(String whereClause, String[] whereArgs) {
