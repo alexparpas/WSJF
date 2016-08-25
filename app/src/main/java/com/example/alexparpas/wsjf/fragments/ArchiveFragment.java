@@ -9,9 +9,6 @@ import android.view.ViewGroup;
 
 import com.example.alexparpas.wsjf.R;
 
-/**
- * Created by Alex on 07/08/2016.
- */
 public class ArchiveFragment extends Fragment {
 
     @Override

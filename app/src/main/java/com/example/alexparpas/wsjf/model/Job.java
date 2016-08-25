@@ -3,9 +3,6 @@ package com.example.alexparpas.wsjf.model;
 import java.util.Date;
 import java.util.UUID;
 
-/**
- * Created by Alex on 06/08/2016.
- */
 public class Job {
 
     private UUID id;

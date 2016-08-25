@@ -1,8 +1,5 @@
 package com.example.alexparpas.wsjf.database;
 
-/**
- * Created by Alex on 20/08/2016.
- */
 public class JobDbSchema {
 
     public static final class JobTable {

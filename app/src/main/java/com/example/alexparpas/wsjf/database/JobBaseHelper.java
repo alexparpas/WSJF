@@ -5,9 +5,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import static com.example.alexparpas.wsjf.database.JobDbSchema.JobTable;
 
-/**
- * Created by Alex on 20/08/2016.
- */
 public class JobBaseHelper extends SQLiteOpenHelper {
     private static final int VERSION = 1;
     private static final String DATABASE_NAME = "jobBase.db";

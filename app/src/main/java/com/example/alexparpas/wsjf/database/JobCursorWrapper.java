@@ -7,9 +7,6 @@ import com.example.alexparpas.wsjf.model.Job;
 import java.util.Date;
 import java.util.UUID;
 
-/**
- * Created by Alex on 20/08/2016.
- */
 public class JobCursorWrapper extends CursorWrapper{
     public JobCursorWrapper(Cursor cursor) {
         super(cursor);

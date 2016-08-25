@@ -2,17 +2,14 @@ package com.example.alexparpas.wsjf.fragments;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
-import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.DatePicker;
 import android.widget.TimePicker;
 
 import com.example.alexparpas.wsjf.R;
@@ -21,9 +18,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-/**
- * Created by Alex on 23/08/2016.
- */
 public class TimePickerFragment extends DialogFragment {
     public static final String EXTRA_TIME = "com.example.alexparpas.wsjf.fragments.time";
     private static final String ARG_TIME = "time";

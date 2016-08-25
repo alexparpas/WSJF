@@ -13,9 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-/**
- * Created by Alex on 07/08/2016.
- */
 public class JobLab {
     private static JobLab sJobLab;
     private Context mContext;

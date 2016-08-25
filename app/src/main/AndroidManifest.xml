@@ -23,7 +23,7 @@
         <activity
             android:name=".activities.JobPagerActivity"
             android:label="Task"
-            android:parentActivityName=".activities.MainActivity"></activity>
+            android:parentActivityName=".activities.MainActivity"/>
     </application>
 
 </manifest>

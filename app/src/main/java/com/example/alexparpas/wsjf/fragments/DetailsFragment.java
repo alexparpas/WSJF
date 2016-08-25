@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
@@ -20,6 +19,7 @@ import android.widget.ImageButton;
 import android.widget.NumberPicker;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.alexparpas.wsjf.activities.MainActivity;
 import com.example.alexparpas.wsjf.model.Job;
@@ -30,9 +30,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 
-/**
- * Created by Alex on 06/08/2016.
- */
 public class DetailsFragment extends Fragment implements NumberPicker.OnValueChangeListener {
     private static final String ARG_JOB_ID = "job_id";
     private static final String DIALOG_DATE = "dialogDate";
@@ -104,12 +101,13 @@ public class DetailsFragment extends Fragment implements NumberPicker.OnValueCha
         super.onPause();
         JobLab.get(getActivity()).updateJob(mJob);
     }
+
     @Override
     public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
         Log.i("value is", "" + newVal);
     }
 
-    private void setup(View v){
+    private void setup(View v) {
         //Title section
         mTitleField = (EditText) v.findViewById(R.id.job_title);
 
@@ -176,9 +174,8 @@ public class DetailsFragment extends Fragment implements NumberPicker.OnValueCha
         setDateTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println(("The time before calling TimePickerFragment.newInstance is:  " + new SimpleDateFormat("HH:mm").format(mJob.getDateTime())));
                 FragmentManager manager = getFragmentManager();
-                TimePickerFragment timePickerFragment  = TimePickerFragment.newInstance(mJob.getDateTime());
+                TimePickerFragment timePickerFragment = TimePickerFragment.newInstance(mJob.getDateTime());
                 timePickerFragment.setTargetFragment(DetailsFragment.this, REQUEST_TIME);
                 timePickerFragment.show(manager, DIALOG_TIME);
             }
@@ -235,13 +232,17 @@ public class DetailsFragment extends Fragment implements NumberPicker.OnValueCha
         detailsFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mJob.setJobName(mTitleField.getText().toString().trim());
-                mJob.setJobDescription(mJobDescriptionField.getText().toString().trim());
-                mJob.calculateWSJF();
-                System.out.println("The time on DetailsFragment is:  " + new SimpleDateFormat("HH:mm").format(mJob.getDateTime()));
-                System.out.println("WSJF value on DetailsFragment is: " + mJob.getWsjfScore());
-                Intent intent = new Intent(getActivity(), MainActivity.class);
-                startActivity(intent);
+                String jobName = mTitleField.getText().toString().trim();
+                if (jobName.matches("")) {
+                    Toast.makeText(getActivity(), "Title cannot be blank ", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    mJob.setJobName(mTitleField.getText().toString().trim());
+                    mJob.setJobDescription(mJobDescriptionField.getText().toString().trim());
+                    mJob.calculateWSJF();
+                    Intent intent = new Intent(getActivity(), MainActivity.class);
+                    startActivity(intent);
+                }
             }
         });
 
