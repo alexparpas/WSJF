@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -47,6 +48,7 @@ public class DetailsFragment extends Fragment implements NumberPicker.OnValueCha
     private EditText mTitleField;
     private TextView mJobDescriptionField, mDateField, mDateTimeField, mUserValueField, mTimeValueField, mRroeValueField, mJobSizeField;
     private RelativeLayout setJobDescription, setDate, setDateTime, setUserValue, setTimeValue, setRrroeValue, setJobSizeValue;
+    private LinearLayout mAddJobTop;
     ImageButton userValueInfo, timeValueInfo, rroeValueInfo, jobSizeInfo;
 
     public static DetailsFragment newInstance(UUID jobId) {
@@ -91,6 +93,11 @@ public class DetailsFragment extends Fragment implements NumberPicker.OnValueCha
 
     @Override
     public void onResume() {
+        //Avoid triggering the keyboard if the title EditText isn't empty
+        if(!mTitleField.getText().toString().matches("")){
+            mAddJobTop.setFocusable(true);
+            mAddJobTop.setFocusableInTouchMode(true);
+        }
         updateValues();
         super.onResume();
     }
@@ -107,7 +114,11 @@ public class DetailsFragment extends Fragment implements NumberPicker.OnValueCha
         Log.i("value is", "" + newVal);
     }
 
+
+
     private void setup(View v) {
+        mAddJobTop = (LinearLayout) v.findViewById(R.id.add_job_layout_top);
+
         //Title section
         mTitleField = (EditText) v.findViewById(R.id.job_title);
 
@@ -281,7 +292,7 @@ public class DetailsFragment extends Fragment implements NumberPicker.OnValueCha
         RelativeLayout linearLayout = new RelativeLayout(getActivity());
         final NumberPicker numberPicker = new NumberPicker(getActivity());
         numberPicker.setMaxValue(13);
-        numberPicker.setMinValue(0);
+        numberPicker.setMinValue(1);
 
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(50, 50);
         RelativeLayout.LayoutParams numPickerParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);

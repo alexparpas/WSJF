@@ -16,7 +16,7 @@ public class Job {
         this(UUID.randomUUID());
     }
 
-    public Job(UUID id){
+    public Job(UUID id) {
         this.id = id;
         date = new Date();
         dateTime = new Date(); //Todo investigate how to get default time
@@ -109,6 +109,14 @@ public class Job {
     }
 
     public void calculateWSJF() {
-        wsjfScore = (userValue + timeValue + rroeValue) / jobSize;
+        if (isJobSizeZero()) {
+            wsjfScore = userValue + timeValue + rroeValue;
+        } else {
+            wsjfScore = (userValue + timeValue + rroeValue) / jobSize;
+        }
+    }
+
+    public boolean isJobSizeZero() {
+        return jobSize == 0;
     }
 }
