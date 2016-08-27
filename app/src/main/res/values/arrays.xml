@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="sort">
+        <item>WSJF Value</item>
+        <item>Alphabetically</item>
+        <item>Newest First</item>
+    </string-array>
+
+    <string-array name="sort_values">
+        <item>wsjf_value</item>
+        <item>alphabeticaclly</item>
+        <item>newest</item>
+    </string-array>
+</resources>

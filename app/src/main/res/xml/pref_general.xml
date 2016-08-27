@@ -9,4 +9,12 @@
         android:summary="@string/pref_values_summ"
         android:title="@string/pref_values_scale" />
 
+    <ListPreference
+        android:defaultValue="10"
+        android:entries="@array/sort"
+        android:entryValues="@array/sort_values"
+        android:key="language_preference"
+        android:summary="%s"
+        android:title="Sort Tasks" />
+
 </PreferenceScreen>

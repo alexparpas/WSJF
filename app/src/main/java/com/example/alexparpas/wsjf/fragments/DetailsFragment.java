@@ -14,6 +14,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -119,10 +121,10 @@ public class DetailsFragment extends Fragment implements NumberPicker.OnValueCha
     private void setup(View v) {
         mAddJobTop = (LinearLayout) v.findViewById(R.id.add_job_layout_top);
 
-        //Title section
+        //Title
         mTitleField = (EditText) v.findViewById(R.id.job_title);
 
-        //Values section
+        //Values
         setUserValue = (RelativeLayout) v.findViewById(R.id.set_user_value);
         setTimeValue = (RelativeLayout) v.findViewById(R.id.set_time_value);
         setRrroeValue = (RelativeLayout) v.findViewById(R.id.set_rroe_value);
@@ -177,7 +179,6 @@ public class DetailsFragment extends Fragment implements NumberPicker.OnValueCha
         });
 
         //Time
-        // TODO sort out functionality
         setDateTime = (RelativeLayout) v.findViewById(R.id.set_date_time);
         mDateTimeField = (TextView) v.findViewById(R.id.date_time_value);
         updateTime();
@@ -256,18 +257,6 @@ public class DetailsFragment extends Fragment implements NumberPicker.OnValueCha
                 }
             }
         });
-
-
-//        mCompletedCheckBox = (CheckBox) v.findViewById(R.id.job_completed);
-//        mCompletedCheckBox.setChecked(mJob.isCompleted());
-//        mCompletedCheckBox.setOnCheckedChangeListener(
-//                new CompoundButton.OnCheckedChangeListener() {
-//                    @Override
-//                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                        mJob.setCompleted(isChecked);
-//                    }
-//                }
-//        );
     }
 
     private void updateDate() {
@@ -275,7 +264,6 @@ public class DetailsFragment extends Fragment implements NumberPicker.OnValueCha
     }
 
     private void updateTime() {
-        //TODO format time appropriately
         mDateTimeField.setText(new SimpleDateFormat("HH:mm").format(mJob.getDateTime()));
     }
 

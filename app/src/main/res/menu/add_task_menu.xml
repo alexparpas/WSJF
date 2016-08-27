@@ -14,4 +14,10 @@
         android:title="Archive"
         app:showAsAction="ifRoom"/>
 
+    <item
+        android:id="@+id/action_complete"
+        android:icon="@drawable/ic_done_white_24dp"
+        android:title="Complete"
+        app:showAsAction="ifRoom"/>
+
 </menu>

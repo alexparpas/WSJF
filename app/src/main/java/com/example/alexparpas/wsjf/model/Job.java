@@ -116,6 +116,11 @@ public class Job {
         }
     }
 
+    @Override
+    public String toString() {
+        return jobName;
+    }
+
     public boolean isJobSizeZero() {
         return jobSize == 0;
     }
