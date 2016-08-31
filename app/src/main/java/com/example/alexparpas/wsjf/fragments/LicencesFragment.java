@@ -9,7 +9,10 @@ import android.view.ViewGroup;
 
 import com.example.alexparpas.wsjf.R;
 
-public class HelpFragment extends Fragment {
+/**
+ * Created by Alex on 28/08/2016.
+ */
+public class LicencesFragment extends Fragment {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -19,7 +22,8 @@ public class HelpFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_help, container, false);
+        View v = inflater.inflate(R.layout.fragment_licences, container, false);
         return v;
     }
+
 }

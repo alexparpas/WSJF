@@ -37,95 +37,16 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <RelativeLayout
-                android:id="@+id/set_date_value"
+            <TextView
+                style="@style/details_headings"
                 android:layout_width="match_parent"
-                android:layout_height="72dp"
-                android:background="?android:attr/selectableItemBackground"
-                android:clickable="true">
-
-                <ImageView
-                    android:id="@+id/date_value_icon"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="32dp"
-                    android:src="@drawable/ic_date_range_black_24dp" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toRightOf="@id/date_value_icon"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Date"
-                        android:textStyle="bold"
-                        android:textSize="15dp" />
-
-                    <TextView
-                        android:id="@+id/date_value"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="15dp" />
-                </LinearLayout>
-            </RelativeLayout>
+                android:layout_height="wrap_content"
+                android:text="Details" />
 
             <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_alignBottom="@id/set_date_value"
-                android:background="#DEDEDE" />
-
-            <RelativeLayout
-                android:id="@+id/set_date_time"
-                android:layout_width="match_parent"
-                android:layout_height="72dp"
-                android:background="?android:attr/selectableItemBackground"
-                android:clickable="true">
-
-                <ImageView
-                    android:id="@+id/date_time_icon"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="32dp"
-                    android:src="@drawable/ic_access_time_black_24dp" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toRightOf="@id/date_time_icon"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Time"
-                        android:textStyle="bold"
-                        android:textSize="15dp" />
-
-                    <TextView
-                        android:id="@+id/date_time_value"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="15dp" />
-                </LinearLayout>
-            </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_alignBottom="@id/set_date_time"
-                android:background="#DEDEDE" />
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#DEDEDE" />
 
             <RelativeLayout
                 android:id="@+id/set_description"
@@ -155,8 +76,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/job_description"
-                        android:textStyle="bold"
-                        android:textSize="15dp" />
+                        android:textSize="15dp"
+                        android:textStyle="bold" />
 
                     <EditText
                         android:id="@+id/job_description"
@@ -169,11 +90,113 @@
                 </LinearLayout>
             </RelativeLayout>
 
-            <View
+            <RelativeLayout
+                android:id="@+id/set_date_value"
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_alignBottom="@id/set_description"
-                android:background="#DEDEDE" />
+                android:layout_height="72dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true">
+
+                <ImageView
+                    android:id="@+id/date_value_icon"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="32dp"
+                    android:src="@drawable/ic_date_range_black_24dp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/date_value_icon"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Date"
+                        android:textSize="15dp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/date_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15dp" />
+                </LinearLayout>
+            </RelativeLayout>
+
+            <!--<View-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="1dp"-->
+            <!--android:layout_alignBottom="@id/set_date_value"-->
+            <!--android:background="#DEDEDE" />-->
+
+            <RelativeLayout
+                android:id="@+id/set_date_time"
+                android:layout_width="match_parent"
+                android:layout_height="72dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true">
+
+                <ImageView
+                    android:id="@+id/date_time_icon"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="32dp"
+                    android:src="@drawable/ic_access_time_black_24dp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/date_time_icon"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Time"
+                        android:textSize="15dp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/date_time_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15dp" />
+                </LinearLayout>
+            </RelativeLayout>
+
+            <!--<View-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="1dp"-->
+            <!--android:layout_alignBottom="@id/set_date_time"-->
+            <!--android:background="#DEDEDE" />-->
+
+            <!--<View-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="1dp"-->
+            <!--android:layout_alignBottom="@id/set_description"-->
+            <!--android:background="#DEDEDE" />-->
+
+            <TextView
+                style="@style/details_headings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Values" />
+
+            <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignBottom="@id/set_description"
+            android:background="#DEDEDE" />
 
             <RelativeLayout
                 android:id="@+id/set_user_value"
@@ -203,8 +226,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="User Value"
-                        android:textStyle="bold"
-                        android:textSize="15dp" />
+                        android:textSize="15dp"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/user_value"
@@ -226,11 +249,11 @@
 
             </RelativeLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_alignBottom="@id/set_description"
-                android:background="#DEDEDE" />
+            <!--<View-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="1dp"-->
+            <!--android:layout_alignBottom="@id/set_description"-->
+            <!--android:background="#DEDEDE" />-->
 
             <RelativeLayout
                 android:id="@+id/set_time_value"
@@ -260,8 +283,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Time Value"
-                        android:textStyle="bold"
-                        android:textSize="15dp" />
+                        android:textSize="15dp"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/time_value"
@@ -283,11 +306,11 @@
 
             </RelativeLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_alignBottom="@id/set_description"
-                android:background="#DEDEDE" />
+            <!--<View-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="1dp"-->
+            <!--android:layout_alignBottom="@id/set_description"-->
+            <!--android:background="#DEDEDE" />-->
 
             <RelativeLayout
                 android:id="@+id/set_rroe_value"
@@ -317,8 +340,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Risk Reduction Value"
-                        android:textStyle="bold"
-                        android:textSize="15dp" />
+                        android:textSize="15dp"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/rroe_value"
@@ -339,11 +362,11 @@
                     android:background="@drawable/ic_info_outline_black_36dp" />
             </RelativeLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_alignBottom="@id/set_description"
-                android:background="#DEDEDE" />
+            <!--<View-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="1dp"-->
+            <!--android:layout_alignBottom="@id/set_description"-->
+            <!--android:background="#DEDEDE" />-->
 
             <RelativeLayout
                 android:id="@+id/set_job_size_value"
@@ -373,8 +396,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Job Size Value"
-                        android:textStyle="bold"
-                        android:textSize="15dp" />
+                        android:textSize="15dp"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/job_size_value"
@@ -396,21 +419,11 @@
 
             </RelativeLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_alignBottom="@id/set_description"
-                android:background="#DEDEDE" />
-
-            <!--<TextView-->
-                <!--style="?android:listSeparatorTextViewStyle"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_marginLeft="16dp"-->
-                <!--android:layout_marginTop="24dp"-->
-                <!--android:gravity="center_vertical"-->
-                <!--android:text="Actions"-->
-                <!--android:textSize="15dp" />-->
-
+            <!--<View-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="1dp"-->
+            <!--android:layout_alignBottom="@id/set_description"-->
+            <!--android:background="#DEDEDE" />-->
         </LinearLayout>
 
     </ScrollView>

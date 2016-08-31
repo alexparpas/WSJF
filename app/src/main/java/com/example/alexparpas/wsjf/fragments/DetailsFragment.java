@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -95,12 +97,12 @@ public class DetailsFragment extends Fragment implements NumberPicker.OnValueCha
 
     @Override
     public void onResume() {
+        updateValues();
         //Avoid triggering the keyboard if the title EditText isn't empty
-        if(!mTitleField.getText().toString().matches("")){
+        if (!mTitleField.getText().toString().matches("")) {
             mAddJobTop.setFocusable(true);
             mAddJobTop.setFocusableInTouchMode(true);
         }
-        updateValues();
         super.onResume();
     }
 
@@ -115,7 +117,6 @@ public class DetailsFragment extends Fragment implements NumberPicker.OnValueCha
     public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
         Log.i("value is", "" + newVal);
     }
-
 
 
     private void setup(View v) {
@@ -247,8 +248,7 @@ public class DetailsFragment extends Fragment implements NumberPicker.OnValueCha
                 String jobName = mTitleField.getText().toString().trim();
                 if (jobName.matches("")) {
                     Toast.makeText(getActivity(), "Title cannot be blank ", Toast.LENGTH_SHORT).show();
-                }
-                else{
+                } else {
                     mJob.setJobName(mTitleField.getText().toString().trim());
                     mJob.setJobDescription(mJobDescriptionField.getText().toString().trim());
                     mJob.calculateWSJF();
@@ -279,6 +279,7 @@ public class DetailsFragment extends Fragment implements NumberPicker.OnValueCha
     public void showNumberPickerDialog(final String value) {
         RelativeLayout linearLayout = new RelativeLayout(getActivity());
         final NumberPicker numberPicker = new NumberPicker(getActivity());
+
         numberPicker.setMaxValue(13);
         numberPicker.setMinValue(1);
 

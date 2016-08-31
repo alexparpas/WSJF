@@ -10,8 +10,8 @@
 
     <string name="pref_values_scale">Values Scale</string>
     <string name="pref_values_summ">Set the scale values of the jobs.</string>
-
     <string name="pref_scale_key" translatable="false">scale</string>
+    <string name="pref_scale_default" translatable="false">10</string>
 
 
     <string name="action_search" translatable="false">Search</string>

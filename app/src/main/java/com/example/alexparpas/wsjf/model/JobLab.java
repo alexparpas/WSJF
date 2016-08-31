@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import com.example.alexparpas.wsjf.database.JobBaseHelper;
 import com.example.alexparpas.wsjf.database.JobCursorWrapper;
 import com.example.alexparpas.wsjf.database.JobDbSchema.JobTable;
+import com.example.alexparpas.wsjf.fragments.TasksFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,10 +36,24 @@ public class JobLab {
         mDatabase.insert(JobTable.NAME, null, values);
     }
 
-    public List<Job> getJobs() {
+    public List<Job> getJobs(int sortType) {
         List<Job> jobs = new ArrayList<>();
-        JobCursorWrapper cursor = queryJobs(null, null);
+        JobCursorWrapper cursor = null;
 
+        switch (sortType){
+            case TasksFragment.NOT_SORTED:
+                cursor = queryJobs(null, null, null);
+                break;
+            case TasksFragment.SORT_ALPHABETICALLY:
+                cursor = queryJobs(null, null, JobTable.Cols.JOB_NAME + " DESC");
+                break;
+            case TasksFragment.SORT_DATE:
+                cursor = queryJobs(null, null, JobTable.Cols.DATE + " ASC");
+                break;
+            case TasksFragment.SORT_WSJF:
+                cursor = queryJobs(null, null, JobTable.Cols.WSJF_VALUE + " DESC");
+                break;
+        }
         try {
             cursor.moveToFirst();
             while (!cursor.isAfterLast()) {
@@ -52,7 +67,7 @@ public class JobLab {
     }
 
     public Job getJob(UUID id) {
-        JobCursorWrapper cursor = queryJobs(JobTable.Cols.UUID + " = ?", new String[]{id.toString()});
+        JobCursorWrapper cursor = queryJobs(JobTable.Cols.UUID + " = ?", new String[]{id.toString()}, null);
 
         try {
             if (cursor.getCount() == 0) {
@@ -77,7 +92,7 @@ public class JobLab {
         mDatabase.delete(JobTable.NAME, JobTable.Cols.UUID + " =?", new String[]{uuidString});
     }
 
-    private JobCursorWrapper queryJobs(String whereClause, String[] whereArgs) {
+    private JobCursorWrapper queryJobs(String whereClause, String[] whereArgs, String orderBy) {
         Cursor cursor = mDatabase.query(
                 JobTable.NAME,
                 null,
@@ -85,7 +100,7 @@ public class JobLab {
                 whereArgs,
                 null,
                 null,
-                null
+                orderBy
         );
         return new JobCursorWrapper(cursor);
     }

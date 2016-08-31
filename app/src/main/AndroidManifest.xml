@@ -18,12 +18,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".preferences.SettingsActivity" />
+        <activity
+            android:name=".preferences.SettingsActivity"
+            android:parentActivityName=".activities.MainActivity" />
         <activity android:name=".activities.UpgradeActivity" />
         <activity
             android:name=".activities.JobPagerActivity"
             android:label="Task"
-            android:parentActivityName=".activities.MainActivity"/>
+            android:parentActivityName=".activities.MainActivity" />
     </application>
 
 </manifest>

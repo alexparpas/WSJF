@@ -5,10 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.MenuItemCompat;
-import android.support.v7.view.ActionMode;
-import android.view.ContextMenu;
-import android.view.MenuInflater;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -18,31 +15,36 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.alexparpas.wsjf.R;
+import com.example.alexparpas.wsjf.fragments.AboutFragment;
 import com.example.alexparpas.wsjf.fragments.ArchiveFragment;
-import com.example.alexparpas.wsjf.fragments.HelpFragment;
+import com.example.alexparpas.wsjf.fragments.LicencesFragment;
 import com.example.alexparpas.wsjf.fragments.TasksFragment;
 import com.example.alexparpas.wsjf.model.Job;
 import com.example.alexparpas.wsjf.model.JobLab;
 import com.example.alexparpas.wsjf.preferences.SettingsActivity;
 
+import java.util.Stack;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private Stack<Fragment> fragmentStack;
+    FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        fragmentStack = new Stack<Fragment>();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -62,16 +64,25 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        populateFragment(new TasksFragment());
-
-
+            //Add first fragment and push it on the stack
+            TasksFragment tf = new TasksFragment();
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction ft = fragmentManager.beginTransaction();
+            ft.replace(R.id.content_frame, tf);
+            fragmentStack.push(tf);
+            ft.commit();
     }
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        if (fragmentStack.size() == 2) {
+            FragmentTransaction ft = fragmentManager.beginTransaction();
+            fragmentStack.lastElement().onPause();
+            ft.remove(fragmentStack.pop());
+            fragmentStack.lastElement().onResume();
+            ft.show(fragmentStack.lastElement());
+            ft.commit();
         } else {
             super.onBackPressed();
         }
@@ -80,39 +91,12 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-
-//        MenuItem item = menu.findItem(R.id.action_sort);
-//        Spinner spinner = (Spinner) MenuItemCompat.getActionView(item);
-//
-//        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-//                R.array.spinner_list_item_array, android.R.layout.simple_spinner_item);
-//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//
-//        spinner.setAdapter(adapter);
-        return true;
+//        getMenuInflater().inflate(R.menu.main, menu);
+        return super.onCreateOptionsMenu(menu);
     }
-
-//    @Override
-//    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-//        super.onCreateContextMenu(menu, v, menuInfo);
-//        MenuInflater inflater = getMenuInflater();
-//        inflater.inflate(R.menu.add_task_menu, menu);
-//    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            startActivity(new Intent(this, SettingsActivity.class));
-            return true;
-        }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -123,19 +107,30 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_tasks) {
-            if (!item.isChecked())
-                populateFragment(new TasksFragment());
-        } else if (id == R.id.nav_archive) {
-            if (!item.isChecked())
-                populateFragment(new ArchiveFragment());
-        } else if (id == R.id.nav_settings) {
             if (!item.isChecked()) {
-                startActivity(new Intent(this, SettingsActivity.class));
-                Toast.makeText(getApplicationContext(), "Settings Selected", Toast.LENGTH_SHORT).show();
+                populateFragment(new TasksFragment());
+                fab.show();
             }
+        } else if (id == R.id.nav_archive) {
+            if (!item.isChecked()) {
+                populateFragment(new ArchiveFragment());
+                fab.hide();
+            }
+//        } else if (id == R.id.nav_settings) {
+//            if (!item.isChecked()) {
+//                startActivity(new Intent(this, SettingsActivity.class));
+//                Toast.makeText(getApplicationContext(), "Settings Selected", Toast.LENGTH_SHORT).show();
+//            }
         } else if (id == R.id.nav_about) {
-            if (!item.isChecked())
-                populateFragment(new HelpFragment());
+            if (!item.isChecked()) {
+                populateFragment(new AboutFragment());
+                fab.hide();
+            }
+        } else if (id == R.id.nav_licences) {
+            if (!item.isChecked()) {
+                populateFragment(new LicencesFragment());
+                fab.hide();
+            }
         } else if (id == R.id.nav_upgrade) {
             if (!item.isChecked()) {
                 startActivity(new Intent(this, UpgradeActivity.class));
@@ -153,14 +148,20 @@ public class MainActivity extends AppCompatActivity
         FragmentManager fragmentManager = getSupportFragmentManager();
         if (f instanceof TasksFragment) {
             fragment = new TasksFragment();
+        } else if (f instanceof AboutFragment) {
+            fragment = new AboutFragment();
+        } else if (f instanceof LicencesFragment) {
+            fragment = new LicencesFragment();
         } else if (f instanceof ArchiveFragment) {
             fragment = new ArchiveFragment();
-        } else if (f instanceof HelpFragment) {
-            fragment = new HelpFragment();
         }
-        fragmentManager.beginTransaction()
-                .replace(R.id.content_frame, fragment)
-                .commit();
-
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        ft.add(R.id.content_frame, fragment);
+        fragmentStack.lastElement().onPause();
+        //Hide the last fragment
+        ft.hide(fragmentStack.lastElement());
+        //Push the new fragment into stack
+        fragmentStack.push(fragment);
+        ft.commit();
     }
 }

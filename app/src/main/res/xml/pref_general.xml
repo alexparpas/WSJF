@@ -1,20 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <EditTextPreference
-        android:defaultValue="10"
-        android:dialogTitle="@string/pref_values_scale"
-        android:inputType="number"
-        android:key="@string/pref_scale_key"
-        android:summary="@string/pref_values_summ"
-        android:title="@string/pref_values_scale" />
+    <PreferenceCategory
+        android:key="pref_key_storage_settings"
+        android:title="General">
 
-    <ListPreference
-        android:defaultValue="10"
-        android:entries="@array/sort"
-        android:entryValues="@array/sort_values"
-        android:key="language_preference"
-        android:summary="%s"
-        android:title="Sort Tasks" />
+        <EditTextPreference
+            android:defaultValue="10"
+            android:dialogTitle="@string/pref_values_scale"
+            android:inputType="number"
+            android:key="@string/pref_scale_key"
+            android:summary="@string/pref_values_summ"
+            android:title="@string/pref_values_scale" />
 
+        <!--<ListPreference-->
+        <!--android:defaultValue="10"-->
+        <!--android:entries="@array/sort"-->
+        <!--android:entryValues="@array/sort_values"-->
+        <!--android:key="language_preference"-->
+        <!--android:summary="%s"-->
+        <!--android:title="Sort Tasks" />-->
+    </PreferenceCategory>
 </PreferenceScreen>

@@ -1,11 +1,15 @@
 package com.example.alexparpas.wsjf.fragments;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.PopupMenu;
 import android.view.ActionMode;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,6 +24,8 @@ import android.widget.Toast;
 
 import com.example.alexparpas.wsjf.R;
 import com.example.alexparpas.wsjf.activities.JobPagerActivity;
+import com.example.alexparpas.wsjf.activities.MainActivity;
+import com.example.alexparpas.wsjf.database.JobDbSchema;
 import com.example.alexparpas.wsjf.model.DividerItemDecoration;
 import com.example.alexparpas.wsjf.model.EmptyRecyclerView;
 import com.example.alexparpas.wsjf.model.Job;
@@ -31,13 +37,23 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.UUID;
 
 public class TasksFragment extends Fragment {
+
+    public static final int NOT_SORTED = 0;
+    public static final int SORT_WSJF = 1;
+    public static final int SORT_ALPHABETICALLY = 2;
+    public static final int SORT_DATE = 3;
+
+    private static int isSorted; //0 when not sorted, 1 when sorted Alphabetically,
+    // 2 when sorted by wsjf, 3 when sorted by date
 
     private EmptyRecyclerView mJobsRecyclerView;
     private JobAdapter mAdapter;
     private ActionMode mActionMode;
     private int itemPosition;
+
     private ActionMode.Callback mActionModeCallback = new ActionMode.Callback() {
         @Override
         public boolean onCreateActionMode(ActionMode mode, Menu menu) {
@@ -56,11 +72,11 @@ public class TasksFragment extends Fragment {
 
         @Override
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-            List<Job> jobs = JobLab.get(getActivity()).getJobs();
+            List<Job> jobs = getSortedJobs(isSorted);
             switch (item.getItemId()) {
                 case R.id.action_delete:
                     JobLab.get(getActivity()).deleteJob(jobs.get(itemPosition));
-                    updateUI();
+                    updateUI(isSorted);
                     mode.finish();
                     return true;
                 case R.id.action_archive:
@@ -75,7 +91,7 @@ public class TasksFragment extends Fragment {
                         item.setIcon(ContextCompat.getDrawable(getActivity(), R.drawable.ic_done_white_24dp));
                     }
                     JobLab.get(getActivity()).updateJob(jobs.get(itemPosition));
-                    updateUI();
+                    updateUI(isSorted);
                     mode.finish();
                     return true;
                 default:
@@ -90,7 +106,7 @@ public class TasksFragment extends Fragment {
     };
 
     private void modifyActionMode(MenuItem menuItem) {
-        List<Job> jobs = JobLab.get(getActivity()).getJobs();
+        List<Job> jobs = JobLab.get(getActivity()).getJobs(isSorted);
         if (jobs.get(itemPosition).isCompleted())
             menuItem.setIcon(ContextCompat.getDrawable(getActivity(), R.drawable.ic_undo_white_24dp));
         else {
@@ -100,6 +116,7 @@ public class TasksFragment extends Fragment {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
+        System.out.println("isSorted value onCreate before SharedPreferences is: " + isSorted);
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
     }
@@ -107,24 +124,22 @@ public class TasksFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        updateUI();
+        updateUI(isSorted);
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.main, menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
+
         if (id == R.id.action_sort) {
-//            sortAlphabetically();
-//            sortWSJF();
-            sortDate();
-            Toast.makeText(getActivity(), "Hello from Toast",
-                    Toast.LENGTH_LONG).show();
-            return true;
+            popupWindow();
+            return false;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -141,67 +156,61 @@ public class TasksFragment extends Fragment {
 
         View emptyView = v.findViewById(R.id.todo_list_empty_view);
         mJobsRecyclerView.setEmptyView(emptyView);
-        updateUI();
+        updateUI(NOT_SORTED);
         return v;
     }
 
-    private void updateUI() {
-        List<Job> jobs = JobLab.get(getActivity()).getJobs();
+    private void updateUI(int sortType) {
+        List<Job> jobs = getSortedJobs(sortType);
         if (mAdapter == null) {
             mAdapter = new JobAdapter(jobs);
             mJobsRecyclerView.setAdapter(mAdapter);
         } else {
-            mAdapter.setJobs(jobs);
-            mAdapter.notifyDataSetChanged();
+            refreshAdapter(jobs);
         }
     }
 
-
-    public void sortAlphabetically() {
-        List<Job> jobs = JobLab.get(getActivity()).getJobs();
-        Collections.sort(jobs, new Comparator<Job>() {
-            @Override
-            public int compare(Job j1, Job j2) {
-                return j1.getJobName().compareTo(j2.getJobName());
-            }
-        });
+    private void refreshAdapter(List<Job> jobs){
         mAdapter.setJobs(jobs);
         mAdapter.notifyDataSetChanged();
     }
 
-    public void sortDate() {
-        List<Job> jobs = JobLab.get(getActivity()).getJobs();
-        Collections.sort(jobs, new Comparator<Job>() {
-            @Override
-            public int compare(Job j1, Job j2) {
-                return j1.getDate().compareTo(j2.getDate());
+    public void popupWindow() {
+        View sortView = getActivity().findViewById(R.id.action_sort);
+        PopupMenu popup = new PopupMenu(getActivity(), sortView);
+        popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            public boolean onMenuItemClick(MenuItem item) {
+                List<Job> sortedJobs;
+                switch (item.getItemId()) {
+                    case R.id.popup_alphabetically:
+                        isSorted = SORT_ALPHABETICALLY;
+                        sortedJobs = getSortedJobs(SORT_ALPHABETICALLY);
+                        break;
+                    case R.id.popup_date:
+                        isSorted = SORT_DATE;
+                        sortedJobs = getSortedJobs(SORT_DATE);
+                        break;
+                    case R.id.popup_wsjf:
+                        isSorted = SORT_WSJF;
+                        sortedJobs = getSortedJobs(SORT_WSJF);
+                        break;
+                    default:
+                        return false;
+                }
+                refreshAdapter(sortedJobs);
+                return true;
             }
         });
-        mAdapter.setJobs(jobs);
-        mAdapter.notifyDataSetChanged();
+        popup.show();
     }
 
-    public void sortWSJF() {
-        List<Job> jobs = JobLab.get(getActivity()).getJobs();
-        for(Job j: jobs){
-            System.out.print("Before Sort: ");
-            System.out.print(j.getWsjfScore() + ", ");
-        }
-        System.out.println();
-        Collections.sort(jobs, new Comparator<Job>() {
-            @Override
-            public int compare(Job j1, Job j2) {
-                if (j1.getWsjfScore() < j2.getWsjfScore()) return 1;
-                if (j1.getWsjfScore() > j2.getWsjfScore()) return -1;
-                return 0;
-            }
-        });
-        for(Job j: jobs){
-            System.out.print("After Sort: ");
-            System.out.print(j.getWsjfScore() + ", ");
-        }
-        mAdapter.setJobs(jobs);
-        mAdapter.notifyDataSetChanged();
+    public List<Job> getSortedJobs(int sortType){
+        return JobLab.get(getActivity()).getJobs(sortType);
+    }
+
+    public static int getIsSorted(){
+        return isSorted;
     }
 
     private class JobsHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
@@ -221,14 +230,24 @@ public class TasksFragment extends Fragment {
         public void bindJob(Job job) {
             mJob = job;
             mTitleTextView.setText(mJob.getJobName());
-            if (mJob.isCompleted()) {
-                mTitleTextView.setPaintFlags(mTitleTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-            } else {
-                mTitleTextView.setPaintFlags(mTitleTextView.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
-            }
             mJobDescription.setText(mJob.getJobDescription());
             mScore.setText(String.valueOf(mJob.getWsjfScore()));
-            mDateTextView.setText(new SimpleDateFormat("dd/MM").format(mJob.getDate()));
+            mDateTextView.setText(new SimpleDateFormat("dd/MM/yy").format(mJob.getDate()));
+            setStrikeThroughText();
+        }
+
+        private void setStrikeThroughText(){
+            if (mJob.isCompleted()) {
+                mTitleTextView.setPaintFlags(mTitleTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                mJobDescription.setPaintFlags(mJobDescription.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                mScore.setPaintFlags(mScore.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                mDateTextView.setPaintFlags(mDateTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+            } else {
+                mTitleTextView.setPaintFlags(mTitleTextView.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+                mJobDescription.setPaintFlags(mJobDescription.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+                mScore.setPaintFlags(mScore.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+                mDateTextView.setPaintFlags(mDateTextView.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+            }
         }
 
         @Override
