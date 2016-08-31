@@ -1,5 +1,6 @@
 package com.example.alexparpas.wsjf.activities;
 
+import android.support.annotation.LayoutRes;
 import android.support.v4.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import android.widget.Toast;
 import com.example.alexparpas.wsjf.R;
 import com.example.alexparpas.wsjf.fragments.AboutFragment;
 import com.example.alexparpas.wsjf.fragments.ArchiveFragment;
+import com.example.alexparpas.wsjf.fragments.DetailsFragment;
 import com.example.alexparpas.wsjf.fragments.LicencesFragment;
 import com.example.alexparpas.wsjf.fragments.TasksFragment;
 import com.example.alexparpas.wsjf.model.Job;
@@ -29,20 +31,38 @@ import com.example.alexparpas.wsjf.preferences.SettingsActivity;
 import java.util.Stack;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, TasksFragment.Callbacks {
 
     private Stack<Fragment> fragmentStack;
     FloatingActionButton fab;
 
+    @LayoutRes
+    protected int getLayoutResId() {
+        return R.layout.activity_masterdetail;
+    }
+
+    @Override
+    public void onJobSelected(Job job) {
+        if (findViewById(R.id.details_content_frame) == null) {
+            Intent intent = JobPagerActivity.newIntent(this, job.getId());
+            startActivity(intent);
+        } else {
+            Fragment newDetail = DetailsFragment.newInstance(job.getId());
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.details_content_frame, newDetail)
+                    .commit();
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(getLayoutResId());
 
-        fragmentStack = new Stack<Fragment>();
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        fragmentStack = new Stack<>();
+            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+            setSupportActionBar(toolbar);
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -50,8 +70,9 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View view) {
                 Job job = new Job();
                 JobLab.get(getBaseContext()).addJob(job);
-                Intent intent = JobPagerActivity.newIntent(getBaseContext(), job.getId());
-                startActivity(intent);
+                onJobSelected(job);
+                TasksFragment fragment = (TasksFragment) getSupportFragmentManager().findFragmentByTag("TASKS_FRAGMENT");
+                fragment.updateUI(fragment.getIsSorted());
             }
         });
 
@@ -64,13 +85,13 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-            //Add first fragment and push it on the stack
-            TasksFragment tf = new TasksFragment();
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            FragmentTransaction ft = fragmentManager.beginTransaction();
-            ft.replace(R.id.content_frame, tf);
-            fragmentStack.push(tf);
-            ft.commit();
+        //Add first fragment and push it on the stack
+        TasksFragment tf = new TasksFragment();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        ft.replace(R.id.content_frame, tf, "TASKS_FRAGMENT");
+        fragmentStack.push(tf);
+        ft.commit();
     }
 
     @Override
@@ -108,12 +129,12 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_tasks) {
             if (!item.isChecked()) {
-                populateFragment(new TasksFragment());
+                populateFragment(new TasksFragment(), "TASKS_FRAGMENT");
                 fab.show();
             }
         } else if (id == R.id.nav_archive) {
             if (!item.isChecked()) {
-                populateFragment(new ArchiveFragment());
+                populateFragment(new ArchiveFragment(), "");
                 fab.hide();
             }
 //        } else if (id == R.id.nav_settings) {
@@ -123,12 +144,12 @@ public class MainActivity extends AppCompatActivity
 //            }
         } else if (id == R.id.nav_about) {
             if (!item.isChecked()) {
-                populateFragment(new AboutFragment());
+                populateFragment(new AboutFragment(), "");
                 fab.hide();
             }
         } else if (id == R.id.nav_licences) {
             if (!item.isChecked()) {
-                populateFragment(new LicencesFragment());
+                populateFragment(new LicencesFragment(), "");
                 fab.hide();
             }
         } else if (id == R.id.nav_upgrade) {
@@ -143,7 +164,7 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    public void populateFragment(Fragment f) {
+    public void populateFragment(Fragment f, String tag) {
         Fragment fragment = null;
         FragmentManager fragmentManager = getSupportFragmentManager();
         if (f instanceof TasksFragment) {
@@ -156,7 +177,7 @@ public class MainActivity extends AppCompatActivity
             fragment = new ArchiveFragment();
         }
         FragmentTransaction ft = fragmentManager.beginTransaction();
-        ft.add(R.id.content_frame, fragment);
+        ft.add(R.id.content_frame, fragment, tag);
         fragmentStack.lastElement().onPause();
         //Hide the last fragment
         ft.hide(fragmentStack.lastElement());

@@ -2,14 +2,13 @@ package com.example.alexparpas.wsjf.fragments;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Paint;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.PopupMenu;
+import android.telecom.Call;
 import android.view.ActionMode;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,24 +19,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.example.alexparpas.wsjf.R;
 import com.example.alexparpas.wsjf.activities.JobPagerActivity;
-import com.example.alexparpas.wsjf.activities.MainActivity;
-import com.example.alexparpas.wsjf.database.JobDbSchema;
 import com.example.alexparpas.wsjf.model.DividerItemDecoration;
 import com.example.alexparpas.wsjf.model.EmptyRecyclerView;
 import com.example.alexparpas.wsjf.model.Job;
 import com.example.alexparpas.wsjf.model.JobLab;
-import com.example.alexparpas.wsjf.preferences.SettingsActivity;
-
 import java.text.SimpleDateFormat;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
-import java.util.UUID;
 
 public class TasksFragment extends Fragment {
 
@@ -53,6 +42,23 @@ public class TasksFragment extends Fragment {
     private JobAdapter mAdapter;
     private ActionMode mActionMode;
     private int itemPosition;
+    private Callbacks mCallbacks;
+
+    public interface Callbacks{
+        void onJobSelected(Job job);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mCallbacks = (Callbacks) context;
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mCallbacks = null;
+    }
 
     private ActionMode.Callback mActionModeCallback = new ActionMode.Callback() {
         @Override
@@ -160,7 +166,7 @@ public class TasksFragment extends Fragment {
         return v;
     }
 
-    private void updateUI(int sortType) {
+    public void updateUI(int sortType) {
         List<Job> jobs = getSortedJobs(sortType);
         if (mAdapter == null) {
             mAdapter = new JobAdapter(jobs);
@@ -252,8 +258,7 @@ public class TasksFragment extends Fragment {
 
         @Override
         public void onClick(View view) {
-            Intent intent = JobPagerActivity.newIntent(getActivity(), mJob.getId());
-            startActivity(intent);
+            mCallbacks.onJobSelected(mJob);
         }
 
         @Override
@@ -265,8 +270,7 @@ public class TasksFragment extends Fragment {
                 return false;
             }
 
-            // Start the CAB
-            mActionMode = getActivity().startActionMode(mActionModeCallback);
+            // Start the CAB artActionMode(mActionModeCallback);
             view.setSelected(true);
             return true;
         }
