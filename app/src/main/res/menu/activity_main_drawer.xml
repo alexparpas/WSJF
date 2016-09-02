@@ -8,10 +8,10 @@
             android:id="@+id/nav_tasks"
             android:icon="@drawable/ic_menu_file_document_box"
             android:title="Tasks" />
-        <item
-            android:id="@+id/nav_archive"
-            android:icon="@drawable/ic_menu_archive"
-            android:title="Archive" />
+        <!--<item-->
+            <!--android:id="@+id/nav_archive"-->
+            <!--android:icon="@drawable/ic_menu_archive"-->
+            <!--android:title="Archive" />-->
     </group>
 
     <group
@@ -35,10 +35,10 @@
     <group
         android:id="@+id/group_other"
         android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_upgrade"
-            android:icon="@drawable/ic_menu_cart"
-            android:title="Upgrade" />
+        <!--<item-->
+            <!--android:id="@+id/nav_upgrade"-->
+            <!--android:icon="@drawable/ic_menu_cart"-->
+            <!--android:title="Upgrade" />-->
     </group>
 
 </menu>

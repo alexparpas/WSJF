@@ -11,8 +11,11 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -54,6 +57,11 @@ public class DetailsFragment extends Fragment implements NumberPicker.OnValueCha
     private RelativeLayout setJobDescription, setDate, setDateTime, setUserValue, setTimeValue, setRrroeValue, setJobSizeValue;
     private LinearLayout mAddJobTop;
     ImageButton userValueInfo, timeValueInfo, rroeValueInfo, jobSizeInfo;
+    private Callbacks mCallbacks;
+
+    public interface Callbacks {
+        void onJobUpdated(Job job);
+    }
 
     public static DetailsFragment newInstance(UUID jobId) {
         Bundle args = new Bundle();
@@ -62,6 +70,18 @@ public class DetailsFragment extends Fragment implements NumberPicker.OnValueCha
         DetailsFragment fragment = new DetailsFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mCallbacks = (Callbacks) context;
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mCallbacks = null;
     }
 
     @Override
@@ -95,6 +115,11 @@ public class DetailsFragment extends Fragment implements NumberPicker.OnValueCha
         }
     }
 
+    private void updateJob() {
+        JobLab.get(getActivity()).updateJob(mJob);
+        mCallbacks.onJobUpdated(mJob);
+    }
+
     @Override
     public void onResume() {
         updateValues();
@@ -117,7 +142,6 @@ public class DetailsFragment extends Fragment implements NumberPicker.OnValueCha
     public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
         Log.i("value is", "" + newVal);
     }
-
 
     private void setup(View v) {
         mAddJobTop = (LinearLayout) v.findViewById(R.id.add_job_layout_top);
@@ -254,6 +278,7 @@ public class DetailsFragment extends Fragment implements NumberPicker.OnValueCha
                     mJob.calculateWSJF();
                     Intent intent = new Intent(getActivity(), MainActivity.class);
                     startActivity(intent);
+                    updateJob();
                 }
             }
         });
@@ -280,7 +305,7 @@ public class DetailsFragment extends Fragment implements NumberPicker.OnValueCha
         RelativeLayout linearLayout = new RelativeLayout(getActivity());
         final NumberPicker numberPicker = new NumberPicker(getActivity());
 
-        numberPicker.setMaxValue(13);
+        numberPicker.setMaxValue(20);
         numberPicker.setMinValue(1);
 
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(50, 50);
@@ -353,19 +378,19 @@ public class DetailsFragment extends Fragment implements NumberPicker.OnValueCha
         switch (value) {
             case NP_USER_VALUE:
                 alertDialog.setTitle("User Value");
-                alertDialog.setMessage("Alert message to be shown");
+                alertDialog.setMessage(getString(R.string.info_user_value));
                 break;
             case NP_TIME_VALUE:
                 alertDialog.setTitle("Time Value");
-                alertDialog.setMessage("Alert message to be shown");
+                alertDialog.setMessage(getString(R.string.info_time_value));
                 break;
             case NP_RROE_VALUE:
                 alertDialog.setTitle("Risk Reduction Value");
-                alertDialog.setMessage("Alert message to be shown");
+                alertDialog.setMessage(getString(R.string.info_rroe_value));
                 break;
             case NP_JOBSIZE_VALUE:
                 alertDialog.setTitle("Job Size Value");
-                alertDialog.setMessage("Alert message to be shown");
+                alertDialog.setMessage(getString(R.string.info_job_size_value));
                 break;
         }
 
@@ -377,4 +402,6 @@ public class DetailsFragment extends Fragment implements NumberPicker.OnValueCha
 
         alertDialog.show();
     }
+
+
 }

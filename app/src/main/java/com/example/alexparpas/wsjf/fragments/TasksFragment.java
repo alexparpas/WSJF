@@ -19,12 +19,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import com.example.alexparpas.wsjf.R;
 import com.example.alexparpas.wsjf.activities.JobPagerActivity;
 import com.example.alexparpas.wsjf.model.DividerItemDecoration;
 import com.example.alexparpas.wsjf.model.EmptyRecyclerView;
 import com.example.alexparpas.wsjf.model.Job;
 import com.example.alexparpas.wsjf.model.JobLab;
+
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -35,7 +37,7 @@ public class TasksFragment extends Fragment {
     public static final int SORT_ALPHABETICALLY = 2;
     public static final int SORT_DATE = 3;
 
-    private static int isSorted; //0 when not sorted, 1 when sorted Alphabetically,
+    private int isSorted; //0 when not sorted, 1 when sorted Alphabetically,
     // 2 when sorted by wsjf, 3 when sorted by date
 
     private EmptyRecyclerView mJobsRecyclerView;
@@ -44,7 +46,7 @@ public class TasksFragment extends Fragment {
     private int itemPosition;
     private Callbacks mCallbacks;
 
-    public interface Callbacks{
+    public interface Callbacks {
         void onJobSelected(Job job);
     }
 
@@ -78,16 +80,16 @@ public class TasksFragment extends Fragment {
 
         @Override
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-            List<Job> jobs = getSortedJobs(isSorted);
+            List<Job> jobs = getSortedJobs(getIsSorted());
             switch (item.getItemId()) {
                 case R.id.action_delete:
                     JobLab.get(getActivity()).deleteJob(jobs.get(itemPosition));
-                    updateUI(isSorted);
+                    updateUI(getIsSorted());
                     mode.finish();
                     return true;
-                case R.id.action_archive:
-                    mode.finish();
-                    return true;
+//                case R.id.action_archive:
+//                    mode.finish();
+//                    return true;
                 case R.id.action_complete:
                     if (!jobs.get(itemPosition).isCompleted()) {
                         jobs.get(itemPosition).setCompleted(true);
@@ -97,7 +99,7 @@ public class TasksFragment extends Fragment {
                         item.setIcon(ContextCompat.getDrawable(getActivity(), R.drawable.ic_done_white_24dp));
                     }
                     JobLab.get(getActivity()).updateJob(jobs.get(itemPosition));
-                    updateUI(isSorted);
+                    updateUI(getIsSorted());
                     mode.finish();
                     return true;
                 default:
@@ -112,7 +114,7 @@ public class TasksFragment extends Fragment {
     };
 
     private void modifyActionMode(MenuItem menuItem) {
-        List<Job> jobs = JobLab.get(getActivity()).getJobs(isSorted);
+        List<Job> jobs = JobLab.get(getActivity()).getJobs(getIsSorted());
         if (jobs.get(itemPosition).isCompleted())
             menuItem.setIcon(ContextCompat.getDrawable(getActivity(), R.drawable.ic_undo_white_24dp));
         else {
@@ -122,7 +124,7 @@ public class TasksFragment extends Fragment {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        System.out.println("isSorted value onCreate before SharedPreferences is: " + isSorted);
+        System.out.println("isSorted value onCreate before SharedPreferences is: " + getIsSorted());
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
     }
@@ -130,7 +132,7 @@ public class TasksFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        updateUI(isSorted);
+        updateUI(getIsSorted());
     }
 
     @Override
@@ -142,7 +144,6 @@ public class TasksFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-
         if (id == R.id.action_sort) {
             popupWindow();
             return false;
@@ -176,7 +177,7 @@ public class TasksFragment extends Fragment {
         }
     }
 
-    private void refreshAdapter(List<Job> jobs){
+    private void refreshAdapter(List<Job> jobs) {
         mAdapter.setJobs(jobs);
         mAdapter.notifyDataSetChanged();
     }
@@ -202,7 +203,9 @@ public class TasksFragment extends Fragment {
                         sortedJobs = getSortedJobs(SORT_WSJF);
                         break;
                     default:
-                        return false;
+                        isSorted = NOT_SORTED;
+                        sortedJobs = getSortedJobs(NOT_SORTED);
+                        break;
                 }
                 refreshAdapter(sortedJobs);
                 return true;
@@ -211,11 +214,11 @@ public class TasksFragment extends Fragment {
         popup.show();
     }
 
-    public List<Job> getSortedJobs(int sortType){
+    public List<Job> getSortedJobs(int sortType) {
         return JobLab.get(getActivity()).getJobs(sortType);
     }
 
-    public static int getIsSorted(){
+    public int getIsSorted() {
         return isSorted;
     }
 
@@ -242,7 +245,7 @@ public class TasksFragment extends Fragment {
             setStrikeThroughText();
         }
 
-        private void setStrikeThroughText(){
+        private void setStrikeThroughText() {
             if (mJob.isCompleted()) {
                 mTitleTextView.setPaintFlags(mTitleTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                 mJobDescription.setPaintFlags(mJobDescription.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
@@ -270,7 +273,8 @@ public class TasksFragment extends Fragment {
                 return false;
             }
 
-            // Start the CAB artActionMode(mActionModeCallback);
+            // Start the CAB
+            mActionMode = getActivity().startActionMode(mActionModeCallback);
             view.setSelected(true);
             return true;
         }

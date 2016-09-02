@@ -19,7 +19,7 @@ public class Job {
     public Job(UUID id) {
         this.id = id;
         date = new Date();
-        dateTime = new Date(); //Todo investigate how to get default time
+        dateTime = new Date();
         jobName = "";
         jobDescription = "";
     }

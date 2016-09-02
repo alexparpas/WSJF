@@ -8,11 +8,11 @@
         android:title="Delete"
         app:showAsAction="ifRoom"/>
 
-    <item
-        android:id="@+id/action_archive"
-        android:icon="@drawable/ic_menu_archive_white"
-        android:title="Archive"
-        app:showAsAction="ifRoom"/>
+    <!--<item-->
+        <!--android:id="@+id/action_archive"-->
+        <!--android:icon="@drawable/ic_menu_archive_white"-->
+        <!--android:title="Archive"-->
+        <!--app:showAsAction="ifRoom"/>-->
 
     <item
         android:id="@+id/action_complete"

@@ -44,9 +44,9 @@
                 android:text="Details" />
 
             <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#DEDEDE" />
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#DEDEDE" />
 
             <RelativeLayout
                 android:id="@+id/set_description"
@@ -85,6 +85,7 @@
                         android:layout_height="wrap_content"
                         android:background="@android:color/transparent"
                         android:hint="Add Description"
+                        android:inputType="textAutoCorrect|textCapSentences"
                         android:textColor="#727272"
                         android:textSize="15dp" />
                 </LinearLayout>
@@ -193,10 +194,10 @@
                 android:text="Values" />
 
             <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_alignBottom="@id/set_description"
-            android:background="#DEDEDE" />
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignBottom="@id/set_description"
+                android:background="#DEDEDE" />
 
             <RelativeLayout
                 android:id="@+id/set_user_value"

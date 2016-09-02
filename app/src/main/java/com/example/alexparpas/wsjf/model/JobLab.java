@@ -38,14 +38,13 @@ public class JobLab {
 
     public List<Job> getJobs(int sortType) {
         List<Job> jobs = new ArrayList<>();
-        JobCursorWrapper cursor = null;
-
-        switch (sortType){
+        JobCursorWrapper cursor;
+        switch (sortType) {
             case TasksFragment.NOT_SORTED:
                 cursor = queryJobs(null, null, null);
                 break;
             case TasksFragment.SORT_ALPHABETICALLY:
-                cursor = queryJobs(null, null, JobTable.Cols.JOB_NAME + " DESC");
+                cursor = queryJobs(null, null, JobTable.Cols.JOB_NAME + " ASC");
                 break;
             case TasksFragment.SORT_DATE:
                 cursor = queryJobs(null, null, JobTable.Cols.DATE + " ASC");
@@ -53,6 +52,8 @@ public class JobLab {
             case TasksFragment.SORT_WSJF:
                 cursor = queryJobs(null, null, JobTable.Cols.WSJF_VALUE + " DESC");
                 break;
+            default:
+                cursor = queryJobs(null, null, null);
         }
         try {
             cursor.moveToFirst();
@@ -87,7 +88,7 @@ public class JobLab {
         mDatabase.update(JobTable.NAME, values, JobTable.Cols.UUID + " =?", new String[]{uuidString});
     }
 
-    public void deleteJob(Job job){
+    public void deleteJob(Job job) {
         String uuidString = job.getId().toString();
         mDatabase.delete(JobTable.NAME, JobTable.Cols.UUID + " =?", new String[]{uuidString});
     }

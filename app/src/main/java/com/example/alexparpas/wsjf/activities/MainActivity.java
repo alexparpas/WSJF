@@ -31,10 +31,11 @@ import com.example.alexparpas.wsjf.preferences.SettingsActivity;
 import java.util.Stack;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, TasksFragment.Callbacks {
+        implements NavigationView.OnNavigationItemSelectedListener, TasksFragment.Callbacks, DetailsFragment.Callbacks {
 
     private Stack<Fragment> fragmentStack;
     FloatingActionButton fab;
+    NavigationView navigationView;
 
     @LayoutRes
     protected int getLayoutResId() {
@@ -55,14 +56,20 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
+    public void onJobUpdated(Job job) {
+        TasksFragment fragment = (TasksFragment) getSupportFragmentManager().findFragmentByTag("TASKS_FRAGMENT");
+        fragment.updateUI(fragment.getIsSorted());
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutResId());
 
         fragmentStack = new Stack<>();
-            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-            setSupportActionBar(toolbar);
-            getSupportActionBar().setDisplayShowTitleEnabled(false);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -71,8 +78,6 @@ public class MainActivity extends AppCompatActivity
                 Job job = new Job();
                 JobLab.get(getBaseContext()).addJob(job);
                 onJobSelected(job);
-                TasksFragment fragment = (TasksFragment) getSupportFragmentManager().findFragmentByTag("TASKS_FRAGMENT");
-                fragment.updateUI(fragment.getIsSorted());
             }
         });
 
@@ -82,7 +87,7 @@ public class MainActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         //Add first fragment and push it on the stack
@@ -96,6 +101,11 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
+        Menu menuNav = navigationView.getMenu();
+        MenuItem navAbout = menuNav.findItem(R.id.nav_about);
+        MenuItem navLicences = menuNav.findItem(R.id.nav_licences);
+        MenuItem navTasks = menuNav.findItem(R.id.nav_tasks);
+
         FragmentManager fragmentManager = getSupportFragmentManager();
         if (fragmentStack.size() == 2) {
             FragmentTransaction ft = fragmentManager.beginTransaction();
@@ -103,6 +113,24 @@ public class MainActivity extends AppCompatActivity
             ft.remove(fragmentStack.pop());
             fragmentStack.lastElement().onResume();
             ft.show(fragmentStack.lastElement());
+
+            if (fragmentStack.lastElement() instanceof TasksFragment) {
+                fab.show();
+                navTasks.setChecked(true);
+                navAbout.setChecked(false);
+                navLicences.setChecked(false);
+            } else if (fragmentStack.lastElement() instanceof AboutFragment) {
+                fab.hide();
+                navAbout.setChecked(true);
+                navTasks.setChecked(false);
+                navLicences.setChecked(false);
+            } else if (fragmentStack.lastElement() instanceof LicencesFragment) {
+                fab.hide();
+                navLicences.setChecked(true);
+                navAbout.setChecked(false);
+                navTasks.setChecked(false);
+            }
+
             ft.commit();
         } else {
             super.onBackPressed();
@@ -132,11 +160,11 @@ public class MainActivity extends AppCompatActivity
                 populateFragment(new TasksFragment(), "TASKS_FRAGMENT");
                 fab.show();
             }
-        } else if (id == R.id.nav_archive) {
-            if (!item.isChecked()) {
-                populateFragment(new ArchiveFragment(), "");
-                fab.hide();
-            }
+//        } else if (id == R.id.nav_archive) {
+//            if (!item.isChecked()) {
+//                populateFragment(new ArchiveFragment(), "");
+//                fab.hide();
+//            }
 //        } else if (id == R.id.nav_settings) {
 //            if (!item.isChecked()) {
 //                startActivity(new Intent(this, SettingsActivity.class));
@@ -152,11 +180,11 @@ public class MainActivity extends AppCompatActivity
                 populateFragment(new LicencesFragment(), "");
                 fab.hide();
             }
-        } else if (id == R.id.nav_upgrade) {
-            if (!item.isChecked()) {
-                startActivity(new Intent(this, UpgradeActivity.class));
-                Toast.makeText(getApplicationContext(), "Upgrade Selected", Toast.LENGTH_SHORT).show();
-            }
+//        } else if (id == R.id.nav_upgrade) {
+//            if (!item.isChecked()) {
+//                startActivity(new Intent(this, UpgradeActivity.class));
+//                Toast.makeText(getApplicationContext(), "Upgrade Selected", Toast.LENGTH_SHORT).show();
+//            }
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

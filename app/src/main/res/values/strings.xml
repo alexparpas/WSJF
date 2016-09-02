@@ -7,6 +7,7 @@
     <string name="action_settings">Settings</string>
 
     <string name="header_title">Task Scheduler</string>
+    <string name="header_subtitle">Version 1.0</string>
 
     <string name="pref_values_scale">Values Scale</string>
     <string name="pref_values_summ">Set the scale values of the jobs.</string>
@@ -28,5 +29,10 @@
 
     <string name="date_picker_title">Start Date</string>
     <string name="no_data_available">There are no jobs. You can add a job by clicking on the + button below. </string>
+
+    <string name="info_user_value">Completed</string>
+    <string name="info_time_value">Completed</string>
+    <string name="info_rroe_value">Completed</string>
+    <string name="info_job_size_value">Completed</string>
 
 </resources>
