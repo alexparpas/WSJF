@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onJobSelected(Job job) {
-        if (findViewById(R.id.details_content_frame) == null) {
+        if (findViewById(R.id.details_content_frame) == null) { //Check for tablet
             Intent intent = JobPagerActivity.newIntent(this, job.getId());
             startActivity(intent);
         } else {
@@ -69,7 +69,6 @@ public class MainActivity extends AppCompatActivity
         fragmentStack = new Stack<>();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -103,7 +102,7 @@ public class MainActivity extends AppCompatActivity
     public void onBackPressed() {
         Menu menuNav = navigationView.getMenu();
         MenuItem navAbout = menuNav.findItem(R.id.nav_about);
-        MenuItem navLicences = menuNav.findItem(R.id.nav_licences);
+//        MenuItem navLicences = menuNav.findItem(R.id.nav_licences);
         MenuItem navTasks = menuNav.findItem(R.id.nav_tasks);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -118,15 +117,15 @@ public class MainActivity extends AppCompatActivity
                 fab.show();
                 navTasks.setChecked(true);
                 navAbout.setChecked(false);
-                navLicences.setChecked(false);
+//                navLicences.setChecked(false);
             } else if (fragmentStack.lastElement() instanceof AboutFragment) {
                 fab.hide();
                 navAbout.setChecked(true);
                 navTasks.setChecked(false);
-                navLicences.setChecked(false);
+//                navLicences.setChecked(false);
             } else if (fragmentStack.lastElement() instanceof LicencesFragment) {
                 fab.hide();
-                navLicences.setChecked(true);
+//                navLicences.setChecked(true);
                 navAbout.setChecked(false);
                 navTasks.setChecked(false);
             }
@@ -175,11 +174,11 @@ public class MainActivity extends AppCompatActivity
                 populateFragment(new AboutFragment(), "");
                 fab.hide();
             }
-        } else if (id == R.id.nav_licences) {
-            if (!item.isChecked()) {
-                populateFragment(new LicencesFragment(), "");
-                fab.hide();
-            }
+//        } else if (id == R.id.nav_licences) {
+//            if (!item.isChecked()) {
+//                populateFragment(new LicencesFragment(), "");
+//                fab.hide();
+//            }
 //        } else if (id == R.id.nav_upgrade) {
 //            if (!item.isChecked()) {
 //                startActivity(new Intent(this, UpgradeActivity.class));

@@ -8,6 +8,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
         android:paddingTop="10dp">
 
         <ImageView
@@ -27,13 +29,49 @@
             style="?android:listSeparatorTextViewStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="About" />
+            android:text="WSJF" />
 
         <TextView
             style="@style/about_item"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Has eu quem deterruisset. Mazim civibus partiendo id vis. Cu debitis veritus accommodare pri. Ut nam autem melius omnium. Elitr quaeque no nam, ne meis honestatis est, sed ut legimus conclusionemque. Porro posidonium no cum, eum id paulo corpora conceptam. In omnes dissentias theophrastus est, te sed labitur placerat singulis. Oportere principes at mei, partem voluptaria eam ut. Sea erant veniam ad, ut deserunt eleifend pri. No nisl tota inimicus nec, cu adolescens temporibus pro, duo cu affert discere gloriatur. Has eu quem deterruisset. Mazim civibus partiendo id vis. Cu debitis veritus accommodare pri. Ut nam autem melius omnium. Elitr quaeque no nam, ne meis honestatis est, sed ut legimus conclusionemque. Porro posidonium no cum, eum id paulo corpora conceptam. In omnes dissentias theophrastus est, te sed labitur placerat singulis. Oportere principes at mei, partem voluptaria eam ut. Sea erant veniam ad, ut deserunt eleifend pri. No nisl tota inimicus nec, cu adolescens temporibus pro, duo cu affert discere gloriatur." />
+            android:text="WSJF (Weighted Shortest Job First) is a prioritization technique recommended by Dean Leffingwell that determines job sequencing, calculated as the cost of delay divided by job duration. Jobs that can deliver the most value (or cost of delay), and are of the shortest duration are selected first for implementation." />
+
+        <TextView
+            style="?android:listSeparatorTextViewStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cost of Delay" />
+
+        <TextView
+            style="@style/about_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="There are three primary elements that contribute to the cost of delay:\n \nUser Value: What is the relative value of the feature in the eyes of the business or the user?\n\nTime Value: Describes the need of delivering something in a timescale.\n\nRROE Value: Gives a relative value for the need of a business to eliminate risks earlier or the potential for new business opportunity to be derived from the task.\n\nAlgorithm: Cost of Delay = (User Value + Time Value + RROE Value)  " />
+
+        <TextView
+            style="?android:listSeparatorTextViewStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Job Duration" />
+
+        <TextView
+            style="@style/about_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="To determine the job duration, a job size proxy is used.\n\nJob Size: The estimate of length of time to implement the feature." />
+
+        <TextView
+            style="?android:listSeparatorTextViewStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Result" />
+
+        <TextView
+            style="@style/about_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Finally, when all the aforementioned values have been established, we have a reasonable straightforward calculation for comparing tasks via WSJF. \n\nWSJF = (User Value + Time Value + RROE Value) / Job Size" />
 
         <TextView
             style="?android:listSeparatorTextViewStyle"
@@ -41,37 +79,21 @@
             android:layout_height="wrap_content"
             android:text="Developer" />
 
-        <TextView
-            style="@style/about_item"
+        <RelativeLayout
+            android:id="@+id/about_contact"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:autoLink="web"
-            android:text="Alexandros Parpas\nhttp://alexandrosparpas.com" />
+            android:layout_height="match_parent"
+            android:clickable="true">
 
-        <TextView
-            style="?android:listSeparatorTextViewStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Links" />
+            <TextView
+                android:id="@+id/about_developer_name"
+                style="@style/about_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autoLink="web"
+                android:text="Alexandros Parpas\n\nSend Feedback" />
 
-
-        <TextView
-            style="@style/about_item"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Rate on Google Play" />
-
-        <TextView
-            style="@style/about_item"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Send Feedback" />
-
-        <TextView
-            style="@style/about_item"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="View Source Code on GitHub" />
+        </RelativeLayout>
 
         <TextView
             style="?android:listSeparatorTextViewStyle"
@@ -83,7 +105,6 @@
             style="@style/about_item"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Has eu quem deterruisset. Mazim civibus partiendo id vis. Cu debitis veritus accommodare pri. Ut nam autem melius omnium." />
-
+            android:text="@string/about_legal" />
     </LinearLayout>
 </ScrollView>

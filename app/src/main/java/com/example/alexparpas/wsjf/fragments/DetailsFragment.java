@@ -135,7 +135,11 @@ public class DetailsFragment extends Fragment implements NumberPicker.OnValueCha
     @Override
     public void onPause() {
         super.onPause();
-        JobLab.get(getActivity()).updateJob(mJob);
+        mJob.setJobName(mTitleField.getText().toString());
+        mJob.setJobDescription(mJobDescriptionField.getText().toString());
+        mJob.calculateWSJF();
+        updateValues();
+        updateJob();
     }
 
     @Override
@@ -305,7 +309,7 @@ public class DetailsFragment extends Fragment implements NumberPicker.OnValueCha
         RelativeLayout linearLayout = new RelativeLayout(getActivity());
         final NumberPicker numberPicker = new NumberPicker(getActivity());
 
-        numberPicker.setMaxValue(20);
+        numberPicker.setMaxValue(10);
         numberPicker.setMinValue(1);
 
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(50, 50);

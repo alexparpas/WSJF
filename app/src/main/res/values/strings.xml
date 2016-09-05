@@ -6,7 +6,7 @@
 
     <string name="action_settings">Settings</string>
 
-    <string name="header_title">Task Scheduler</string>
+    <string name="header_title">WSJF Task Scheduler</string>
     <string name="header_subtitle">Version 1.0</string>
 
     <string name="pref_values_scale">Values Scale</string>
@@ -30,9 +30,11 @@
     <string name="date_picker_title">Start Date</string>
     <string name="no_data_available">There are no jobs. You can add a job by clicking on the + button below. </string>
 
-    <string name="info_user_value">Completed</string>
-    <string name="info_time_value">Completed</string>
-    <string name="info_rroe_value">Completed</string>
-    <string name="info_job_size_value">Completed</string>
+    <string name="info_user_value">What is the relative value of the feature in the eyes of the business or the user? (1 being the lowest value and 10 being the highest)?\n\nAnswers the following questions:\n&#8226; Do our users prefer this over that?\n&#8226; What is the revenue impact on our business?\n&#8226; Is there a potential penalty or other negative impact if we delay?</string>
+    <string name="info_time_value">This value describes the need of delivering something in a timescale. (1 being a low "need" and 10 being highest "need")\n\nAnswers the following questions:\n&#8226; How does the user/business value decay over time?\n&#8226; Is there a fixed deadline?\n&#8226; Will they wait for us or move to another solution?\n&#8226; What is current effect on customer satisfaction?\n\n</string>
+    <string name="info_rroe_value">Gives a relative value for the need of a business to eliminate risks earlier or the potential for new business opportunity to be derived from the task. (1 being a low "need" and 13 being highest "need")\n\nAnswers the following questions:\n&#8226; What else does this do for our business?\n&#8226; Does it reduce the risk of this or future delivery?\n&#8226; Is there value in the information we will receive?\n&#8226; Will this feature enable new business opportunities?</string>
+    <string name="info_job_size_value">The estimate of length of time to implement the feature. (1 being the shortest duration and 10 being the highest)</string>
+
+    <string name="about_legal">Copyright 2016 Material Design icons by Google\n\nLicensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.You may obtain a copy of the License at\n\nhttp://www.apache.org/licenses/LICENSE-2.0\n\nUnless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</string>
 
 </resources>

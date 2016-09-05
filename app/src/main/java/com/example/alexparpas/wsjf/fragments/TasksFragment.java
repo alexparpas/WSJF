@@ -83,9 +83,12 @@ public class TasksFragment extends Fragment {
             List<Job> jobs = getSortedJobs(getIsSorted());
             switch (item.getItemId()) {
                 case R.id.action_delete:
-                    JobLab.get(getActivity()).deleteJob(jobs.get(itemPosition));
-                    updateUI(getIsSorted());
-                    mode.finish();
+                    //if statement avoids crash when action item is clicked while the list is empty
+                    if (!JobLab.get(getActivity()).getJobs(NOT_SORTED).isEmpty()) {
+                        JobLab.get(getActivity()).deleteJob(jobs.get(itemPosition));
+                        updateUI(getIsSorted());
+                        mode.finish();
+                    }
                     return true;
 //                case R.id.action_archive:
 //                    mode.finish();

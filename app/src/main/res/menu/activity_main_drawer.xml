@@ -14,7 +14,7 @@
             <!--android:title="Archive" />-->
     </group>
 
-    <group
+    <!--<group-->
         android:id="@+id/group_settings"
         android:checkableBehavior="single">
 
@@ -27,18 +27,18 @@
         android:id="@+id/nav_about"
         android:icon="@drawable/ic_menu_help_circle"
         android:title="About" />
-        <item
-            android:id="@+id/nav_licences"
-            android:icon="@drawable/ic_vpn_key_black_24dp"
-            android:title="Licences" />
-    </group>
-    <group
+        <!--<item-->
+            <!--android:id="@+id/nav_licences"-->
+            <!--android:icon="@drawable/ic_vpn_key_black_24dp"-->
+            <!--android:title="Licences" />-->
+    <!--</group>-->
+    <!--<group-->
         android:id="@+id/group_other"
         android:checkableBehavior="single">
         <!--<item-->
             <!--android:id="@+id/nav_upgrade"-->
             <!--android:icon="@drawable/ic_menu_cart"-->
             <!--android:title="Upgrade" />-->
-    </group>
+    <!--</group>-->
 
 </menu>

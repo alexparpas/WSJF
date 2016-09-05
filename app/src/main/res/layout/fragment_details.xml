@@ -214,7 +214,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="32dp"
-                    android:src="@drawable/ic_mode_edit_black_24dp" />
+                    android:src="@drawable/ic_format_list_numbered_black_24dp" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -247,7 +247,6 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="16dp"
                     android:background="@drawable/ic_info_outline_black_36dp" />
-
             </RelativeLayout>
 
             <!--<View-->
@@ -271,7 +270,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="32dp"
-                    android:src="@drawable/ic_mode_edit_black_24dp" />
+                    android:src="@drawable/ic_format_list_numbered_black_24dp" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -328,7 +327,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="32dp"
-                    android:src="@drawable/ic_mode_edit_black_24dp" />
+                    android:src="@drawable/ic_format_list_numbered_black_24dp" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -384,7 +383,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="32dp"
-                    android:src="@drawable/ic_mode_edit_black_24dp" />
+                    android:src="@drawable/ic_format_list_numbered_black_24dp" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -437,7 +436,7 @@
         android:layout_marginEnd="32dp"
         android:layout_marginTop="86dp"
         android:padding="16dp"
-        android:src="@drawable/ic_play_arrow_black_24dp"
+        android:src="@drawable/ic_send_white_24dp"
         app:fabSize="normal" />
 
 </RelativeLayout>
