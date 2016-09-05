@@ -34,8 +34,6 @@ public class AboutFragment extends Fragment {
                 startActivity(Intent.createChooser(emailIntent, "Send email..."));
             }
         });
-
-
         return v;
     }
 }

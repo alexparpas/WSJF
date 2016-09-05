@@ -4,23 +4,16 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -113,11 +106,6 @@ public class DetailsFragment extends Fragment implements NumberPicker.OnValueCha
             mJob.setDateTime(time);
             updateTime();
         }
-    }
-
-    private void updateJob() {
-        JobLab.get(getActivity()).updateJob(mJob);
-        mCallbacks.onJobUpdated(mJob);
     }
 
     @Override
@@ -286,6 +274,11 @@ public class DetailsFragment extends Fragment implements NumberPicker.OnValueCha
                 }
             }
         });
+    }
+
+    private void updateJob() {
+        JobLab.get(getActivity()).updateJob(mJob);
+        mCallbacks.onJobUpdated(mJob);
     }
 
     private void updateDate() {

@@ -14,7 +14,8 @@
         android:layout_height="match_parent"
         android:divider="?android:attr/dividerHorizontal"
         android:orientation="horizontal"
-        android:showDividers="middle">
+        android:showDividers="middle"
+        android:baselineAligned="false">
 
         <LinearLayout
             android:layout_width="wrap_content"

@@ -1,11 +1,9 @@
 package com.example.alexparpas.wsjf.preferences;
 
-import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 
 import com.example.alexparpas.wsjf.R;
 

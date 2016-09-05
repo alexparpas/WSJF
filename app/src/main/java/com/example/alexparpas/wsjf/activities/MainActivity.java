@@ -16,17 +16,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.example.alexparpas.wsjf.R;
 import com.example.alexparpas.wsjf.fragments.AboutFragment;
 import com.example.alexparpas.wsjf.fragments.ArchiveFragment;
 import com.example.alexparpas.wsjf.fragments.DetailsFragment;
-import com.example.alexparpas.wsjf.fragments.LicencesFragment;
 import com.example.alexparpas.wsjf.fragments.TasksFragment;
 import com.example.alexparpas.wsjf.model.Job;
 import com.example.alexparpas.wsjf.model.JobLab;
-import com.example.alexparpas.wsjf.preferences.SettingsActivity;
 
 import java.util.Stack;
 
@@ -123,13 +120,7 @@ public class MainActivity extends AppCompatActivity
                 navAbout.setChecked(true);
                 navTasks.setChecked(false);
 //                navLicences.setChecked(false);
-            } else if (fragmentStack.lastElement() instanceof LicencesFragment) {
-                fab.hide();
-//                navLicences.setChecked(true);
-                navAbout.setChecked(false);
-                navTasks.setChecked(false);
             }
-
             ft.commit();
         } else {
             super.onBackPressed();
@@ -174,16 +165,6 @@ public class MainActivity extends AppCompatActivity
                 populateFragment(new AboutFragment(), "");
                 fab.hide();
             }
-//        } else if (id == R.id.nav_licences) {
-//            if (!item.isChecked()) {
-//                populateFragment(new LicencesFragment(), "");
-//                fab.hide();
-//            }
-//        } else if (id == R.id.nav_upgrade) {
-//            if (!item.isChecked()) {
-//                startActivity(new Intent(this, UpgradeActivity.class));
-//                Toast.makeText(getApplicationContext(), "Upgrade Selected", Toast.LENGTH_SHORT).show();
-//            }
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -198,8 +179,6 @@ public class MainActivity extends AppCompatActivity
             fragment = new TasksFragment();
         } else if (f instanceof AboutFragment) {
             fragment = new AboutFragment();
-        } else if (f instanceof LicencesFragment) {
-            fragment = new LicencesFragment();
         } else if (f instanceof ArchiveFragment) {
             fragment = new ArchiveFragment();
         }

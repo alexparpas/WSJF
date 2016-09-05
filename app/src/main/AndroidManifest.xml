@@ -19,16 +19,11 @@
         <!--<activity-->
             <!--android:name=".preferences.SettingsActivity"-->
             <!--android:parentActivityName=".activities.MainActivity" />-->
-        <activity android:name=".activities.UpgradeActivity" />
         <activity
             android:name=".activities.JobPagerActivity"
             android:label="Task"
             android:parentActivityName=".activities.MainActivity" />
     </application>
-
-    <uses-sdk
-        android:minSdkVersion="19"
-        android:targetSdkVersion="23" />
 
     <supports-screens android:largeScreens="true"
         android:normalScreens="true" android:smallScreens="true"

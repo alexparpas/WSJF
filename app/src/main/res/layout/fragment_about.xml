@@ -6,7 +6,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
@@ -17,7 +17,7 @@
             android:layout_height="100dp"
             android:layout_gravity="center_horizontal"
             android:layout_margin="6dp"
-            android:src="@drawable/ic_menu_briefcase_download" />
+            android:src="@mipmap/ic_launcher" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -29,55 +29,55 @@
             style="?android:listSeparatorTextViewStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="WSJF" />
+            android:text="@string/about_wsjf_title" />
 
         <TextView
             style="@style/about_item"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="WSJF (Weighted Shortest Job First) is a prioritization technique recommended by Dean Leffingwell that determines job sequencing, calculated as the cost of delay divided by job duration. Jobs that can deliver the most value (or cost of delay), and are of the shortest duration are selected first for implementation." />
+            android:text="@string/about_wsjf_text" />
 
         <TextView
             style="?android:listSeparatorTextViewStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Cost of Delay" />
+            android:text="@string/about_cod_title" />
 
         <TextView
             style="@style/about_item"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="There are three primary elements that contribute to the cost of delay:\n \nUser Value: What is the relative value of the feature in the eyes of the business or the user?\n\nTime Value: Describes the need of delivering something in a timescale.\n\nRROE Value: Gives a relative value for the need of a business to eliminate risks earlier or the potential for new business opportunity to be derived from the task.\n\nAlgorithm: Cost of Delay = (User Value + Time Value + RROE Value)  " />
+            android:text="@string/about_cod_text" />
 
         <TextView
             style="?android:listSeparatorTextViewStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Job Duration" />
+            android:text="@string/about_job_duration_title" />
 
         <TextView
             style="@style/about_item"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="To determine the job duration, a job size proxy is used.\n\nJob Size: The estimate of length of time to implement the feature." />
+            android:text="@string/about_job_duration_text" />
 
         <TextView
             style="?android:listSeparatorTextViewStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Result" />
+            android:text="@string/about_result_title" />
 
         <TextView
             style="@style/about_item"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Finally, when all the aforementioned values have been established, we have a reasonable straightforward calculation for comparing tasks via WSJF. \n\nWSJF = (User Value + Time Value + RROE Value) / Job Size" />
+            android:text="@string/about_result_text" />
 
         <TextView
             style="?android:listSeparatorTextViewStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Developer" />
+            android:text="@string/about_developer_title" />
 
         <RelativeLayout
             android:id="@+id/about_contact"
@@ -91,7 +91,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:autoLink="web"
-                android:text="Alexandros Parpas\n\nSend Feedback" />
+                android:text="@string/about_developer_text" />
 
         </RelativeLayout>
 
@@ -99,12 +99,12 @@
             style="?android:listSeparatorTextViewStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Legal" />
+            android:text="@string/about_legal_title" />
 
         <TextView
             style="@style/about_item"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/about_legal" />
+            android:text="@string/about_legal_text" />
     </LinearLayout>
 </ScrollView>
