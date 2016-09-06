@@ -1,5 +1,7 @@
 package com.example.alexparpas.wsjf.model;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Date;
 import java.util.UUID;
 
@@ -112,7 +114,11 @@ public class Job {
         if (isJobSizeZero()) {
             wsjfScore = userValue + timeValue + rroeValue;
         } else {
-            wsjfScore = (userValue + timeValue + rroeValue) / jobSize;
+            double wsjf = (userValue + timeValue + rroeValue) / (double) jobSize;
+            BigDecimal bd = new BigDecimal(wsjf);
+            bd = bd.setScale(1, RoundingMode.HALF_UP);
+            wsjfScore = bd.doubleValue();
+
         }
     }
 

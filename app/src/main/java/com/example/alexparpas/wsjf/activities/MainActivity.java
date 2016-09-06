@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity
     private Stack<Fragment> fragmentStack;
     FloatingActionButton fab;
     NavigationView navigationView;
+    MenuItem navAbout, navTasks;
 
     @LayoutRes
     protected int getLayoutResId() {
@@ -92,6 +93,12 @@ public class MainActivity extends AppCompatActivity
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        //Initialize navigation menu items to set as checked/not checked
+        Menu menuNav = navigationView.getMenu();
+        navAbout = menuNav.findItem(R.id.nav_about);
+        navTasks = menuNav.findItem(R.id.nav_tasks);
+        navTasks.setChecked(true);
+
         //Add first fragment and push it on the stack
         TasksFragment tf = new TasksFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -103,11 +110,6 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        Menu menuNav = navigationView.getMenu();
-        MenuItem navAbout = menuNav.findItem(R.id.nav_about);
-//        MenuItem navLicences = menuNav.findItem(R.id.nav_licences);
-        MenuItem navTasks = menuNav.findItem(R.id.nav_tasks);
-
         FragmentManager fragmentManager = getSupportFragmentManager();
         if (fragmentStack.size() == 2) {
             FragmentTransaction ft = fragmentManager.beginTransaction();
@@ -120,12 +122,10 @@ public class MainActivity extends AppCompatActivity
                 fab.show();
                 navTasks.setChecked(true);
                 navAbout.setChecked(false);
-//                navLicences.setChecked(false);
             } else if (fragmentStack.lastElement() instanceof AboutFragment) {
                 fab.hide();
                 navAbout.setChecked(true);
                 navTasks.setChecked(false);
-//                navLicences.setChecked(false);
             }
             ft.commit();
         } else {
@@ -133,26 +133,15 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.main, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        return super.onOptionsItemSelected(item);
-    }
-
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
         if (id == R.id.nav_tasks) {
             if (!item.isChecked()) {
+                item.setChecked(true);
+                navAbout.setChecked(false);
                 populateFragment(new TasksFragment(), "TASKS_FRAGMENT");
                 fab.show();
             }
@@ -168,6 +157,8 @@ public class MainActivity extends AppCompatActivity
 //            }
         } else if (id == R.id.nav_about) {
             if (!item.isChecked()) {
+                item.setChecked(true);
+                navTasks.setChecked(false);
                 populateFragment(new AboutFragment(), "");
                 fab.hide();
             }

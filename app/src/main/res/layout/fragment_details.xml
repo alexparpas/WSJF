@@ -84,9 +84,12 @@
                         android:id="@+id/job_description"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:minLines="1"
+                        android:maxLines="3"
+                        android:lines="3"
                         android:background="@android:color/transparent"
                         android:hint="@string/details_job_description_hint"
-                        android:inputType="textAutoCorrect|textCapSentences"
+                        android:inputType="textAutoCorrect|textCapSentences|textMultiLine"
                         android:textColor="#727272"
                         android:textSize="15sp" />
                 </LinearLayout>
@@ -392,7 +395,6 @@
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="16dp"
                     android:background="@drawable/ic_info_outline_black_36dp" />
-
             </RelativeLayout>
 
             <com.google.android.gms.ads.AdView
@@ -400,11 +402,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
+                android:layout_gravity="center"
                 android:layout_centerHorizontal="true"
-                ads:adSize="SMART_BANNER"
+                ads:adSize="BANNER"
                 ads:adUnitId="@string/details_ad_unit_id">
             </com.google.android.gms.ads.AdView>
-
         </LinearLayout>
 
     </ScrollView>
