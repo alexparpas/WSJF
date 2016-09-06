@@ -23,6 +23,9 @@ import com.example.alexparpas.wsjf.model.DividerItemDecoration;
 import com.example.alexparpas.wsjf.model.EmptyRecyclerView;
 import com.example.alexparpas.wsjf.model.Job;
 import com.example.alexparpas.wsjf.model.JobLab;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -42,6 +45,7 @@ public class TasksFragment extends Fragment {
     private ActionMode mActionMode;
     private int itemPosition;
     private Callbacks mCallbacks;
+    private InterstitialAd mInterstitialAd;
 
     public interface Callbacks {
         void onJobSelected(Job job);
@@ -124,7 +128,6 @@ public class TasksFragment extends Fragment {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        System.out.println("isSorted value onCreate before SharedPreferences is: " + getIsSorted());
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
     }
@@ -132,6 +135,9 @@ public class TasksFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        if (mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
+        }
         updateUI(getIsSorted());
     }
 
@@ -155,6 +161,13 @@ public class TasksFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_tasks, container, false);
+
+        mInterstitialAd = new InterstitialAd(getActivity());
+        mInterstitialAd.setAdUnitId(getString(R.string.tasks_ad_unit_id));
+
+        AdRequest adRequest = new AdRequest.Builder()
+                .build();
+        mInterstitialAd.loadAd(adRequest);
 
         mJobsRecyclerView = (EmptyRecyclerView) v.findViewById(R.id.job_recycler_view);
         mJobsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));

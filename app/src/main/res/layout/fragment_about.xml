@@ -105,6 +105,17 @@
             style="@style/about_item"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/about_legal_text" />
+            android:text="@string/about_legal_material_icons" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#DEDEDE" />
+
+        <TextView
+            style="@style/about_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/about_legal_app_icon" />
     </LinearLayout>
 </ScrollView>

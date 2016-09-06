@@ -42,7 +42,8 @@
     <string name="about_job_duration_text">To determine the job duration, a job size proxy is used.\n\nJob Size: The estimate of length of time to implement the feature.</string>
     <string name="about_result_text">Finally, when all the aforementioned values have been established, we have a reasonable straightforward calculation for comparing tasks via WSJF. \n\nWSJF = (User Value + Time Value + RROE Value) / Job Size</string>
     <string name="about_developer_text">Alexandros Parpas\n\nSend Feedback</string>
-    <string name="about_legal_text">Copyright 2016 Material Design icons by Google\n\nLicensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.You may obtain a copy of the License at\n\nhttp://www.apache.org/licenses/LICENSE-2.0\n\nUnless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</string>
+    <string name="about_legal_material_icons">Copyright 2016 Material Design icons by Google\n\nLicensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.You may obtain a copy of the License at\n\nhttp://www.apache.org/licenses/LICENSE-2.0\n\nUnless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</string>
+    <string name="about_legal_app_icon">Copyright 2014 Android Asset Studio\n\nLicensed under a Creative Commons Attribution 3.0 Unported License.; You must give appropriate credit, provide a link to the license, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use. You may obtain a copy of the license in:\n\nhttps://creativecommons.org/licenses/by/3.0</string>
 
     <string name="date_picker_title">Start Date</string>
     <string name="no_data_available">There are no jobs. You can add a job by clicking on the + button below. </string>
@@ -51,4 +52,10 @@
     <string name="info_time_value">This value describes the need of delivering something in a timescale. (1 being a low "need" and 10 being highest "need")\n\nAnswers the following questions:\n&#8226; How does the user/business value decay over time?\n&#8226; Is there a fixed deadline?\n&#8226; Will they wait for us or move to another solution?\n&#8226; What is current effect on customer satisfaction?\n\n</string>
     <string name="info_rroe_value">Gives a relative value for the need of a business to eliminate risks earlier or the potential for new business opportunity to be derived from the task. (1 being a low "need" and 13 being highest "need")\n\nAnswers the following questions:\n&#8226; What else does this do for our business?\n&#8226; Does it reduce the risk of this or future delivery?\n&#8226; Is there value in the information we will receive?\n&#8226; Will this feature enable new business opportunities?</string>
     <string name="info_job_size_value">The estimate of length of time to implement the feature. (1 being the shortest duration and 10 being the highest)</string>
+
+    <string name="tasks_ad_unit_id">ca-app-pub-3946646782063719/1378706385</string>
+    <string name="details_ad_unit_id">ca-app-pub-3946646782063719/3053915989</string>
+    <string name="app_ad_unit_id">ca-app-pub-3946646782063719~7282625982</string>
+
+
 </resources>

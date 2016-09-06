@@ -24,6 +24,10 @@ import com.example.alexparpas.wsjf.fragments.DetailsFragment;
 import com.example.alexparpas.wsjf.fragments.TasksFragment;
 import com.example.alexparpas.wsjf.model.Job;
 import com.example.alexparpas.wsjf.model.JobLab;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.MobileAds;
 
 import java.util.Stack;
 
@@ -62,6 +66,8 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutResId());
+
+        MobileAds.initialize(getApplicationContext(), getString(R.string.app_ad_unit_id));
 
         fragmentStack = new Stack<>();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

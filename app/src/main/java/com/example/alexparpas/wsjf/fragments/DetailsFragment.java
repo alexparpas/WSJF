@@ -26,6 +26,8 @@ import com.example.alexparpas.wsjf.activities.MainActivity;
 import com.example.alexparpas.wsjf.model.Job;
 import com.example.alexparpas.wsjf.R;
 import com.example.alexparpas.wsjf.model.JobLab;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -87,6 +89,12 @@ public class DetailsFragment extends Fragment implements NumberPicker.OnValueCha
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_details, container, false);
+
+        AdView mAdView = (AdView) v.findViewById(R.id.details_adView);
+        AdRequest adRequest = new AdRequest.Builder()
+                .build();
+        mAdView.loadAd(adRequest);
+
         setup(v);
         return v;
     }
