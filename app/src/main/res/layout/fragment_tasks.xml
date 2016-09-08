@@ -6,7 +6,7 @@
 
     <!-- Replaced android.support.v7.widget.RecyclerView with the
          new EmptyRecyclerView -->
-    <com.example.alexparpas.wsjf.model.EmptyRecyclerView
+    <com.ap.alexparpas.wsjf.model.EmptyRecyclerView
         android:id="@+id/job_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

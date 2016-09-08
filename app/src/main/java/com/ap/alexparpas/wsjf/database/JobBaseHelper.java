@@ -1,9 +1,9 @@
-package com.example.alexparpas.wsjf.database;
+package com.ap.alexparpas.wsjf.database;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import static com.example.alexparpas.wsjf.database.JobDbSchema.JobTable;
+import static com.ap.alexparpas.wsjf.database.JobDbSchema.JobTable;
 
 public class JobBaseHelper extends SQLiteOpenHelper {
     private static final int VERSION = 1;

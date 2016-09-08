@@ -1,4 +1,4 @@
-package com.example.alexparpas.wsjf.activities;
+package com.ap.alexparpas.wsjf.activities;
 
 import android.support.annotation.LayoutRes;
 import android.support.v4.app.FragmentManager;
@@ -17,16 +17,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.example.alexparpas.wsjf.R;
-import com.example.alexparpas.wsjf.fragments.AboutFragment;
-import com.example.alexparpas.wsjf.fragments.ArchiveFragment;
-import com.example.alexparpas.wsjf.fragments.DetailsFragment;
-import com.example.alexparpas.wsjf.fragments.TasksFragment;
-import com.example.alexparpas.wsjf.model.Job;
-import com.example.alexparpas.wsjf.model.JobLab;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.InterstitialAd;
+import com.ap.alexparpas.wsjf.R;
+import com.ap.alexparpas.wsjf.fragments.AboutFragment;
+import com.ap.alexparpas.wsjf.fragments.ArchiveFragment;
+import com.ap.alexparpas.wsjf.fragments.DetailsFragment;
+import com.ap.alexparpas.wsjf.fragments.TasksFragment;
+import com.ap.alexparpas.wsjf.model.Job;
+import com.ap.alexparpas.wsjf.model.JobLab;
 import com.google.android.gms.ads.MobileAds;
 
 import java.util.Stack;

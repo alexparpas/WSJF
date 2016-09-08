@@ -1,9 +1,9 @@
-package com.example.alexparpas.wsjf.database;
+package com.ap.alexparpas.wsjf.database;
 
 import android.database.Cursor;
 import android.database.CursorWrapper;
-import com.example.alexparpas.wsjf.database.JobDbSchema.JobTable;
-import com.example.alexparpas.wsjf.model.Job;
+import com.ap.alexparpas.wsjf.database.JobDbSchema.JobTable;
+import com.ap.alexparpas.wsjf.model.Job;
 import java.util.Date;
 import java.util.UUID;
 

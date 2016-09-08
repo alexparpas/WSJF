@@ -3,7 +3,7 @@
 
     <item
         android:id="@+id/popup_date"
-        android:title="Date Created"/>
+        android:title="Date"/>
 
     <item
         android:id="@+id/popup_alphabetically"

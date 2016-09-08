@@ -1,4 +1,4 @@
-package com.example.alexparpas.wsjf.fragments;
+package com.ap.alexparpas.wsjf.fragments;
 
 import android.content.Context;
 import android.graphics.Paint;
@@ -18,13 +18,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.alexparpas.wsjf.R;
-import com.example.alexparpas.wsjf.model.DividerItemDecoration;
-import com.example.alexparpas.wsjf.model.EmptyRecyclerView;
-import com.example.alexparpas.wsjf.model.Job;
-import com.example.alexparpas.wsjf.model.JobLab;
+import com.ap.alexparpas.wsjf.R;
+import com.ap.alexparpas.wsjf.model.DividerItemDecoration;
+import com.ap.alexparpas.wsjf.model.EmptyRecyclerView;
+import com.ap.alexparpas.wsjf.model.Job;
+import com.ap.alexparpas.wsjf.model.JobLab;
 import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 
 import java.text.SimpleDateFormat;
@@ -135,9 +134,6 @@ public class TasksFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (mInterstitialAd.isLoaded()) {
-            mInterstitialAd.show();
-        }
         updateUI(getIsSorted());
     }
 
@@ -274,6 +270,9 @@ public class TasksFragment extends Fragment {
 
         @Override
         public void onClick(View view) {
+            if (mInterstitialAd.isLoaded()) {
+                mInterstitialAd.show();
+            }
             mCallbacks.onJobSelected(mJob);
         }
 

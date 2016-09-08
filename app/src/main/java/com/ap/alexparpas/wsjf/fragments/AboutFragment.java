@@ -1,4 +1,4 @@
-package com.example.alexparpas.wsjf.fragments;
+package com.ap.alexparpas.wsjf.fragments;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
-import com.example.alexparpas.wsjf.R;
+import com.ap.alexparpas.wsjf.R;
 
 public class AboutFragment extends Fragment {
     @Override

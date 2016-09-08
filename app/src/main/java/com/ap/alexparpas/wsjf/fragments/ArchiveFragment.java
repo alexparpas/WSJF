@@ -1,4 +1,4 @@
-package com.example.alexparpas.wsjf.fragments;
+package com.ap.alexparpas.wsjf.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,7 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.alexparpas.wsjf.R;
+import com.ap.alexparpas.wsjf.R;
 
 public class ArchiveFragment extends Fragment {
 

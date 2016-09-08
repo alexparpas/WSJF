@@ -1,4 +1,4 @@
-package com.example.alexparpas.wsjf.fragments;
+package com.ap.alexparpas.wsjf.fragments;
 
 import android.app.Activity;
 import android.content.Context;
@@ -22,12 +22,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.alexparpas.wsjf.activities.MainActivity;
-import com.example.alexparpas.wsjf.model.Job;
-import com.example.alexparpas.wsjf.R;
-import com.example.alexparpas.wsjf.model.JobLab;
+import com.ap.alexparpas.wsjf.activities.MainActivity;
+import com.ap.alexparpas.wsjf.model.Job;
+import com.ap.alexparpas.wsjf.R;
+import com.ap.alexparpas.wsjf.model.JobLab;
 import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 
 import java.text.SimpleDateFormat;
@@ -93,7 +92,6 @@ public class DetailsFragment extends Fragment implements NumberPicker.OnValueCha
 
         AdView mAdView = (AdView) v.findViewById(R.id.details_adView);
         AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice("B41EC9F121B7271073850002339BF7ED")
                 .build();
         mAdView.loadAd(adRequest);
 

@@ -1,18 +1,17 @@
-package com.example.alexparpas.wsjf.fragments;
+package com.ap.alexparpas.wsjf.fragments;
 
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.DatePicker;
 
-import com.example.alexparpas.wsjf.R;
+import com.ap.alexparpas.wsjf.R;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -20,7 +19,7 @@ import java.util.GregorianCalendar;
 
 public class DatePickerFragment extends DialogFragment {
 
-    public static final String EXTRA_DATE = "com.example.alexparpas.wsjf.fragments.date";
+    public static final String EXTRA_DATE = "com.ap.alexparpas.wsjf.fragments.date";
     private static final String ARG_DATE = "date";
     private DatePicker mDatePicker;
 

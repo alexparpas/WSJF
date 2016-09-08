@@ -1,14 +1,14 @@
-package com.example.alexparpas.wsjf.model;
+package com.ap.alexparpas.wsjf.model;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.example.alexparpas.wsjf.database.JobBaseHelper;
-import com.example.alexparpas.wsjf.database.JobCursorWrapper;
-import com.example.alexparpas.wsjf.database.JobDbSchema.JobTable;
-import com.example.alexparpas.wsjf.fragments.TasksFragment;
+import com.ap.alexparpas.wsjf.database.JobBaseHelper;
+import com.ap.alexparpas.wsjf.database.JobCursorWrapper;
+import com.ap.alexparpas.wsjf.database.JobDbSchema.JobTable;
+import com.ap.alexparpas.wsjf.fragments.TasksFragment;
 
 import java.util.ArrayList;
 import java.util.List;

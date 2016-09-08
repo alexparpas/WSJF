@@ -1,4 +1,4 @@
-package com.example.alexparpas.wsjf.database;
+package com.ap.alexparpas.wsjf.database;
 
 public class JobDbSchema {
 

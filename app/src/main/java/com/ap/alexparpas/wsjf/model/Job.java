@@ -1,4 +1,4 @@
-package com.example.alexparpas.wsjf.model;
+package com.ap.alexparpas.wsjf.model;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
