@@ -1,6 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:ads="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -20,7 +20,7 @@
             android:layout_marginRight="32dp"
             android:gravity="start|center"
             android:hint="@string/details_job_title_hint"
-            android:inputType="textAutoCorrect|textCapSentences"
+            android:inputType="textAutoCorrect|textCapWords"
             android:lines="2"
             android:maxLines="3"
             android:textSize="20sp" />
@@ -74,24 +74,19 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/details_job_description"
-                        android:textSize="15sp"
-                        android:textStyle="bold" />
+                        style="@style/details_titles"
+                        android:text="@string/details_job_description" />
 
                     <EditText
                         android:id="@+id/job_description"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:minLines="1"
-                        android:maxLines="3"
-                        android:lines="3"
+                        style="@style/details_values"
                         android:background="@android:color/transparent"
                         android:hint="@string/details_job_description_hint"
+                        android:textColorHint="#D3D3D3"
                         android:inputType="textAutoCorrect|textCapSentences|textMultiLine"
-                        android:textColor="#727272"
-                        android:textSize="15sp" />
+                        android:lines="3"
+                        android:maxLines="3"
+                        android:minLines="1" />
                 </LinearLayout>
             </RelativeLayout>
 
@@ -120,17 +115,12 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/details_job_date"
-                        android:textSize="15sp"
-                        android:textStyle="bold" />
+                        style="@style/details_titles"
+                        android:text="@string/details_job_date" />
 
                     <TextView
                         android:id="@+id/date_value"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="15sp" />
+                        style="@style/details_values" />
                 </LinearLayout>
             </RelativeLayout>
 
@@ -165,17 +155,12 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/details_job_time"
-                        android:textSize="15sp"
-                        android:textStyle="bold" />
+                        style="@style/details_titles"
+                        android:text="@string/details_job_time" />
 
                     <TextView
                         android:id="@+id/date_time_value"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="15sp" />
+                        style="@style/details_values" />
                 </LinearLayout>
             </RelativeLayout>
 
@@ -215,19 +200,13 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/details_user_value"
-                        android:textSize="15sp"
-                        android:textStyle="bold" />
+                        style="@style/details_titles"
+                        android:text="@string/details_user_value" />
 
                     <TextView
                         android:id="@+id/user_value"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/details_default_value"
-                        android:textColor="#727272"
-                        android:textSize="15sp" />
+                        style="@style/details_values"
+                        android:text="@string/details_default_value" />
                 </LinearLayout>
 
                 <ImageButton
@@ -265,19 +244,13 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Time Value"
-                        android:textSize="15sp"
-                        android:textStyle="bold" />
+                        style="@style/details_titles"
+                        android:text="Time Value" />
 
                     <TextView
                         android:id="@+id/time_value"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/details_default_value"
-                        android:textColor="#727272"
-                        android:textSize="15sp" />
+                        style="@style/details_values"
+                        android:text="@string/details_default_value" />
                 </LinearLayout>
 
                 <ImageButton
@@ -322,19 +295,13 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/details_rroe_value"
-                        android:textSize="15sp"
-                        android:textStyle="bold" />
+                        style="@style/details_titles"
+                        android:text="@string/details_rroe_value" />
 
                     <TextView
                         android:id="@+id/rroe_value"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/details_default_value"
-                        android:textColor="#727272"
-                        android:textSize="15sp" />
+                        style="@style/details_values"
+                        android:text="@string/details_default_value" />
                 </LinearLayout>
 
                 <ImageButton
@@ -372,19 +339,13 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/details_job_size"
-                        android:textSize="15sp"
-                        android:textStyle="bold" />
+                        style="@style/details_titles"
+                        android:text="@string/details_job_size" />
 
                     <TextView
                         android:id="@+id/job_size_value"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/details_default_value"
-                        android:textColor="#727272"
-                        android:textSize="15sp" />
+                        style="@style/details_values"
+                        android:text="@string/details_default_value" />
                 </LinearLayout>
 
                 <ImageButton
@@ -402,11 +363,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:layout_gravity="center"
                 android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
                 ads:adSize="BANNER"
-                ads:adUnitId="@string/details_ad_unit_id">
-            </com.google.android.gms.ads.AdView>
+                ads:adUnitId="@string/details_ad_unit_id"/>
+
         </LinearLayout>
 
     </ScrollView>
