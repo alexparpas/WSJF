@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">WSJF Task Scheduler</string>
+    <string name="app_version">Version  1.2</string>
+    <string name="app_logo_decription">WSJF</string>
+
+    <string name="shared_preferences_key">com.ap.alexparpas.PREFERENCE_FILE_KEY</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

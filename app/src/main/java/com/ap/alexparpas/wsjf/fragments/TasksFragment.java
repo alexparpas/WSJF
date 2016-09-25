@@ -1,6 +1,7 @@
 package com.ap.alexparpas.wsjf.fragments;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -29,6 +30,8 @@ import com.google.android.gms.ads.InterstitialAd;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+import static android.R.attr.value;
+
 public class TasksFragment extends Fragment {
 
     public static final int NOT_SORTED = 0;
@@ -36,7 +39,7 @@ public class TasksFragment extends Fragment {
     public static final int SORT_ALPHABETICALLY = 2;
     public static final int SORT_DATE = 3;
 
-    private int isSorted; //0 when not sorted, 1 when sorted Alphabetically,
+    private int sortValue; //0 when not sorted, 1 when sorted Alphabetically,
     // 2 when sorted by wsjf, 3 when sorted by date
 
     private EmptyRecyclerView mJobsRecyclerView;
@@ -80,13 +83,13 @@ public class TasksFragment extends Fragment {
 
         @Override
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-            List<Job> jobs = getSortedJobs(getIsSorted());
+            List<Job> jobs = getSortedJobs(getSortValue());
             switch (item.getItemId()) {
                 case R.id.action_delete:
                     //if statement avoids crash when action item is clicked while the list is empty
                     if (!JobLab.get(getActivity()).getJobs(NOT_SORTED).isEmpty()) {
                         JobLab.get(getActivity()).deleteJob(jobs.get(itemPosition));
-                        updateUI(getIsSorted());
+                        updateUI(getSortValue());
                         mode.finish();
                     }
                     return true;
@@ -102,7 +105,7 @@ public class TasksFragment extends Fragment {
                         item.setIcon(ContextCompat.getDrawable(getActivity(), R.drawable.ic_done_white_24dp));
                     }
                     JobLab.get(getActivity()).updateJob(jobs.get(itemPosition));
-                    updateUI(getIsSorted());
+                    updateUI(getSortValue());
                     mode.finish();
                     return true;
                 default:
@@ -117,7 +120,7 @@ public class TasksFragment extends Fragment {
     };
 
     private void modifyActionMode(MenuItem menuItem) {
-        List<Job> jobs = JobLab.get(getActivity()).getJobs(getIsSorted());
+        List<Job> jobs = JobLab.get(getActivity()).getJobs(getSortValue());
         if (jobs.get(itemPosition).isCompleted())
             menuItem.setIcon(ContextCompat.getDrawable(getActivity(), R.drawable.ic_undo_white_24dp));
         else {
@@ -134,7 +137,8 @@ public class TasksFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        updateUI(getIsSorted());
+        loadSortValue();
+        updateUI(getSortValue());
     }
 
     @Override
@@ -200,22 +204,24 @@ public class TasksFragment extends Fragment {
                 List<Job> sortedJobs;
                 switch (item.getItemId()) {
                     case R.id.popup_alphabetically:
-                        isSorted = SORT_ALPHABETICALLY;
+                        sortValue = SORT_ALPHABETICALLY;
                         sortedJobs = getSortedJobs(SORT_ALPHABETICALLY);
                         break;
                     case R.id.popup_date:
-                        isSorted = SORT_DATE;
+                        sortValue = SORT_DATE;
                         sortedJobs = getSortedJobs(SORT_DATE);
                         break;
                     case R.id.popup_wsjf:
-                        isSorted = SORT_WSJF;
+                        sortValue = SORT_WSJF;
                         sortedJobs = getSortedJobs(SORT_WSJF);
                         break;
                     default:
-                        isSorted = NOT_SORTED;
+                        sortValue = NOT_SORTED;
                         sortedJobs = getSortedJobs(NOT_SORTED);
                         break;
                 }
+                //TODO save shared preference
+                saveSortValue(sortValue);
                 refreshAdapter(sortedJobs);
                 return true;
             }
@@ -223,12 +229,25 @@ public class TasksFragment extends Fragment {
         popup.show();
     }
 
+    private void saveSortValue(int value) {
+        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putInt(getString(R.string.shared_preferences_key), value);
+        editor.commit();
+    }
+
+    private void loadSortValue() {
+        int defaultValue = 0;
+        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        sortValue = sharedPref.getInt(getString(R.string.shared_preferences_key), defaultValue);
+    }
+
     public List<Job> getSortedJobs(int sortType) {
         return JobLab.get(getActivity()).getJobs(sortType);
     }
 
-    public int getIsSorted() {
-        return isSorted;
+    public int getSortValue() {
+        return sortValue;
     }
 
     private class JobsHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {

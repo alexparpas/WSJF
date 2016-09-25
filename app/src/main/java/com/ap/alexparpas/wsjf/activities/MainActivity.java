@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onJobUpdated(Job job) {
         TasksFragment fragment = (TasksFragment) getSupportFragmentManager().findFragmentByTag("TASKS_FRAGMENT");
-        fragment.updateUI(fragment.getIsSorted());
+        fragment.updateUI(fragment.getSortValue());
     }
 
     @Override
