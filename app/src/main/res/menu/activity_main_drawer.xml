@@ -8,37 +8,29 @@
             android:id="@+id/nav_tasks"
             android:icon="@drawable/ic_description_black_24dp"
             android:title="Tasks" />
-        <!--<item-->
-            <!--android:id="@+id/nav_archive"-->
-            <!--android:icon="@drawable/ic_menu_archive"-->
-            <!--android:title="Archive" />-->
+        <item
+        android:id="@+id/nav_archive"
+        android:icon="@drawable/ic_archive_black_24dp"
+        android:title="Archive" />
     </group>
 
-    <!--<group-->
+    <group
         android:id="@+id/group_settings"
         android:checkableBehavior="single">
 
-        <!--<item-->
-            <!--android:id="@+id/nav_settings"-->
-            <!--android:icon="@drawable/ic_menu_manage"-->
-            <!--android:title="Settings" />-->
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@drawable/ic_settings_black_24dp"
+            android:title="Settings" />
 
         <item
-        android:id="@+id/nav_about"
-        android:icon="@drawable/ic_help_black_24dp"
-        android:title="About" />
-        <!--<item-->
-            <!--android:id="@+id/nav_licences"-->
-            <!--android:icon="@drawable/ic_vpn_key_black_24dp"-->
-            <!--android:title="Licences" />-->
-    <!--</group>-->
-    <!--<group-->
-        android:id="@+id/group_other"
-        android:checkableBehavior="single">
-        <!--<item-->
-            <!--android:id="@+id/nav_upgrade"-->
-            <!--android:icon="@drawable/ic_menu_cart"-->
-            <!--android:title="Upgrade" />-->
-    <!--</group>-->
+            android:id="@+id/nav_about"
+            android:icon="@drawable/ic_help_black_24dp"
+            android:title="About" />
+        <item
+            android:id="@+id/nav_upgrade"
+            android:icon="@drawable/ic_shopping_cart_black_24dp"
+            android:title="Upgrade" />
+    </group>
 
 </menu>

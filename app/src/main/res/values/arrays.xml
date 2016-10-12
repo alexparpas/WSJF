@@ -9,7 +9,7 @@
 
     <string-array name="sort_values">
         <item>wsjf_value</item>
-        <item>alphabeticaclly</item>
+        <item>alphabetically</item>
         <item>newest</item>
     </string-array>
 </resources>

@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="com.android.vending.BILLING"/>
 
     <supports-screens
         android:anyDensity="true"
@@ -38,7 +39,9 @@
             android:name=".activities.JobPagerActivity"
             android:label="Task"
             android:parentActivityName=".activities.MainActivity" />
-        <activity android:name=".welcome.MyWelcomeActivity"></activity>
+        <activity
+            android:name=".welcome.MyWelcomeActivity"
+            android:theme="@style/WelcomeScreenTheme.Light.SolidNavigation"/>
     </application>
 
 </manifest>

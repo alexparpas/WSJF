@@ -1,4 +1,4 @@
-package com.example.alexparpas.wsjf;
+package com.ap.alexparpas.wsjf;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

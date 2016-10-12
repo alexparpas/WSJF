@@ -82,7 +82,7 @@
                         style="@style/details_values"
                         android:background="@android:color/transparent"
                         android:hint="@string/details_job_description_hint"
-                        android:textColorHint="#D3D3D3"
+                        android:textColorHint="@color/grey"
                         android:inputType="textAutoCorrect|textCapSentences|textMultiLine"
                         android:lines="3"
                         android:maxLines="3"

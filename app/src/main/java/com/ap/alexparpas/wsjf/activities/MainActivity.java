@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -18,23 +19,40 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.ap.alexparpas.wsjf.R;
+import com.ap.alexparpas.wsjf.billing.IabHelper;
+import com.ap.alexparpas.wsjf.billing.IabResult;
 import com.ap.alexparpas.wsjf.fragments.AboutFragment;
 import com.ap.alexparpas.wsjf.fragments.ArchiveFragment;
 import com.ap.alexparpas.wsjf.fragments.DetailsFragment;
 import com.ap.alexparpas.wsjf.fragments.TasksFragment;
 import com.ap.alexparpas.wsjf.model.Job;
 import com.ap.alexparpas.wsjf.model.JobLab;
+import com.ap.alexparpas.wsjf.welcome.MyWelcomeActivity;
 import com.google.android.gms.ads.MobileAds;
+import com.stephentuso.welcome.WelcomeScreenHelper;
 
 import java.util.Stack;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, TasksFragment.Callbacks, DetailsFragment.Callbacks {
 
+    IabHelper mHelper;
+    public static final String TAG = MainActivity.class.getSimpleName();
     private Stack<Fragment> fragmentStack;
     FloatingActionButton fab;
     NavigationView navigationView;
     MenuItem navAbout, navTasks;
+    WelcomeScreenHelper welcomeScreen;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(getLayoutResId());
+        init();
+
+        welcomeScreen = new WelcomeScreenHelper(this, MyWelcomeActivity.class);
+        welcomeScreen.show(savedInstanceState);
+    }
 
     @LayoutRes
     protected int getLayoutResId() {
@@ -60,16 +78,11 @@ public class MainActivity extends AppCompatActivity
         fragment.updateUI(fragment.getSortValue());
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(getLayoutResId());
-
-        MobileAds.initialize(getApplicationContext(), getString(R.string.app_ad_unit_id));
-
+    private void init() {
         fragmentStack = new Stack<>();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        MobileAds.initialize(getApplicationContext(), getString(R.string.app_ad_unit_id));
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -78,6 +91,20 @@ public class MainActivity extends AppCompatActivity
                 Job job = new Job();
                 JobLab.get(getBaseContext()).addJob(job);
                 onJobSelected(job);
+            }
+        });
+
+        //In App Billing Setup //TODO
+        mHelper = new IabHelper(this, getString(R.string.billing_license));
+        mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
+            @Override
+            public void onIabSetupFinished(IabResult result) {
+                if (!result.isSuccess()) {
+                    Log.d(TAG, "In app billing setup failed: " + result);
+                }
+                else{
+                    Log.d(TAG, "In app billing is set up OK");
+                }
             }
         });
 
@@ -103,6 +130,12 @@ public class MainActivity extends AppCompatActivity
         ft.replace(R.id.content_frame, tf, "TASKS_FRAGMENT");
         fragmentStack.push(tf);
         ft.commit();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        welcomeScreen.onSaveInstanceState(outState);
     }
 
     @Override

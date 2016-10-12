@@ -4,4 +4,7 @@
 <color name="colorPrimaryDark">#28672B</color>
 <color name="colorAccent">#69B26C</color>
 <color name="grey">#a8a8a8</color>
+<color name="welcome_color">#56925C</color>
+<color name="welcome_color1">#7EBE45</color>
+<color name="welcome_color2">#62B452</color>
 </resources>
