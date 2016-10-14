@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.ap.alexparpas.wsjf.R;
+import com.ap.alexparpas.wsjf.activities.MainActivity;
 import com.ap.alexparpas.wsjf.model.DividerItemDecoration;
 import com.ap.alexparpas.wsjf.model.EmptyRecyclerView;
 import com.ap.alexparpas.wsjf.model.Job;
@@ -162,12 +163,14 @@ public class TasksFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_tasks, container, false);
 
-        mInterstitialAd = new InterstitialAd(getActivity());
-        mInterstitialAd.setAdUnitId(getString(R.string.tasks_ad_unit_id));
+        if (!MainActivity.isRemoveAds()) {
+            mInterstitialAd = new InterstitialAd(getActivity());
+            mInterstitialAd.setAdUnitId(getString(R.string.tasks_ad_unit_id));
 
-        AdRequest adRequest = new AdRequest.Builder()
-                .build();
-        mInterstitialAd.loadAd(adRequest);
+            AdRequest adRequest = new AdRequest.Builder()
+                    .build();
+            mInterstitialAd.loadAd(adRequest);
+        }
 
         mJobsRecyclerView = (EmptyRecyclerView) v.findViewById(R.id.job_recycler_view);
         mJobsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -220,7 +223,6 @@ public class TasksFragment extends Fragment {
                         sortedJobs = getSortedJobs(NOT_SORTED);
                         break;
                 }
-                //TODO save shared preference
                 saveSortValue(sortValue);
                 refreshAdapter(sortedJobs);
                 return true;
@@ -289,8 +291,10 @@ public class TasksFragment extends Fragment {
 
         @Override
         public void onClick(View view) {
-            if (mInterstitialAd.isLoaded()) {
-                mInterstitialAd.show();
+            if (!MainActivity.isRemoveAds()) {
+                if (mInterstitialAd.isLoaded()) {
+                    mInterstitialAd.show();
+                }
             }
             mCallbacks.onJobSelected(mJob);
         }

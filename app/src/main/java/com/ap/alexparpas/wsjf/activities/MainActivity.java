@@ -17,16 +17,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.ap.alexparpas.wsjf.R;
 import com.ap.alexparpas.wsjf.billing.IabHelper;
 import com.ap.alexparpas.wsjf.billing.IabResult;
+import com.ap.alexparpas.wsjf.billing.Purchase;
 import com.ap.alexparpas.wsjf.fragments.AboutFragment;
 import com.ap.alexparpas.wsjf.fragments.ArchiveFragment;
 import com.ap.alexparpas.wsjf.fragments.DetailsFragment;
 import com.ap.alexparpas.wsjf.fragments.TasksFragment;
 import com.ap.alexparpas.wsjf.model.Job;
 import com.ap.alexparpas.wsjf.model.JobLab;
+import com.ap.alexparpas.wsjf.preferences.SettingsActivity;
 import com.ap.alexparpas.wsjf.welcome.MyWelcomeActivity;
 import com.google.android.gms.ads.MobileAds;
 import com.stephentuso.welcome.WelcomeScreenHelper;
@@ -36,13 +39,16 @@ import java.util.Stack;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, TasksFragment.Callbacks, DetailsFragment.Callbacks {
 
-    IabHelper mHelper;
+    private static boolean removeAds = false;
     public static final String TAG = MainActivity.class.getSimpleName();
+    static final String SKU_REMOVE_ADS = "ap.alexparpas.removeads";
     private Stack<Fragment> fragmentStack;
     FloatingActionButton fab;
     NavigationView navigationView;
-    MenuItem navAbout, navTasks;
+    MenuItem navTasks, navArchive, navSettings, navAbout, navUpgrade;
     WelcomeScreenHelper welcomeScreen;
+    IabHelper mHelper;
+    IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,8 +56,41 @@ public class MainActivity extends AppCompatActivity
         setContentView(getLayoutResId());
         init();
 
+        //In App Billing Setup //TODO
+        String base64EncodedPublicKey = getString(R.string.billing_license);
+        mHelper = new IabHelper(this, base64EncodedPublicKey);
+        mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
+            @Override
+            public void onIabSetupFinished(IabResult result) {
+                if (!result.isSuccess()) {
+                    Log.d(TAG, "In app billing setup failed: " + result);
+                }
+            }
+        });
+
+        mPurchaseFinishedListener = new IabHelper.OnIabPurchaseFinishedListener() {
+            @Override
+            public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
+                if (result.isFailure()) {
+                    Toast.makeText(MainActivity.this, "Error Purchasing: " + result, Toast.LENGTH_SHORT).show();
+                    return;
+                } else if (purchase.getSku().equals(SKU_REMOVE_ADS)) {
+                    Toast.makeText(MainActivity.this, "Thanks for your purchase", Toast.LENGTH_SHORT).show();
+                    removeAds = true;
+                }
+            }
+        };
         welcomeScreen = new WelcomeScreenHelper(this, MyWelcomeActivity.class);
         welcomeScreen.show(savedInstanceState);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mHelper != null) {
+            mHelper.dispose();
+            mHelper = null;
+        }
     }
 
     @LayoutRes
@@ -82,7 +121,8 @@ public class MainActivity extends AppCompatActivity
         fragmentStack = new Stack<>();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        MobileAds.initialize(getApplicationContext(), getString(R.string.app_ad_unit_id));
+        if (!removeAds)
+            MobileAds.initialize(getApplicationContext(), getString(R.string.app_ad_unit_id));
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -91,20 +131,6 @@ public class MainActivity extends AppCompatActivity
                 Job job = new Job();
                 JobLab.get(getBaseContext()).addJob(job);
                 onJobSelected(job);
-            }
-        });
-
-        //In App Billing Setup //TODO
-        mHelper = new IabHelper(this, getString(R.string.billing_license));
-        mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
-            @Override
-            public void onIabSetupFinished(IabResult result) {
-                if (!result.isSuccess()) {
-                    Log.d(TAG, "In app billing setup failed: " + result);
-                }
-                else{
-                    Log.d(TAG, "In app billing is set up OK");
-                }
             }
         });
 
@@ -119,8 +145,11 @@ public class MainActivity extends AppCompatActivity
 
         //Initialize navigation menu items to set as checked/not checked
         Menu menuNav = navigationView.getMenu();
-        navAbout = menuNav.findItem(R.id.nav_about);
         navTasks = menuNav.findItem(R.id.nav_tasks);
+        navArchive = menuNav.findItem(R.id.nav_archive);
+        navSettings = menuNav.findItem(R.id.nav_settings);
+        navAbout = menuNav.findItem(R.id.nav_about);
+        navUpgrade = menuNav.findItem(R.id.nav_upgrade);
         navTasks.setChecked(true);
 
         //Add first fragment and push it on the stack
@@ -150,16 +179,17 @@ public class MainActivity extends AppCompatActivity
 
             if (fragmentStack.lastElement() instanceof TasksFragment) {
                 fab.show();
-                navTasks.setChecked(true);
-                navAbout.setChecked(false);
+                handleChecked(true, false, false, false, false);
+            } else if (fragmentStack.lastElement() instanceof ArchiveFragment) {
+                fab.hide();
+                handleChecked(false, true, false, false, false);
             } else if (fragmentStack.lastElement() instanceof AboutFragment) {
                 fab.hide();
-                navAbout.setChecked(true);
-                navTasks.setChecked(false);
+                handleChecked(false, false, false, true, false);
+                ft.commit();
+            } else {
+                super.onBackPressed();
             }
-            ft.commit();
-        } else {
-            super.onBackPressed();
         }
     }
 
@@ -170,32 +200,31 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
         if (id == R.id.nav_tasks) {
             if (!item.isChecked()) {
-                item.setChecked(true);
-                navAbout.setChecked(false);
+                handleChecked(true, false, false, false, false);
                 populateFragment(new TasksFragment(), "TASKS_FRAGMENT");
                 fab.show();
             }
-//        } else if (id == R.id.nav_archive) {
-//            if (!item.isChecked()) {
-//                populateFragment(new ArchiveFragment(), "");
-//                fab.hide();
-//            }
-//        } else if (id == R.id.nav_settings) {
-//            if (!item.isChecked()) {
-//                startActivity(new Intent(this, SettingsActivity.class));
-//                Toast.makeText(getApplicationContext(), "Settings Selected", Toast.LENGTH_SHORT).show();
-//            }
+        } else if (id == R.id.nav_archive) {
+            if (!item.isChecked()) {
+                handleChecked(false, true, false, false, false);
+                populateFragment(new ArchiveFragment(), "");
+                fab.hide();
+            }
+        } else if (id == R.id.nav_settings) {
+            startActivity(new Intent(this, SettingsActivity.class));
+            Toast.makeText(getApplicationContext(), "Settings Selected", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_about) {
             if (!item.isChecked()) {
-                item.setChecked(true);
-                navTasks.setChecked(false);
+                handleChecked(false, false, false, true, false);
                 populateFragment(new AboutFragment(), "");
                 fab.hide();
             }
+        } else if (id == R.id.nav_upgrade) {
+            buyClick();
         }
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
+
         return true;
     }
 
@@ -218,4 +247,28 @@ public class MainActivity extends AppCompatActivity
         fragmentStack.push(fragment);
         ft.commit();
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (!mHelper.handleActivityResult(requestCode, resultCode, data)) {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+    public void handleChecked(boolean tasks, boolean archive, boolean settings, boolean about, boolean upgrade) {
+        navTasks.setChecked(tasks);
+        navArchive.setChecked(archive);
+        navSettings.setChecked(settings);
+        navAbout.setChecked(about);
+        navUpgrade.setChecked(upgrade);
+    }
+
+    public void buyClick() {
+        mHelper.launchPurchaseFlow(this, SKU_REMOVE_ADS, 10001, mPurchaseFinishedListener, "removeads");
+    }
+
+    public static boolean isRemoveAds() {
+        return removeAds;
+    }
+
 }

@@ -8,6 +8,7 @@ android {
         applicationId "com.ap.alexparpas.wsjf"
         minSdkVersion 19
         targetSdkVersion 24
+        multiDexEnabled true
         versionCode 5
         versionName "@string/app_version"
     }

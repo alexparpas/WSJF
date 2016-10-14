@@ -90,10 +90,17 @@ public class DetailsFragment extends Fragment implements NumberPicker.OnValueCha
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_details, container, false);
 
+        boolean removeAds = MainActivity.isRemoveAds();
+        LinearLayout detailsContainer = (LinearLayout) v.findViewById(R.id.details_container);
         AdView mAdView = (AdView) v.findViewById(R.id.details_adView);
-        AdRequest adRequest = new AdRequest.Builder()
-                .build();
-        mAdView.loadAd(adRequest);
+
+        if (removeAds) {
+            detailsContainer.removeView(mAdView);
+        } else {
+            AdRequest adRequest = new AdRequest.Builder()
+                    .build();
+            mAdView.loadAd(adRequest);
+        }
 
         setup(v);
         return v;

@@ -23,6 +23,7 @@
             android:value="@integer/google_play_services_version" />
 
         <activity
+
             android:name=".activities.MainActivity"
             android:label="WSJF Tasks"
             android:theme="@style/AppTheme.NoActionBar">
@@ -32,9 +33,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!-- <activity -->
-        <!-- android:name=".preferences.SettingsActivity" -->
-        <!-- android:parentActivityName=".activities.MainActivity" /> -->
+         <activity
+         android:name=".preferences.SettingsActivity"
+         android:parentActivityName=".activities.MainActivity" />
         <activity
             android:name=".activities.JobPagerActivity"
             android:label="Task"

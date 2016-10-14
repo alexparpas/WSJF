@@ -15,6 +15,7 @@
 
 package com.ap.alexparpas.wsjf.billing;
 
+import android.support.compat.BuildConfig;
 import android.text.TextUtils;
 import android.util.Log;
 
